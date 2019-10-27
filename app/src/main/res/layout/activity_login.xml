@@ -81,7 +81,6 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/action_sign_in"
                     android:textStyle="bold"
-                    android:onClick="@{v -> model.login()}"
             />
             <Button
                     android:id="@+id/email_register_button"

@@ -23,6 +23,7 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.content.Intent
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -58,7 +59,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         email_register_button.setOnClickListener{loginModel.register()}
 
-        email_sign_in_button.setOnClickListener { loginModel.login() }
+        email_sign_in_button.setOnClickListener {
+            //loginModel.login()
+
+            startActivity(Intent(this,MainActivity::class.java))
+            finish()
+        }
     }
 
 
