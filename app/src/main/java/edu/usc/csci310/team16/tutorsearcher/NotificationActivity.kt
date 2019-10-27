@@ -8,12 +8,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 class NotificationActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_home -> {
-                message.setText(R.string.title_home)
+            R.id.navigation_search -> {
+                message.setText(R.string.title_search)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                message.setText(R.string.title_dashboard)
+            R.id.navigation_tutors -> {
+                message.setText(R.string.title_tutors)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
