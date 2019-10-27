@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainer
-import androidx.fragment.app.commit
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityMainBinding
 
@@ -28,19 +25,32 @@ class MainActivity:AppCompatActivity() {
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
         mainModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainModel::class.java)
-        supportFragmentManager.commit {
-            replace(R.id.fragment_container,ProfileActivity())
-        }
+
+        supportFragmentManager.beginTransaction().apply{
+            replace(R.id.fragment_container, profile)
+        }.commit()
 
     }
 
-    fun click(v: View){
+    fun onClick(v: View){
         if(v.id == mainModel.page){
             return
-        }else{
-            supportFragmentManager
-            TODO("Route switching")
-            return
+        } else {
+            supportFragmentManager.beginTransaction().apply{
+                replace(R.id.fragment_container, when(v.id) {
+                    R.id.navigation_search -> {
+                        mainModel.page = R.id.navigation_search
+                        search
+                    }
+                    R.id.navigation_profile -> {
+                        mainModel.page = R.id.navigation_profile
+                        profile
+                    }
+                    R.id.navigation_notifications -> notification
+                    R.id.navigation_tutors -> rating
+                    else -> profile
+                })
+            }
         }
     }
 }

@@ -8,4 +8,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class RatingActivity : Fragment() {
 
+
+
 }

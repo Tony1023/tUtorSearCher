@@ -4,6 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainModel: ViewModel() {
-    val page = R.id.navigation_profile
+    var page = R.id.navigation_profile
 
 }
