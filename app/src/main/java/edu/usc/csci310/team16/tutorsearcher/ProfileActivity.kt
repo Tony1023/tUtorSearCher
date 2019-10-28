@@ -17,6 +17,6 @@ class ProfileActivity : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.profile_fragment, container)
+        return inflater.inflate(R.layout.profile_fragment, container, false)
     }
 }

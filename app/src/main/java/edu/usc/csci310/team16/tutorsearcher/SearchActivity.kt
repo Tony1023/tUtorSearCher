@@ -16,7 +16,7 @@ class SearchActivity : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.search_fragment, container)
+        return inflater.inflate(R.layout.search_fragment, container, false)
     }
 
 }
