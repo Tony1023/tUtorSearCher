@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_main.xml"
+            app:startDestination="@id/loginActivity">
+    <activity
+            android:id="@+id/loginActivity"
+            android:name="edu.usc.csci310.team16.tutorsearcher.LoginActivity"
+            android:label="LoginActivity"/>
+    <fragment
+            android:id="@+id/profileActivity"
+            android:name="edu.usc.csci310.team16.tutorsearcher.ProfileActivity"
+            android:label="ProfileActivity"/>
+    <fragment android:id="@+id/placeholder"/>
+    <fragment
+            android:id="@+id/search"
+            android:name="edu.usc.csci310.team16.tutorsearcher.Search"
+            android:label="search_fragment"
+            tools:layout="@layout/search_fragment"/>
+</navigation>

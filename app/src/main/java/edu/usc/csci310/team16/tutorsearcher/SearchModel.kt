@@ -1,9 +1,10 @@
 package edu.usc.csci310.team16.tutorsearcher
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel;
 
-class SearchModel:ViewModel() {
+class SearchModel : ViewModel() {
+    // TODO: Implement the ViewModel
     val classes = MutableLiveData<List<String>>()
     val freeTime = MutableLiveData<List<IntArray>>()
     val results = MutableLiveData<List<IntArray>>()
