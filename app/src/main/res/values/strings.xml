@@ -3,6 +3,7 @@
     <string name="title_tutors">List</string>
     <string name="title_search">Search</string>
     <string name="title_profile">Profile</string>
+    <string name="title_rating">Ratings</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_login">Sign in</string>
     <!-- Strings related to login -->
@@ -16,7 +17,4 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="action_register">Register</string>
-    <string name="title_profile">Profile</string>
-    <string name="title_search">Tutor Search</string>
-    <string name="title_rating">Ratings</string>
 </resources>
