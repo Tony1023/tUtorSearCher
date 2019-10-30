@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 
 
-class Search : Fragment() {
+class SearchKt : Fragment() {
 
     companion object {
-        fun newInstance() = Search()
+        fun newInstance() = SearchFragment()
     }
 
     private lateinit var viewModel: SearchModel
