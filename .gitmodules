@@ -1,0 +1,3 @@
+[submodule "tUtorSearCher-server"]
+	path = tUtorSearCher-server
+	url = git@github.com:Tony1023/tUtorSearCher-server.git

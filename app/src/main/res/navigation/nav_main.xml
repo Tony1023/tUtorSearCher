@@ -9,9 +9,9 @@
             android:name="edu.usc.csci310.team16.tutorsearcher.LoginActivity"
             android:label="LoginActivity"/>
     <fragment
-            android:id="@+id/profileActivity"
-            android:name="edu.usc.csci310.team16.tutorsearcher.ProfileActivity"
-            android:label="ProfileActivity"/>
+            android:id="@+id/profileFragment"
+            android:name="edu.usc.csci310.team16.tutorsearcher.ProfileFragment"
+            android:label="ProfileFragment"/>
     <fragment android:id="@+id/placeholder"/>
     <fragment
             android:id="@+id/search"
