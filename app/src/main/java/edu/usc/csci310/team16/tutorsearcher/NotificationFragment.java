@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationFragmentBinding;
 
-public class NotificationActivity extends Fragment {
+public class NotificationFragment extends Fragment {
     NotificationModel notificationModel;
     RecyclerView.LayoutManager layoutManager;
     NotificationFragmentBinding binding;
@@ -26,8 +26,8 @@ public class NotificationActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.notification_fragment,container,false);
-        binding.setBind(notificationModel);
+        //binding = DataBindingUtil.inflate(inflater,R.layout.notification_fragment,container,false);
+        //binding.setBind(notificationModel);
 
         layoutManager = new LinearLayoutManager(getActivity());
 
