@@ -13,13 +13,13 @@ import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityMainBinding
 class MainActivity:AppCompatActivity() {
     lateinit var mainModel:MainModel
     lateinit var fragmentContainer: FragmentContainer
-    lateinit var profile: ProfileActivity
+    lateinit var profile: ProfileFragment
     lateinit var search : SearchActivity
     lateinit var notification: NotificationActivity
     lateinit var rating: RatingActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        profile = ProfileActivity()
+        profile = ProfileFragment()
         search = SearchActivity()
         notification = NotificationActivity()
         rating = RatingActivity()
