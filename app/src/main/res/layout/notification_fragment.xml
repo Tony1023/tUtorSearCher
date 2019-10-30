@@ -4,6 +4,7 @@
     <variable
             name="bind"
             type="edu.usc.csci310.team16.tutorsearcher.NotificationModel"
+            />
 </data>
     <FrameLayout
              android:layout_width="match_parent"
