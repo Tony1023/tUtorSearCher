@@ -18,4 +18,18 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="action_register">Register</string>
     <string name="messages_unavailable">No messages available</string>
+
+    <!--  strings related to Profile  -->
+    <string name="name_label">Name:</string>
+    <string name="grade_label">Grade:</string>
+    <string name="availability_label">Availability:</string>
+    <string name="tutor_label">Tutor</string>
+    <string name="tutee_label">Tutee</string>
+    <!--  tutors specifically  -->
+    <string name="courses_taken_label">Courses Taken:</string>
+    <string name="courses_tutoring_label">Courses Tutoring:</string>
+    <string name="rating_label">Rating:</string>
+    <!--  tutees specifically  -->
+    <string name="previous_tutors_label">Current Tutors:</string>
+
 </resources>

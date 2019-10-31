@@ -1,6 +1,8 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,16 +14,31 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import org.jetbrains.annotations.NotNull;
+
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
+import okhttp3.Headers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+
     private LoginModel loginModel;
+    private boolean authenticated = false;
 
     @Override
     protected void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
+
+        // TODO: Checks if user profile is valid
+        // TODO: make network configs HTTP-secure (network_security_config.xml and AndroidManifest.xml)
+
 
         ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
@@ -30,74 +47,39 @@ public class LoginActivity extends AppCompatActivity {
         binding.setModel(loginModel);
         binding.setLifecycleOwner(this);
 
-        loginModel.credentials.observe(this, new Observer<LoginData>() {
+        loginModel.getUser().observe(this, new Observer<UserProfile>() {
             @Override
-            public void onChanged(LoginData loginData) {
-                return;
-            }
-        });
-
-        EditText email = findViewById(R.id.email);
-        email.addTextChangedListener(new EmailWatcher());
-        EditText password = findViewById(R.id.password);
-        password.addTextChangedListener(new PasswordWatcher());
-
-        Button emailRegisterButton = findViewById(R.id.email_register_button);
-        emailRegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginModel.register();
-            }
-        });
-
-        Button emailSignInButton = findViewById(R.id.email_sign_in_button);
-        emailSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onChanged(UserProfile profile) {
+                UserProfile.setCurrentUser(profile); // The user session object
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
         });
-    }
 
-    private class EmailWatcher implements TextWatcher {
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            LoginData data = loginModel.credentials.getValue();
-            if (data == null) {
-                data = new LoginData();
+        loginModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                System.out.println(s);
             }
-            data.email = s.toString();
-            loginModel.credentials.setValue(data);
-        }
+        });
+
+        loginModel.getToken().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+                editor.putString("accessToken", s);
+                editor.commit();
+            }
+        });
+
     }
 
-    private class PasswordWatcher implements TextWatcher {
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
+    public void onClickRegister(View view) {
+        loginModel.register();
     }
+
+    public void onClickLogin(View view) {
+        loginModel.login();
+    }
+
 }
