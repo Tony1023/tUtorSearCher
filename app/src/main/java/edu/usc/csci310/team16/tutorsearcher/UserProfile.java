@@ -10,11 +10,11 @@ public class UserProfile {
     private String picture_url;
     private String name;
     private String grade;
-    private double rating;
 
     //just for tutors
     private List<String> coursesTaken; //tutor
     private List<String> tutorClasses; //tutor (which can they teach)
+    private double rating;
 
     //just for tutees
     private ArrayList<Integer> previousTutors; //other tutors this tutee is working with
