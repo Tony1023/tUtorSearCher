@@ -36,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
 
-        // Checks if user profile is valid
+        // TODO: Checks if user profile is valid
+        // TODO: make network configs HTTP-secure (network_security_config.xml and AndroidManifest.xml)
 
 
         ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
