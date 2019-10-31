@@ -18,4 +18,12 @@ public class UserProfile {
 
     //just for tutees
     private ArrayList<Integer> previousTutors; //other tutors this tutee is working with
+
+    public UserProfile() {
+        name = "Teagan";
+    }
+
+    public String getName() {
+        return name;
+    }
 }

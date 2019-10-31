@@ -26,12 +26,19 @@
             android:layout_marginBottom="15dp"
              />
     <TextView
+            android:id="@+id/grade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            />
+    <TextView
             android:id="@+id/availability_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/availability_label"
             android:layout_marginBottom="15dp"
             />
+<!--    use availability array to list all the open slots-->
 
     <!--  TUTOR PROFILE -->
     <TextView
@@ -49,6 +56,7 @@
             android:text="@string/courses_taken_label"
             android:layout_marginBottom="15dp"
             />
+<!--    use courses taken array to list all courses -->
     <TextView
             android:id="@+id/courses_tutoring_label"
             android:layout_width="wrap_content"
@@ -56,11 +64,18 @@
             android:text="@string/courses_tutoring_label"
             android:layout_marginBottom="15dp"
             />
+<!--    use courses tutoring array to list all courses tutoring -->
     <TextView
             android:id="@+id/rating_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rating_label"
+            android:layout_marginBottom="15dp"
+            />
+    <TextView
+            android:id="@+id/rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             />
 
@@ -80,6 +95,7 @@
             android:text="@string/previous_tutors_label"
             android:layout_marginBottom="15dp"
             />
+<!--    use previous tutors array to list all the tutors-->
 </LinearLayout>
 
 <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
