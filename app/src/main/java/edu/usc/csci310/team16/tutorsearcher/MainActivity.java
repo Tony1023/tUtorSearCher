@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity
     private FragmentContainer fragmentContainer;
     private ProfileFragment profile;
     private SearchFragment search;
-    private NotificationActivity notification;
+    private NotificationFragment notification;
     private RatingFragment rating;
 
     @Override
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity
 
         profile = new ProfileFragment();
         search = new SearchFragment();
-        notification = new NotificationActivity();
+        notification = new NotificationFragment();
         rating = new RatingFragment();
 
         setContentView(R.layout.activity_main);
@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity
                 default:
                     view = profile;
             }
+            mainModel.setPage(item.getItemId());
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, view)
                     .commit();
-            mainModel.setPage(item.getItemId());
             return true;
         }
     }
