@@ -1,6 +1,8 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,16 +14,30 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import org.jetbrains.annotations.NotNull;
+
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
+import okhttp3.Headers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+
     private LoginModel loginModel;
+    private boolean authenticated = false;
 
     @Override
     protected void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
+
+        // Checks if user profile is valid
+
 
         ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
@@ -30,31 +46,39 @@ public class LoginActivity extends AppCompatActivity {
         binding.setModel(loginModel);
         binding.setLifecycleOwner(this);
 
-        loginModel.getCredentials().getEmail().observe(this, new Observer<String>() {
+        loginModel.getUser().observe(this, new Observer<UserProfile>() {
             @Override
-            public void onChanged(String str) {
-                return;
-            }
-        });
-
-
-        Button emailRegisterButton = findViewById(R.id.email_register_button);
-        emailRegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginModel.register();
-            }
-        });
-
-        Button emailSignInButton = findViewById(R.id.email_sign_in_button);
-        emailSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //transition to main activity page
+            public void onChanged(UserProfile profile) {
+                UserProfile.setCurrentUser(profile); // The user session object
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish(); //ends LoginActivity
+                finish();
             }
         });
+
+        loginModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                System.out.println(s);
+            }
+        });
+
+        loginModel.getToken().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+                editor.putString("accessToken", s);
+                editor.commit();
+            }
+        });
+
+    }
+
+    public void onClickRegister(View view) {
+        loginModel.register();
+    }
+
+    public void onClickLogin(View view) {
+        loginModel.login();
     }
 
 }
