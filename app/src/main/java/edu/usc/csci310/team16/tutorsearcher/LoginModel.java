@@ -11,12 +11,12 @@ import retrofit2.Response;
 
 public class LoginModel extends ViewModel {
 
-    private LoginData credentials = new LoginData();
+    private MutableLiveData<LoginData> credentials = new MutableLiveData<>(new LoginData("", ""));
     private MutableLiveData<UserProfile> user = new MutableLiveData<>();
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private MutableLiveData<String> token = new MutableLiveData<>();
 
-    public LoginData getCredentials() {
+    public MutableLiveData<LoginData> getCredentials() {
         return credentials;
     }
 
@@ -34,7 +34,7 @@ public class LoginModel extends ViewModel {
 
 
     void register() {
-        RemoteServerDAO.getDao().register(credentials).enqueue(new Callback<Integer>() {
+        RemoteServerDAO.getDao().register(credentials.getValue()).enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
                 if (response.body() != null) {
@@ -42,7 +42,7 @@ public class LoginModel extends ViewModel {
                     token.postValue(response.headers().get("access-token"));
                     UserProfile profile = new UserProfile();
                     profile.setId(response.body());
-                    profile.setEmail(credentials.getEmail().getValue());
+                    profile.setEmail(credentials.getValue().email);
                     user.postValue(profile);
                 } else {
                     errorMessage.postValue("Something wrong occurred.");
@@ -57,7 +57,7 @@ public class LoginModel extends ViewModel {
     }
 
     void login() {
-        RemoteServerDAO.getDao().login(credentials).enqueue(new Callback<UserProfile>() {
+        RemoteServerDAO.getDao().login(credentials.getValue()).enqueue(new Callback<UserProfile>() {
             @Override
             public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
 

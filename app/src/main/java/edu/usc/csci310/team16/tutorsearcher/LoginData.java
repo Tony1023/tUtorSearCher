@@ -10,32 +10,14 @@ import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
 
-public class LoginData implements JsonSerializer<LoginData> {
+public class LoginData {
 
-    private MutableLiveData<String> email = new MutableLiveData<>("");
-    private MutableLiveData<String> password = new MutableLiveData<>("");
+    public final String email;
+    public final String password;
 
-    public MutableLiveData<String> getEmail() {
-        return email;
+    LoginData(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
-    public MutableLiveData<String> getPassword() {
-        return password;
-    }
-
-
-    @Override
-    public JsonElement serialize(LoginData data, Type typeOfSrc, JsonSerializationContext context) {
-        return new Gson().toJsonTree(new LoginDataWrapper(data));
-    }
-
-    private class LoginDataWrapper {
-        private final String email;
-        private final String password;
-
-        LoginDataWrapper(LoginData data) {
-            this.email = data.getEmail().getValue();
-            this.password = data.getPassword().getValue();
-        }
-    }
 }

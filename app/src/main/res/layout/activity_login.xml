@@ -48,7 +48,6 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="@={model.credentials.email}"
                 />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -68,26 +67,29 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="@={model.credentials.password}"
                 />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/email_login_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/action_sign_in"
                     android:textStyle="bold"
                     android:onClick="onClickLogin"
+                    android:enabled="false"
             />
             <com.google.android.material.button.MaterialButton
+                    android:id="@+id/email_register_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/action_register"
                     android:textStyle="bold"
-                    android:onClick="onClickRegister" />
+                    android:onClick="onClickRegister"
+                    android:enabled="false"
+                />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

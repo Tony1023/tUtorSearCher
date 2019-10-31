@@ -28,12 +28,9 @@ public class RemoteServerDAO {
 
     public static RemoteServerServices getDao() {
         if (retrofit == null) {
-            GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(LoginData.class, new LoginData());
 
             retrofit = new Retrofit.Builder()
                     .baseUrl("http:10.0.2.2:8080/server/") // Android emulator's hack to access localhost
-                    .addConverterFactory(GsonConverterFactory.create(builder.create()))
                     .build();
         }
         if (dao == null) {
