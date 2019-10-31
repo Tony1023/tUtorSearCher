@@ -1,14 +1,10 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-
-import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +36,7 @@ public class LoginModel extends ViewModel {
     void register() {
         RemoteServerDAO.getDao().register(credentials).enqueue(new Callback<Integer>() {
             @Override
-            public void onResponse(@NotNull Call<Integer> call, @NotNull Response<Integer> response) {
+            public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
                 if (response.body() != null) {
                     // Looks like postValue calls are queued
                     token.postValue(response.headers().get("access-token"));
@@ -54,8 +50,8 @@ public class LoginModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(@NotNull Call<Integer> call, @NotNull Throwable t) {
-
+            public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
+                t.printStackTrace();
             }
         });
     }
@@ -63,7 +59,7 @@ public class LoginModel extends ViewModel {
     void login() {
         RemoteServerDAO.getDao().login(credentials).enqueue(new Callback<UserProfile>() {
             @Override
-            public void onResponse(@NotNull Call<UserProfile> call, @NotNull Response<UserProfile> response) {
+            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
 
             }
 
