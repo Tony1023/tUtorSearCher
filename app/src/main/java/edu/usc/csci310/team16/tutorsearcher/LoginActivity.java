@@ -50,8 +50,9 @@ public class LoginActivity extends AppCompatActivity {
         emailSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //transition to main activity page
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+                finish(); //ends LoginActivity
             }
         });
     }
