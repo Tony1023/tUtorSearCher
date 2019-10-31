@@ -13,12 +13,12 @@
             android:layout_marginRight="@dimen/mtrl_card_spacing"
             android:minHeight="200dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/notification_type"/>
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
                 android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

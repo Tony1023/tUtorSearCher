@@ -15,6 +15,9 @@ import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationFragmentBind
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment responsible for the Notifications tab
+ */
 public class NotificationFragment extends Fragment {
     NotificationModel notificationModel;
     RecyclerView.LayoutManager layoutManager;
@@ -42,14 +45,10 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         List<Notification> notes = new ArrayList<>();
-        Notification n1 = new Notification();
-        n1.setMsg("New message");
-        n1.setType("Fun stuff");
+        Notification n1 = new Notification("fd_FD_f","MSG","Tutor with Mike");
         notes.add(n1);
 
-        n1 = new Notification();
-        n1.setMsg("New message1");
-        n1.setType("Fun stuff1");
+        n1 = new Notification("fd_FD_f","MSG","Tutor with Mike");
         notes.add(n1);
         ((NotificationListAdapter)recyclerView.getAdapter()).setNotifications(notes);
     }
