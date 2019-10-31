@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +20,17 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         public ViewHolder(View v) {
             super(v);
             // TODO Implement view holder
-            // Define click listener for the ViewHolder's View.
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });
-            name = (TextView) v.findViewById(R.id.notification_text);
-            message = (TextView) v.findViewById(R.id.notification_type);
+            name =  v.findViewById(R.id.notification_text);
+            message = v.findViewById(R.id.notification_type);
         }
     }
 
     private final LayoutInflater mInflater;
-    private List<Notification> notifications = new ArrayList<>();
+    private List<Notification> mNotifications = new ArrayList<>();
 
-    NotificationListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    NotificationListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+    }
 
     @NonNull
     @Override
@@ -47,16 +41,21 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position){
-        if (notifications.isEmpty()){
+        if (mNotifications.isEmpty()){
             holder.message.setText(R.string.messages_unavailable);
         }else{
-            Notification current = notifications.get(position);
+            Notification current = mNotifications.get(position);
             holder.message.setText(current.getMsg());
         }
     }
 
+    public void setNotifications(List<Notification> notifications){
+        mNotifications = notifications;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
-        return notifications.size();
+        return mNotifications.size();
     }
 }
