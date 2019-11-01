@@ -22,10 +22,22 @@ public class UserProfile {
     //singleton
     private static UserProfile currentUser;
 
+    //SET TO DEFAULT VALUES FOR TESTING
     public UserProfile() {
         name = "Teagan";
+        grade = "Junior";
+        rating = 4.57;
+
+        coursesTaken.add("CS103");
+        coursesTaken.add("CS104");
+        coursesTaken.add("CS270");
+        coursesTaken.add("CS201");
+
+        tutorClasses.add("CS103");
+        tutorClasses.add("CS102");
+
     }
-    
+
     public static void setCurrentUser(UserProfile profile) {
         currentUser = profile;
     }

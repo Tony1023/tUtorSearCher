@@ -58,10 +58,22 @@
             />
 <!--    use courses taken array to list all courses -->
     <TextView
+            android:id="@+id/courses_taken"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            />
+    <TextView
             android:id="@+id/courses_tutoring_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/courses_tutoring_label"
+            android:layout_marginBottom="15dp"
+            />
+    <TextView
+            android:id="@+id/courses_tutoring"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             />
 <!--    use courses tutoring array to list all courses tutoring -->
@@ -93,6 +105,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/previous_tutors_label"
+            android:layout_marginBottom="15dp"
+            />
+
+    <TextView
+            android:id="@+id/previous_tutors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             />
 <!--    use previous tutors array to list all the tutors-->

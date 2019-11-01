@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //changed from extends Fragment
 public class ProfileFragment extends Fragment {
 
@@ -28,8 +31,49 @@ public class ProfileFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.profile_fragment, container, false);
+
+        //put name on page
         TextView name = (TextView)v.findViewById(R.id.name);
         name.setText(user.getName());
+
+        //put grade on page
+        TextView grade = (TextView)v.findViewById(R.id.grade);
+        grade.setText(user.getGrade());
+
+        //TUTOR:
+        //put rating on page if not -1 (initial value)
+        if(user.getRating() != -1) {
+            TextView rating = (TextView)v.findViewById(R.id.rating);
+            rating.setText(Double.toString(user.getRating()));
+        }
+
+        //put list of courses taken on page
+        TextView coursesTaken = (TextView)v.findViewById(R.id.courses_taken);
+        String coursesTakenString = "";
+        List<String> coursesTakenList = user.getCoursesTaken();
+
+        for(String course : coursesTakenList) {
+            coursesTakenString += course + "\n";
+        }
+        coursesTaken.setText(coursesTakenString);
+
+        //put list of courses tutoring on page
+        TextView coursesTutoring = (TextView)v.findViewById(R.id.courses_tutoring);
+        String coursesTutoringString = "";
+        List<String> coursesTutoringList = user.getTutorClasses();
+
+        for(String course : coursesTutoringList) {
+            coursesTutoringString += course + "\n";
+        }
+        coursesTutoring.setText(coursesTutoringString);
+
+
+        //TUTEE: put list of previous/current tutors on page
+        TextView previousTutors = (TextView)v.findViewById(R.id.previous_tutors);
+        String tutorsString = "";
+        List<Integer> prevTutors = user.getPreviousTutors();
+
+        //for loop and add \n each iteration
 
         return v;
 
