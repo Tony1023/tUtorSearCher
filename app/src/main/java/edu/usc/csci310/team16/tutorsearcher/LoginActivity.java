@@ -45,10 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         SharedPreferences shared = getPreferences(Context.MODE_PRIVATE);
-//        String email = shared.getString("email", null);
-//        String token = shared.getString("accessToken", null);
-        String email = "email";
-        String token = "token";
+        String email = shared.getString("email", null);
+        String token = shared.getString("accessToken", null);
+//        String email = "email";
+//        String token = "token";
         if (email != null && token != null) {
             loginModel.validate(email, token);
         }
@@ -88,9 +88,9 @@ public class LoginActivity extends AppCompatActivity {
         loginModel.getCredentials().observe(this, new Observer<LoginData>() {
             @Override
             public void onChanged(LoginData loginData) {
-                boolean enabled = loginData.email.endsWith("@usc.edu") && loginData.password.length() >= 6;
-                loginBtn.setEnabled(enabled);
-                registerBtn.setEnabled(enabled);
+//                boolean enabled = loginData.email.endsWith("@usc.edu") && loginData.password.length() >= 6;
+//                loginBtn.setEnabled(enabled);
+//                registerBtn.setEnabled(enabled);
             }
         });
 

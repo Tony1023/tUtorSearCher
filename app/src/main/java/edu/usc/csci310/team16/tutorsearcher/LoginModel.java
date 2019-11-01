@@ -15,7 +15,7 @@ public class LoginModel extends ViewModel {
     private MutableLiveData<UserProfile> user = new MutableLiveData<>();
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private MutableLiveData<String> token = new MutableLiveData<>();
-    private MutableLiveData<Boolean> validating = new MutableLiveData<>(false);
+    private MutableLiveData<Boolean> validating = new MutableLiveData<>();
 
     public MutableLiveData<LoginData> getCredentials() {
         return credentials;
@@ -39,27 +39,43 @@ public class LoginModel extends ViewModel {
 
     void register() {
         validating.setValue(true);
-        RemoteServerDAO.getDao().register(credentials.getValue()).enqueue(new Callback<Integer>() {
+//        RemoteServerDAO.getDao().register(credentials.getValue()).enqueue(new Callback<Integer>() {
+//            @Override
+//            public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
+//                if (response.body() != null) {
+//                    // Looks like postValue calls are queued
+//                    token.postValue(response.headers().get("access-token"));
+//                    UserProfile profile = new UserProfile();
+//                    profile.setId(response.body());
+//                    profile.setEmail(credentials.getValue().email);
+//                    user.postValue(profile);
+//                } else {
+//                    validating.postValue(false);
+//                    errorMessage.postValue("Something wrong occurred.");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
-                if (response.body() != null) {
-                    // Looks like postValue calls are queued
-                    token.postValue(response.headers().get("access-token"));
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    token.postValue("ACCESS_TOKEN");
                     UserProfile profile = new UserProfile();
-                    profile.setId(response.body());
-                    profile.setEmail(credentials.getValue().email);
+                    profile.setId(1);
+                    profile.setEmail("email@usc.edu");
                     user.postValue(profile);
-                } else {
-                    validating.postValue(false);
-                    errorMessage.postValue("Something wrong occurred.");
                 }
             }
-
-            @Override
-            public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
-                t.printStackTrace();
-            }
-        });
+        }).start();
     }
 
     void login() {
@@ -84,7 +100,7 @@ public class LoginModel extends ViewModel {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
@@ -92,14 +108,14 @@ public class LoginModel extends ViewModel {
                 }
             }
         }).start();
-//        RemoteServerDAO.getDao().validate(email, token).enqueue(new Callback<UserProfile>() {
+//        RemoteServerDAO.getDao().validate(email, token).enqueue(new Callback<Integer>() {
 //            @Override
-//            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
-//
+//            public void onResponse(Call<Integer> call, Response<Integer> response) {
+//                return;
 //            }
 //
 //            @Override
-//            public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
+//            public void onFailure(Call<Integer> call, Throwable t) {
 //
 //            }
 //        });
