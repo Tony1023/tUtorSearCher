@@ -11,6 +11,8 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 interface RemoteServerServices {
@@ -19,6 +21,13 @@ interface RemoteServerServices {
 
     @POST("signin")
     Call<UserProfile> login(@Body LoginData credentials);
+
+    @FormUrlEncoded
+    @POST("validateToken")
+    Call<Integer> validate(@Field("email") String email, @Field("token") String token);
+    // TODO: change to UserProfile
+    // TODO: make sure @FormUrlEncoded works
+    // TODO: add header to every method
 }
 
 public class RemoteServerDAO {
@@ -28,12 +37,12 @@ public class RemoteServerDAO {
 
     public static RemoteServerServices getDao() {
         if (retrofit == null) {
+
             GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(LoginData.class, new LoginData());
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http:10.0.2.2:8080/server/") // Android emulator's hack to access localhost
                     .addConverterFactory(GsonConverterFactory.create(builder.create()))
+                    .baseUrl("http:10.0.2.2:8080/server/") // Android emulator's hack to access localhost
                     .build();
         }
         if (dao == null) {
