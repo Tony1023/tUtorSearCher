@@ -15,6 +15,7 @@ public class LoginModel extends ViewModel {
     private MutableLiveData<UserProfile> user = new MutableLiveData<>();
     private MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private MutableLiveData<String> token = new MutableLiveData<>();
+    private MutableLiveData<Boolean> validating = new MutableLiveData<>(false);
 
     public MutableLiveData<LoginData> getCredentials() {
         return credentials;
@@ -32,8 +33,12 @@ public class LoginModel extends ViewModel {
         return token;
     }
 
+    MutableLiveData<Boolean> getValidating() {
+        return validating;
+    }
 
     void register() {
+        validating.setValue(true);
         RemoteServerDAO.getDao().register(credentials.getValue()).enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
@@ -45,6 +50,7 @@ public class LoginModel extends ViewModel {
                     profile.setEmail(credentials.getValue().email);
                     user.postValue(profile);
                 } else {
+                    validating.postValue(false);
                     errorMessage.postValue("Something wrong occurred.");
                 }
             }
@@ -57,18 +63,46 @@ public class LoginModel extends ViewModel {
     }
 
     void login() {
-        RemoteServerDAO.getDao().login(credentials.getValue()).enqueue(new Callback<UserProfile>() {
+//        validating.setValue(true);
+//        RemoteServerDAO.getDao().login(credentials.getValue()).enqueue(new Callback<UserProfile>() {
+//            @Override
+//            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UserProfile> call, Throwable t) {
+//
+//            }
+//        });
+
+    }
+
+    void validate(String email, String token) {
+        validating.setValue(true);
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
-
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    validating.postValue(false);
+                }
             }
-
-            @Override
-            public void onFailure(Call<UserProfile> call, Throwable t) {
-
-            }
-        });
-
+        }).start();
+//        RemoteServerDAO.getDao().validate(email, token).enqueue(new Callback<UserProfile>() {
+//            @Override
+//            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
+//
+//            }
+//        });
     }
 
 }

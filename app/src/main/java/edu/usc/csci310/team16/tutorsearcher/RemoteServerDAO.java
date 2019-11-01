@@ -19,6 +19,9 @@ interface RemoteServerServices {
 
     @POST("signin")
     Call<UserProfile> login(@Body LoginData credentials);
+
+    @POST("validateToken")
+    Call<UserProfile> validate(String email, String token);
 }
 
 public class RemoteServerDAO {
