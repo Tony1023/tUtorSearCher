@@ -68,13 +68,6 @@ public class ProfileFragment extends Fragment {
         coursesTutoring.setText(coursesTutoringString);
 
 
-        //TUTEE: put list of previous/current tutors on page
-        TextView previousTutors = (TextView)v.findViewById(R.id.previous_tutors);
-        String tutorsString = "";
-        List<Integer> prevTutors = user.getPreviousTutors();
-
-        //for loop and add \n each iteration
-
         return v;
 
         //take UserProfile information and put it on labels in the view

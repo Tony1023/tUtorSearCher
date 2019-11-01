@@ -16,7 +16,7 @@ public class UserProfile {
     private List<String> coursesTaken = new ArrayList<>(); //tutor
     private List<String> tutorClasses = new ArrayList<>(); //tutor (which can they teach)
     private double rating = -1;
-    //just for tutees
+    //just for tutees: ON RATING PAGE
     private List<Integer> previousTutors = new ArrayList<>(); //other tutors this tutee is working with
 
     //singleton
