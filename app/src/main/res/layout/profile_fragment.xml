@@ -90,31 +90,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             />
-
-    <!--  TUTEE PROFILE  -->
-    <TextView
-            android:id="@+id/tutee_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tutee_label"
-            android:layout_marginBottom="15dp"
-            android:textSize="20sp"
-            />
-    <TextView
-            android:id="@+id/previous_tutors_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/previous_tutors_label"
-            android:layout_marginBottom="15dp"
-            />
-
-    <TextView
-            android:id="@+id/previous_tutors"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            />
-<!--    use previous tutors array to list all the tutors-->
 </LinearLayout>
 
 <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
