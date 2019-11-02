@@ -6,18 +6,17 @@ import java.util.List;
 public class UserProfile {
 
     private int id = -1;
-    //possible availabilities, corresponding to "when is good" blocks
-    private List<Integer> availability = new ArrayList<>();
     private String picture_url = "";
     private String name = "";
     private String grade = "";
     private String email = "";
+    private String bio = "";
+    //possible availabilities, corresponding to "when is good" blocks
+    private List<Integer> availability = new ArrayList<>();
     //just for tutors
     private List<String> coursesTaken = new ArrayList<>(); //tutor
     private List<String> tutorClasses = new ArrayList<>(); //tutor (which can they teach)
     private double rating = -1;
-    //just for tutees
-    private List<Integer> previousTutors = new ArrayList<>(); //other tutors this tutee is working with
 
     private static UserProfile currentUser;
 
@@ -37,6 +36,13 @@ public class UserProfile {
         this.email = email;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -88,10 +94,6 @@ public class UserProfile {
 
     public double getRating() {
         return rating;
-    }
-
-    public List<Integer> getPreviousTutors() {
-        return previousTutors;
     }
 
 }
