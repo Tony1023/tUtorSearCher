@@ -1,10 +1,12 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -23,8 +25,12 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
 
+        //get data from the singleton
         user = UserProfile.getCurrentUser();
+
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,6 +38,12 @@ public class ProfileFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.profile_fragment, container, false);
 
+        //Fragment view = edit_profile_fragment;
+        //        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.fragment_container, view)
+//                .commit();
+
+        //SHOW PROFILE ATTRIBUTES ON PROFILE LAYOUT
         //put name on page
         TextView name = (TextView)v.findViewById(R.id.name);
         name.setText(user.getName());
