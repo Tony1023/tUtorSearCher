@@ -38,15 +38,6 @@ public class NotificationFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-
-        notificationModel.getNotifications().observe(this,
-                new Observer<List<Notification>>() {
-                    @Override
-                    public void onChanged(List<Notification> notifications) {
-                        notificationModel.getAdapter().setNotifications(notifications);
-                    }
-                });
-
         return binding.getRoot();
     }
 
@@ -57,6 +48,12 @@ public class NotificationFragment extends Fragment {
         notes.add(n1);
 
         n1 = new Notification("fd_FD_f","MSG","Tutor with Bob");
+        notes.add(n1);
+
+        n1 = new Notification("ayyy","TUTOR_REQUEST","Accept Bob");
+        notes.add(n1);
+
+        n1 = new Notification("ay2","TUTOR_REQUEST","Accept Bob");
         notes.add(n1);
         notificationModel.getNotifications().postValue(notes);
     }
