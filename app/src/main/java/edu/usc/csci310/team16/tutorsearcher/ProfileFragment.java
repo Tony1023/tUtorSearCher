@@ -38,10 +38,18 @@ public class ProfileFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        //Fragment view = edit_profile_fragment;
-        //        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragment_container, view)
-//                .commit();
+        final Fragment view = new EditProfileFragment();
+//
+
+        //when clicking edit button, transition to edit profile page
+        Button editButton = (Button)v.findViewById(R.id.edit_button);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, view)
+                .commit();
+            }
+        });
 
         //SHOW PROFILE ATTRIBUTES ON PROFILE LAYOUT
         //put name on page
