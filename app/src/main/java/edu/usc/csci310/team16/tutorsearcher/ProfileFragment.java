@@ -23,7 +23,7 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
 
-        user = new UserProfile();
+        user = UserProfile.getCurrentUser();
     }
 
     @Override
