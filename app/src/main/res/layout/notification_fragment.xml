@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 <data>
     <variable
-            name="bind"
+            name="viewModel"
             type="edu.usc.csci310.team16.tutorsearcher.NotificationModel"
             />
 </data>
@@ -15,6 +15,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/notifications_view"
+                app:setAdapter="@{viewModel.getAdapter()}"
                 tools:listitem="@layout/notification_msg">
 
         </androidx.recyclerview.widget.RecyclerView>
