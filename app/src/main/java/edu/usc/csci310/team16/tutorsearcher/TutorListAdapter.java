@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.usc.csci310.team16.tutorsearcher.databinding.TutorMsgBinding;
+import edu.usc.csci310.team16.tutorsearcher.databinding.TutorprofileFragmentBinding;
 
 public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.ViewHolder> {
 
@@ -22,22 +23,23 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
     private List<Tutor> mTutors = new ArrayList<>();
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private final TutorMsgBinding binding;
-        private final TextView name;
-        private final TextView message;
-        private final MaterialButtonToggleGroup buttonToggleGroup;
+        //private final TutorMsgBinding binding;
+        //private final TextView name;
+        //private final TextView message;
+        //private final MaterialButtonToggleGroup buttonToggleGroup;
 
         public ViewHolder(ViewDataBinding bind) {
             super(bind.getRoot());
-            binding = (TutorMsgBinding) bind;
-            name =  binding.tutorType;
-            message = binding.tutorText;
-            buttonToggleGroup = binding.tutorButtons;
+            //binding = (TutorMsgBinding) bind;
+            //name =  binding.tutorType;
+            //message = binding.tutorText;
+            //buttonToggleGroup = binding.tutorButtons;
+
         }
 
         public void bind(int position){
-            binding.setViewModel(viewModel);
-            binding.setPosition(position);
+            //binding.setViewModel(viewModel);
+            //binding.setPosition(position);
         }
     }
 
@@ -49,12 +51,14 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        TutorMsgBinding binding = TutorMsgBinding.inflate( inflater,parent,false);
+        TutorprofileFragmentBinding binding = TutorprofileFragmentBinding.inflate( inflater,parent,false);
         return new ViewHolder(binding);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position){
+        /*
         holder.bind(position);
         if (mTutors.isEmpty()){
             holder.message.setText(R.string.messages_unavailable);
@@ -75,7 +79,10 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
             }
 
         }
+        */
     }
+
+
 
     public void setTutors(List<Tutor> tutors){
         mTutors = tutors;
