@@ -61,6 +61,11 @@ public class ProfileFragment extends Fragment {
         grade.setText(user.getGrade());
 
         //TUTOR:
+
+        //put bio on page
+        TextView bio = (TextView)v.findViewById((R.id.bio));
+        bio.setText(user.getBio());
+
         //put rating on page if not -1 (initial value)
         if(user.getRating() != -1) {
             TextView rating = (TextView)v.findViewById(R.id.rating);
@@ -73,9 +78,9 @@ public class ProfileFragment extends Fragment {
         List<String> coursesTakenList = user.getCoursesTaken();
 
         for(String course : coursesTakenList) {
-            coursesTakenString += course + "\n";
+            coursesTakenString += course + ", ";
         }
-        coursesTaken.setText(coursesTakenString);
+        coursesTaken.setText(coursesTakenString.substring(0, coursesTakenString.length()-2));
 
         //put list of courses tutoring on page
         TextView coursesTutoring = (TextView)v.findViewById(R.id.courses_tutoring);
@@ -83,9 +88,9 @@ public class ProfileFragment extends Fragment {
         List<String> coursesTutoringList = user.getTutorClasses();
 
         for(String course : coursesTutoringList) {
-            coursesTutoringString += course + "\n";
+            coursesTutoringString += course + ", ";
         }
-        coursesTutoring.setText(coursesTutoringString);
+        coursesTutoring.setText(coursesTutoringString.substring(0, coursesTutoringString.length()-2));
 
 
         return v;

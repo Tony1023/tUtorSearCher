@@ -12,7 +12,6 @@ public class UserProfile {
     private String name = "";
     private String grade = "";
     private String email = "";
-    private String bio = "";
 
     //constants for availability array
     private static final String[] days =
@@ -29,10 +28,12 @@ public class UserProfile {
     //divide by 28 to get day (0: Monday, 1: Tuesday, ...)
     //mod by 28 to get the time block on that day
     private List<Integer> availability = new ArrayList<>();
+
     //just for tutors
     private List<String> coursesTaken = new ArrayList<>(); //tutor
     private List<String> tutorClasses = new ArrayList<>(); //tutor (which can they teach)
     private double rating = -1;
+    private String bio = "";
 
 
     //singleton
@@ -43,6 +44,9 @@ public class UserProfile {
         name = "Teagan";
         grade = "Junior";
         rating = 4.57;
+
+        bio = "I like cats and dislike android apps. I'm a 103 cp. " +
+                "fuck writing xml i miss xcode";
 
         coursesTaken.add("CS103");
         coursesTaken.add("CS104");
