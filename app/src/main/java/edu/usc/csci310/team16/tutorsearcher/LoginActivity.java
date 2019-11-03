@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
         final MaterialButton registerBtn;
         // TODO: make network configs HTTP-secure (network_security_config.xml and AndroidManifest.xml)
 
-
         ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         loginModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(LoginModel.class);
@@ -45,25 +44,24 @@ public class LoginActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         SharedPreferences shared = getPreferences(Context.MODE_PRIVATE);
-        String email = shared.getString("email", null);
+        int id = shared.getInt("userId", -1);
         String token = shared.getString("accessToken", null);
-//        String email = "email";
-//        String token = "token";
-        if (email != null && token != null) {
-            loginModel.validate(email, token);
+        if (id != -1 && token != null) {
+            loginModel.validate(id, token);
         }
 
         loginBtn = findViewById(R.id.email_login_button);
         registerBtn = findViewById(R.id.email_register_button);
-
 
         loginModel.getUser().observe(this, new Observer<UserProfile>() {
             @Override
             public void onChanged(UserProfile profile) {
                 UserProfile.setCurrentUser(profile); // The user session object
                 SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+                editor.putInt("userId", profile.getId());
                 editor.putString("email", profile.getEmail());
                 editor.apply();
+                RemoteServerDAO.setId(profile.getId());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
@@ -82,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
                 editor.putString("accessToken", s);
                 editor.apply();
+                RemoteServerDAO.setToken(s);
             }
         });
 
