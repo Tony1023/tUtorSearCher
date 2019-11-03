@@ -1,4 +1,4 @@
-package edu.usc.csci310.team16.tutorsearcher.network;
+package edu.usc.csci310.team16.tutorsearcher.model;
 
 import edu.usc.csci310.team16.tutorsearcher.LoginData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
