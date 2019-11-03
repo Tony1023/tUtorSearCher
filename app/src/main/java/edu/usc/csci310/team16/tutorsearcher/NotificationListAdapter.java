@@ -76,6 +76,12 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         }
     }
 
+    // Clean all elements of the recycler
+    public void clear() {
+        mNotifications.clear();
+        notifyDataSetChanged();
+    }
+
     public void setNotifications(List<Notification> notifications){
         mNotifications = notifications;
         notifyDataSetChanged();
