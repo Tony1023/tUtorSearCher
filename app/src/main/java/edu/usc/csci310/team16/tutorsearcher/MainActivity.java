@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity
     private ProfileFragment profile;
     private SearchFragment search;
     private NotificationFragment notification;
-    private RatingFragment rating;
+    private TutorFragment rating;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
         profile = new ProfileFragment();
         search = new SearchFragment();
         notification = new NotificationFragment();
-        rating = new RatingFragment();
+        rating = new TutorFragment();
 
         setContentView(R.layout.activity_main);
         mainModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainModel.class);

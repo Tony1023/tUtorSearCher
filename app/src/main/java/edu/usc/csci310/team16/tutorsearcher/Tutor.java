@@ -3,12 +3,12 @@ package edu.usc.csci310.team16.tutorsearcher;
 /**
  * Data class for storing notifications
  */
-public class Notification {
+public class Tutor {
     private String mId= "";
     private String mType = "";
     private String mMsg = "";
 
-    public Notification(String id, String type, String msg){
+    public Tutor(String id, String type, String msg){
         mType= type;
         mId = id;
         mMsg = msg;

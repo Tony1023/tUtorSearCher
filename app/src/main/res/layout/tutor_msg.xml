@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="edu.usc.csci310.team16.tutorsearcher.NotificationModel" />
+            type="edu.usc.csci310.team16.tutorsearcher.TutorListModel" />
     </data>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/notification_card"
@@ -24,21 +24,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <com.google.android.material.textview.MaterialTextView
-                android:text="@{viewModel.notifications.get(position).getType()}"
+                android:text="@{viewModel.tutors.get(position).getType()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/notification_type"/>
+                android:id="@+id/tutor_type"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:text="@{viewModel.notifications.get(position).getMsg()}"
+                android:text="@{viewModel.tutors.get(position).getMsg()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/notification_text"/>
+                android:id="@+id/tutor_text"/>
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/notification_buttons"
+                android:id="@+id/tutor_buttons"
                 android:visibility="gone">
                 <com.google.android.material.button.MaterialButton
                     android:text="@string/notification_accept"

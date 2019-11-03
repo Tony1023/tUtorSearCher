@@ -1,37 +1,38 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import androidx.annotation.LayoutRes;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.button.MaterialButtonToggleGroup;
-import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationListAdapter extends RecyclerView.Adapter<NotificationListAdapter.ViewHolder> {
+import edu.usc.csci310.team16.tutorsearcher.databinding.TutorMsgBinding;
 
-    private final NotificationModel viewModel;
-    private List<Notification> mNotifications = new ArrayList<>();
+public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.ViewHolder> {
+
+    private final TutorListModel viewModel;
+    private List<Tutor> mTutors = new ArrayList<>();
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private final NotificationMsgBinding binding;
+        private final TutorMsgBinding binding;
         private final TextView name;
         private final TextView message;
         private final MaterialButtonToggleGroup buttonToggleGroup;
 
         public ViewHolder(ViewDataBinding bind) {
             super(bind.getRoot());
-            binding = (NotificationMsgBinding) bind;
-            name =  binding.notificationType;
-            message = binding.notificationText;
-            buttonToggleGroup = binding.notificationButtons;
+            binding = (TutorMsgBinding) bind;
+            name =  binding.tutorType;
+            message = binding.tutorText;
+            buttonToggleGroup = binding.tutorButtons;
         }
 
         public void bind(int position){
@@ -40,7 +41,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         }
     }
 
-    public NotificationListAdapter(NotificationModel model){
+    public TutorListAdapter(TutorListModel model){
         viewModel = model;
     }
 
@@ -48,17 +49,17 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        NotificationMsgBinding binding = NotificationMsgBinding.inflate( inflater,parent,false);
+        TutorMsgBinding binding = TutorMsgBinding.inflate( inflater,parent,false);
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position){
         holder.bind(position);
-        if (mNotifications.isEmpty()){
+        if (mTutors.isEmpty()){
             holder.message.setText(R.string.messages_unavailable);
         }else{
-            Notification current = mNotifications.get(position);
+            Tutor current = mTutors.get(position);
             holder.message.setText(current.getMsg());
             switch (current.getType()){
                 case "MSG":
@@ -76,13 +77,13 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         }
     }
 
-    public void setNotifications(List<Notification> notifications){
-        mNotifications = notifications;
+    public void setTutors(List<Tutor> tutors){
+        mTutors = tutors;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return mNotifications.size();
+        return mTutors.size();
     }
 }

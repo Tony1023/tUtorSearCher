@@ -29,7 +29,10 @@
     <string name="courses_taken_label">Courses Taken:</string>
     <string name="courses_tutoring_label">Courses Tutoring:</string>
     <string name="rating_label">Rating:</string>
+    <string name="ratings_unavailable">No ratings available</string>
     <!--  tutees specifically  -->
     <string name="previous_tutors_label">Current Tutors:</string>
+    <string name="notification_accept">Accept</string>
+    <string name="notification_reject">Reject</string>
 
 </resources>
