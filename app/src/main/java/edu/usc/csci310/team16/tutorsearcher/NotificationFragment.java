@@ -52,6 +52,6 @@ public class NotificationFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        notificationModel.onRefresh();
+        notificationModel.onCreate();
     }
 }

@@ -21,9 +21,7 @@ public class NotificationModel extends AndroidViewModel {
                     @Override
                     public void onChanged(List<Notification> notifications) {
                         mNotifications.postValue(notifications);
-                        adapter.setNotifications(
-                                notifications
-                        );
+                        adapter.setNotifications(notifications);
                     }
                 });
     }
@@ -41,5 +39,9 @@ public class NotificationModel extends AndroidViewModel {
         //TODO check userID type
         //TODO actually implement networking
         WebServiceRepository.getInstance(getApplication()).getNotificationUpdates(/*UserProfile.getCurrentUser().getId()*/);
+    }
+
+    public void onCreate() {
+        //mNotifications.postValue();
     }
 }

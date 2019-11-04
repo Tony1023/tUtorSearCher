@@ -2,16 +2,11 @@ package edu.usc.csci310.team16.tutorsearcher.model;
 
 import android.app.Application;
 import android.util.Log;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,25 +14,14 @@ import java.util.List;
 public class WebServiceRepository {
 
     private static volatile WebServiceRepository INSTANCE;
-    private final JsonParser parser;
-    Application application;
-    final Retrofit retrofit;
-    BackendService service;
-    final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
+
+    private Application application;
+    private final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
+    private final RemoteServerServices service;
 
     private WebServiceRepository(Application application){
         this.application = application;
-        GsonBuilder builder = new GsonBuilder();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http:10.0.2.2:8080/server/")
-                .addConverterFactory(GsonConverterFactory.create(builder.create()))
-                .build();
-
-        //Defining retrofit api service
-        service = retrofit.create(BackendService.class);
-        parser = new JsonParser();
-
+        service = RemoteServerDAO.getDao();
     }
 
     public static WebServiceRepository getInstance(Application app) {
@@ -55,14 +39,13 @@ public class WebServiceRepository {
         return data;
     }
 
-    public LiveData<List<Notification>> getNotificationUpdates(int userId) {
+    public void getNotificationUpdates(int userId) {
         String response = "";
 
         try {
             //  response = service.makeRequest().execute().body();
             //TODO check userID type
-            service.getNotifications(Integer.toString(userId)).enqueue(new Callback<List<Notification>>() {
-
+            service.getNotifications().enqueue(new Callback<List<Notification>>() {
                 @Override
                 public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
                     List<Notification> webserviceResponseList;
@@ -83,10 +66,9 @@ public class WebServiceRepository {
         }
 
         //  return retrofit.create(ResultModel.class);
-        return  data;
     }
 
-    public LiveData<List<Notification>> getNotificationUpdates() {
+    public void getNotificationUpdates() {
         String response = "";
 
 
@@ -97,7 +79,7 @@ public class WebServiceRepository {
         Notification n1 = new Notification("fd_FD_f","MSG","Tutor with Mike");
         notes.add(n1);
 
-        n1 = new Notification("fd_FD_f","MSG","Tutor with Bob");
+        n1 = new Notification("fd_f","MSG","Tutor with Bob");
         notes.add(n1);
 
         n1 = new Notification("ayyy","TUTOR_REQUEST","Accept Bob");
@@ -106,10 +88,20 @@ public class WebServiceRepository {
         n1 = new Notification("ay2","TUTOR_REQUEST","Accept Bob");
         notes.add(n1);
 
+        n1 = new Notification("1","MSG","Tutor with Bob");
+        notes.add(n1);
+
+        n1 = new Notification("2","MSG","Tutor with Bob");
+        notes.add(n1);
+
+        n1 = new Notification("3","MSG","Tutor with Bob");
+        notes.add(n1);
+        n1 = new Notification("3","MSG","Fun with Bob");
+        notes.add(n1);
+
         RoomDBRepository roomDBRepository = RoomDBRepository.getInstance(application);
         roomDBRepository.insertPosts(notes);
 
         //  return retrofit.create(ResultModel.class);
-        return  data;
     }
 }

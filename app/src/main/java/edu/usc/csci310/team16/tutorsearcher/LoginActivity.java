@@ -1,11 +1,9 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
+import edu.usc.csci310.team16.tutorsearcher.model.RemoteServerDAO;
 
 public class LoginActivity extends AppCompatActivity {
 

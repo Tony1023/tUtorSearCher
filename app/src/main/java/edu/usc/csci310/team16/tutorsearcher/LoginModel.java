@@ -1,12 +1,12 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.Map;
 
+import edu.usc.csci310.team16.tutorsearcher.model.RemoteServerDAO;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
