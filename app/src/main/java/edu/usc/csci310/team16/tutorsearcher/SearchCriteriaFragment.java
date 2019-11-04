@@ -34,13 +34,8 @@ public class SearchCriteriaFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
-//        searchModel = getActivity().ge
-//                ((MainActivity)getActivity()).getSearch().getSearchModel();
         searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
         time_toggle = new MaterialCheckBox[searchModel.getDays().length][searchModel.getBlocks().length];
-
-//        // TODO: get courses from call to db
-//        courses = new ArrayList<String>(Arrays.asList("CSCI 103", "CSCI 104", "CSCI 201", "CSCI 310"));
     }
 
 
@@ -53,6 +48,9 @@ public class SearchCriteriaFragment extends Fragment {
                 v.getContext(), R.layout.course_spinner_item, searchModel.getCourses());
         courseSpinnerArrayAdapter.setDropDownViewResource(R.layout.course_spinner_item);
         courseSpinner.setAdapter(courseSpinnerArrayAdapter);
+
+
+        // Populate time select grid with check boxes for every time
 
         GridLayout timeSelectGrid = (GridLayout) v.findViewById(R.id.time_select_grid);
         timeSelectGrid.setColumnCount(time_toggle.length + 1);
@@ -71,11 +69,9 @@ public class SearchCriteriaFragment extends Fragment {
 
         for(int i = 0; i < time_toggle.length; i++){
             t = new TextView(v.getContext());
-//            t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             t.setWidth(100);
             t.setText(searchModel.getDays()[i]);
             t.setGravity(Gravity.CENTER);
-//            t.setBackgroundResource(R.color.colorPrimary);
             timeSelectGrid.addView(t);
 
             for(int j = 0; j < time_toggle[0].length; j++){
@@ -84,6 +80,7 @@ public class SearchCriteriaFragment extends Fragment {
             }
         }
 
+
         //when clicking search button, transition back to search page, with search results
         Button searchButton = (Button) v.findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +88,7 @@ public class SearchCriteriaFragment extends Fragment {
                 Spinner courseSpinner = (Spinner) getActivity().findViewById(R.id.course_spinner);
                 String course = courseSpinner.getSelectedItem().toString();
 
-                List<Integer> availability = new ArrayList<Integer>();
+                List<Integer> availability = new ArrayList<>();
                 for(int i = 0; i < time_toggle.length; i++){
                     for(int j = 0; j < time_toggle[0].length; j++){
                         if(time_toggle[i][j].isChecked()){
