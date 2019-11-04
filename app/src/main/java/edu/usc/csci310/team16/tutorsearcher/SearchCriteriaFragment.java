@@ -3,18 +3,24 @@ package edu.usc.csci310.team16.tutorsearcher;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.GridLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.android.material.checkbox.MaterialCheckBox;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,14 +29,15 @@ import androidx.lifecycle.ViewModelProviders;
 public class SearchCriteriaFragment extends Fragment {
 
     private SearchModel searchModel;
-    private ToggleButton time_toggle[][];
+    private MaterialCheckBox time_toggle[][];
 
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
-
+//        searchModel = getActivity().ge
+//                ((MainActivity)getActivity()).getSearch().getSearchModel();
         searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
-        time_toggle = new ToggleButton[searchModel.getDays().length][searchModel.getBlocks().length];
+        time_toggle = new MaterialCheckBox[searchModel.getDays().length][searchModel.getBlocks().length];
 
 //        // TODO: get courses from call to db
 //        courses = new ArrayList<String>(Arrays.asList("CSCI 103", "CSCI 104", "CSCI 201", "CSCI 310"));
@@ -48,41 +55,59 @@ public class SearchCriteriaFragment extends Fragment {
         courseSpinner.setAdapter(courseSpinnerArrayAdapter);
 
         GridLayout timeSelectGrid = (GridLayout) v.findViewById(R.id.time_select_grid);
-        timeSelectGrid.setColumnCount(time_toggle.length);
-        timeSelectGrid.setRowCount(1);
-        for(int i = 0; i < time_toggle.length; i++){
-            GridLayout g = new GridLayout(v.getContext());
-            g.setColumnCount(1);
-            g.setRowCount(time_toggle[0].length);
+        timeSelectGrid.setColumnCount(time_toggle.length + 1);
+        timeSelectGrid.setRowCount(time_toggle[0].length + 1);
+        timeSelectGrid.setOrientation(GridLayout.VERTICAL);
 
-            TextView t = new TextView(v.getContext());
+        TextView t = new TextView(v.getContext());
+        t.setText("");
+        timeSelectGrid.addView(t);
+
+        for(int j = 0; j < time_toggle[0].length; j++){
+            t = new TextView(v.getContext());
+            t.setText(searchModel.getBlocks()[j]);
+            timeSelectGrid.addView(t);
+        }
+
+        for(int i = 0; i < time_toggle.length; i++){
+            t = new TextView(v.getContext());
+//            t.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            t.setWidth(100);
             t.setText(searchModel.getDays()[i]);
-            g.addView(t);
+            t.setGravity(Gravity.CENTER);
+//            t.setBackgroundResource(R.color.colorPrimary);
+            timeSelectGrid.addView(t);
 
             for(int j = 0; j < time_toggle[0].length; j++){
-                time_toggle[i][j] = new ToggleButton(v.getContext());
-                time_toggle[i][j].setText(searchModel.getBlocks()[j]);
-                time_toggle[i][j].setTextOn(searchModel.getBlocks()[j]);
-                time_toggle[i][j].setTextOff(searchModel.getBlocks()[j]);
-                g.addView(time_toggle[i][j]);
+                time_toggle[i][j] = new MaterialCheckBox(v.getContext());
+                timeSelectGrid.addView(time_toggle[i][j]);
             }
-
-            timeSelectGrid.addView(g);
         }
-//        ToggleButton tb = new ToggleButton(v.getContext());
-//        timeSelectGrid.addView(tb);
 
         //when clicking search button, transition back to search page, with search results
         Button searchButton = (Button) v.findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Spinner courseSpinner = (Spinner) getActivity().findViewById(R.id.course_spinner);
+                String course = courseSpinner.getSelectedItem().toString();
+
+                List<Integer> availability = new ArrayList<Integer>();
+                for(int i = 0; i < time_toggle.length; i++){
+                    for(int j = 0; j < time_toggle[0].length; j++){
+                        if(time_toggle[i][j].isChecked()){
+                            availability.add(i*time_toggle[0].length + j);
+                        }
+                    }
+                }
+
+                searchModel.setCourse(course);
+                searchModel.setAvailability(availability);
+
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, ((MainActivity)getActivity()).getSearch())
                         .commit();
             }
         });
-
-        String classChosen = courseSpinner.getSelectedItem().toString();
 
         return v;
     }

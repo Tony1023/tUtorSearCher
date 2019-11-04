@@ -1,13 +1,16 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 public class SearchFragment extends Fragment {
 
@@ -27,14 +30,21 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        Log.d("search fragment", searchModel.getCourse());
+        Log.d("search fragment", searchModel.getAvailability().toString());
+
         return v;
     }
 
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        searchModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(SearchModel.class);
+        searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
     }
 
+
+    public SearchModel getSearchModel() {
+        return searchModel;
+    }
 }

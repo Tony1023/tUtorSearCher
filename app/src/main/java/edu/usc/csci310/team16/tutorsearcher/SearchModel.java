@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 public class SearchModel extends ViewModel {
     private static final String[] days =
-            {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+            {"M", "Tu", "W", "Th", "F", "Sa", "Su"};
     private static final String[] blocks =
             {"8:00am", "8:30am", "9:00am", "9:30am", "10:00am", "10:30am", "11:00am",
                     "11:30am", "12:00pm", "12:30pm", "1:00pm", "1:30pm", "2:00pm", "2:30pm",
@@ -17,8 +17,8 @@ public class SearchModel extends ViewModel {
             {"CSCI 103", "CSCI 104", "CSCI 170", "CSCI 201", "CSCI 270", "CSCI 310", "CSCI 350",
                     "CSCI 356", "CSCI 360"};
 
-    private String course;
-    private List<Integer> availability;
+    private String course = "";
+    private List<Integer> availability = new ArrayList<>();
 
 
     public static String[] getDays() {
