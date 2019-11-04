@@ -48,10 +48,12 @@ public class SearchCriteriaFragment extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new SearchCriteriaFragment())
+                        .replace(R.id.fragment_container, ((MainActivity)getActivity()).getSearch())
                         .commit();
             }
         });
+
+        String classChosen = courseSpinner.getSelectedItem().toString();
 
         return v;
     }

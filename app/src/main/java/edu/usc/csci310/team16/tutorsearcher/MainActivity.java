@@ -63,4 +63,20 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
     }
+
+    public ProfileFragment getProfile() {
+        return profile;
+    }
+
+    public SearchFragment getSearch() {
+        return search;
+    }
+
+    public NotificationFragment getNotification() {
+        return notification;
+    }
+
+    public RatingFragment getRating() {
+        return rating;
+    }
 }
