@@ -3,7 +3,7 @@ A revolutionary new app that connects USC Viterbi students, tutor to tutee.
 
 ## Modules
 ### Android App
-The entire repository, except for [tUtorSearCher-server/](tUtorSearCher-server/) and [databse/](database/), is the android application.
+The entire repository, except for [tUtorSearCher-server/](tUtorSearCher-server/) and [database/](database/), is the android application.
 ### Remote Server
 Server related files are in the [tUtorSearCher-server/](tUtorSearCher-server/) directory. Implemented with Java and Spring Boot.
 ### Remote Database

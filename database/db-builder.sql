@@ -2,8 +2,9 @@ CREATE TABLE IF NOT EXISTS Users (
   id INT(11) PRIMARY KEY AUTO_INCREMENT,
   email VARCHAR(256) UNIQUE NOT NULL,
   pass_hash VARCHAR(256) NOT NULL,
-  first_name VARCHAR(128) NULL,
-  last_name VARCHAR(128) NULL,
+  picture_url VARCHAR(4096) NULL,
+  name VARCHAR(128) NULL,
+  grade VARCHAR(100) NULL,
   bio VARCHAR(1024) NULL,
   date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   date_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -34,6 +35,14 @@ CREATE TABLE IF NOT EXISTS Courses (
 );
 
 CREATE TABLE IF NOT EXISTS UserCourses (
+  id INT(11) PRIMARY KEY AUTO_INCREMENT,
+  user_id INT(11) NOT NULL,
+  course_id INT(11) NOT NULL,
+  FOREIGN KEY fk_usercourses_userid (user_id) REFERENCES Users(id),
+  FOREIGN KEY fk_usercourses_courseid (course_id) REFERENCES Courses(id)
+);
+
+CREATE TABLE IF NOT EXISTS CourseOffered (
   id INT(11) PRIMARY KEY AUTO_INCREMENT,
   user_id INT(11) NOT NULL,
   course_id INT(11) NOT NULL,
