@@ -87,9 +87,9 @@ public class LoginActivity extends AppCompatActivity {
         loginModel.getCredentials().observe(this, new Observer<LoginData>() {
             @Override
             public void onChanged(LoginData loginData) {
-//                boolean enabled = loginData.email.endsWith("@usc.edu") && loginData.password.length() >= 6;
-//                loginBtn.setEnabled(enabled);
-//                registerBtn.setEnabled(enabled);
+                boolean enabled = loginData.email.endsWith("@usc.edu") && loginData.password.length() >= 6;
+                loginBtn.setEnabled(enabled);
+                registerBtn.setEnabled(enabled);
             }
         });
 
@@ -190,6 +190,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClickLogin(View view) {
         loginModel.login();
+    }
+
+    public void onClickFakeLogin(View view) {
+        loginModel.fakeLogin();
     }
 
 }
