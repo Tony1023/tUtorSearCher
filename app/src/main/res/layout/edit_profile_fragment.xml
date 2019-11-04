@@ -7,6 +7,7 @@
         >
 
     <!-- name -->
+
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -29,26 +30,23 @@
     </LinearLayout>
 
     <!-- grade -->
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+    <TextView
+            android:id="@+id/grade_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
-        <TextView
-                android:id="@+id/grade_label"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/grade_label"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                />
-        <EditText
-                android:id="@+id/grade"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:inputType="text" />
-    </LinearLayout>
+            android:text="@string/grade_label"
+            android:textSize="20sp"
+            />
+
+    <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/grade_array"
+            android:textSize="25dp" />
+
+
 
     <!-- FIGURE OUT HOW TO DEAL WITH AVAILABILITY -->
     <TextView
@@ -60,6 +58,16 @@
             />
 
     <!-- TUTOR PROFILE -->
+
+    <TextView
+            android:id="@+id/tutor_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="For Tutors:"
+            android:textSize="25dp"
+            android:paddingTop="10dp"
+            android:gravity="center"
+            />
 
     <!-- bio -->
     <TextView
@@ -76,5 +84,176 @@
             android:inputType="text|textMultiLine"
             android:gravity="top"
             />
+
+
+<!--  USE CHECK BOXES FOR COURSES TAKEN, COURSES TUTORING, and grade  -->
+
+<!-- courses taken -->
+    <TextView
+            android:id="@+id/courses_taken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Courses You've Taken"
+            android:textSize="20sp"
+            />
+    <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            <CheckBox
+                    android:id="@+id/cs103_taken"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="CS 103" />
+            <CheckBox
+                    android:id="@+id/cs104_taken"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="CS 104" />
+            <CheckBox
+                    android:id="@+id/cs170_taken"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="CS 170" />
+
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <CheckBox
+                android:id="@+id/cs201_taken"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 201" />
+        <CheckBox
+                android:id="@+id/cs270_taken"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 270" />
+        <CheckBox
+                android:id="@+id/cs310_taken"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 310" />
+
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <CheckBox
+                android:id="@+id/cs350_taken"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 350" />
+        <CheckBox
+                android:id="@+id/cs356_taken"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 356" />
+        <CheckBox
+                android:id="@+id/cs360_taken"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 360" />
+
+    </LinearLayout>
+
+    <!-- courses tutoring -->
+    <TextView
+            android:id="@+id/courses_tutoring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Courses You Want to Tutor:"
+            android:textSize="20sp"
+            />
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <CheckBox
+                android:id="@+id/cs103_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 103" />
+        <CheckBox
+                android:id="@+id/cs104_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 104" />
+        <CheckBox
+                android:id="@+id/cs170_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 170" />
+
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <CheckBox
+                android:id="@+id/cs201_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 201" />
+        <CheckBox
+                android:id="@+id/cs270_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 270" />
+        <CheckBox
+                android:id="@+id/cs310_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 310" />
+
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        <CheckBox
+                android:id="@+id/cs350_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 350" />
+        <CheckBox
+                android:id="@+id/cs356_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 356" />
+        <CheckBox
+                android:id="@+id/cs360_tutoring"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="CS 360" />
+
+    </LinearLayout>
 
 </LinearLayout>
