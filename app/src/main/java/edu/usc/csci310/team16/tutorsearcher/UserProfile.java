@@ -1,5 +1,7 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -128,6 +130,14 @@ public class UserProfile {
 
     public List<String> getTutorClasses() {
         return tutorClasses;
+    }
+
+    public void setCoursesTaken(ArrayList<String> list) {
+        coursesTaken = list;
+    }
+
+    public void setTutorClasses(ArrayList<String> list) {
+        tutorClasses = list;
     }
 
     public double getRating() {

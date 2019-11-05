@@ -95,9 +95,13 @@ public class EditProfileFragment extends Fragment {
                     cs103, cs104, cs109, cs170, cs201, cs270, cs350, cs356, cs360
                  */
 
-                
-
                 //put them in the UserProfile fields
+                user.setName(name);
+                user.setGrade(grade);
+                user.setBio(bio);
+                user.setCoursesTaken(coursesTaken);
+                user.setTutorClasses(coursesTutoring);
+
 
                 //transition back to profile fragment
                 getActivity().getSupportFragmentManager().beginTransaction()
