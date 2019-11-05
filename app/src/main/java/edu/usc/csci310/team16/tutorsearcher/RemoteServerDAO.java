@@ -42,14 +42,13 @@ interface RemoteServerServices {
     Call<UserProfile> validate(@Field("id") Integer id, @Field("token") String token);
     // TODO: change to UserProfile
     // TODO: make sure @FormUrlEncoded works
-    // TODO: add header to every method
 
     @GET("user/getTutors")
     Call<List<UserProfile>> getTutors();
 
     @Multipart
     @POST("user/updateProfileImage")
-    Call<String> uploadImage(@Part("userId") Integer id, @Part MultipartBody.Part file);
+    Call<String> uploadImage(@Part MultipartBody.Part file);
 }
 
 public class RemoteServerDAO {
