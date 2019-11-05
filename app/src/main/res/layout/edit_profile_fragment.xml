@@ -45,7 +45,7 @@
                 />
 
         <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/grade_spinner"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
                 android:drawSelectorOnTop="true"

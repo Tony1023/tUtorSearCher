@@ -93,9 +93,7 @@ public class ProfileFragment extends Fragment {
 
         return v;
 
-        //take UserProfile information and put it on labels in the view
 
-        //edit button to create a new view with a bunch of text boxes in it
         //take the results of those text boxes and change the UserProfile data members
             //once the user clicks another button at the bottom of that page
             //finish() that view and go back to the Profile view
