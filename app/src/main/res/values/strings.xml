@@ -31,6 +31,8 @@
     <string name="rating_label">Rating:</string>
     <!--  tutees specifically  -->
     <string name="previous_tutors_label">Current Tutors:</string>
+    <string name="notification_accept">Accept</string>
+    <string name="notification_reject">Reject</string>
     <string name="configure_search_button_label">New Search</string>
 
 </resources>

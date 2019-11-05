@@ -8,8 +8,10 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationFragmentBinding;
 
 import java.util.ArrayList;
@@ -26,30 +28,30 @@ public class NotificationFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        notificationModel = new NotificationModel();
-
         View v = super.onCreateView(inflater,container,savedInstanceState);
-        //ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.notification_fragment, container,false);
         binding = NotificationFragmentBinding.inflate(inflater,container,false);
+        notificationModel = new NotificationModel(getActivity().getApplication());
+        binding.setViewModel(notificationModel);
 
-        binding.setBind(notificationModel);
         recyclerView = binding.notificationsView;
-        final NotificationListAdapter adapter = new NotificationListAdapter(getActivity());
-        recyclerView.setAdapter(adapter);
+
+        recyclerView.setAdapter(notificationModel.getAdapter());
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
+        binding.notificationSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                notificationModel.onRefresh();
+                binding.notificationSwipe.setRefreshing(false);
+            }
+        });
 
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        List<Notification> notes = new ArrayList<>();
-        Notification n1 = new Notification("fd_FD_f","MSG","Tutor with Mike");
-        notes.add(n1);
-
-        n1 = new Notification("fd_FD_f","MSG","Tutor with Mike");
-        notes.add(n1);
-        ((NotificationListAdapter)recyclerView.getAdapter()).setNotifications(notes);
+        notificationModel.onRefresh();
     }
 }
