@@ -36,7 +36,7 @@ public class ProfileFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        final Fragment view = new EditProfileFragment();
+//        final Fragment view = new EditProfileFragment();
 //
 
         //when clicking edit button, transition to edit profile page
@@ -44,7 +44,7 @@ public class ProfileFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, view)
+                .replace(R.id.fragment_container, ((MainActivity)getActivity()).getEditProfile())
                 .commit();
             }
         });
@@ -78,7 +78,9 @@ public class ProfileFragment extends Fragment {
         for(String course : coursesTakenList) {
             coursesTakenString += course + ", ";
         }
-        coursesTaken.setText(coursesTakenString.substring(0, coursesTakenString.length()-2));
+
+        if(coursesTakenString.length() != 0)
+            coursesTaken.setText(coursesTakenString.substring(0, coursesTakenString.length()-2));
 
         //put list of courses tutoring on page
         TextView coursesTutoring = (TextView)v.findViewById(R.id.courses_tutoring);
@@ -88,7 +90,9 @@ public class ProfileFragment extends Fragment {
         for(String course : coursesTutoringList) {
             coursesTutoringString += course + ", ";
         }
-        coursesTutoring.setText(coursesTutoringString.substring(0, coursesTutoringString.length()-2));
+        
+        if(coursesTutoringString.length() != 0)
+            coursesTutoring.setText(coursesTutoringString.substring(0, coursesTutoringString.length()-2));
 
 
         return v;

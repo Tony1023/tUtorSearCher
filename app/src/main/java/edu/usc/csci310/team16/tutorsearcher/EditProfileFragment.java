@@ -45,15 +45,15 @@ public class EditProfileFragment extends Fragment {
                 //get all the values from the text fields/boxes
 
                 //name
-                final EditText nameText = (EditText) v.findViewById(R.id.name);
+                final EditText nameText = (EditText) getActivity().findViewById(R.id.name);
                 String name = nameText.getText().toString();
 
                 //grade
-                final Spinner gradeSpinner = (Spinner)v.findViewById(R.id.grade_spinner);
+                final Spinner gradeSpinner = (Spinner)getActivity().findViewById(R.id.grade_spinner);
                 String grade = gradeSpinner.getSelectedItem().toString();
 
                 //bio
-                final EditText bioText = (EditText) v.findViewById(R.id.bio);
+                final EditText bioText = (EditText) getActivity().findViewById(R.id.bio);
                 String bio = bioText.getText().toString();
 
                 //checkboxes ones
@@ -75,14 +75,14 @@ public class EditProfileFragment extends Fragment {
                 for(int i = 0; i < coursesTakenArray.length; i++) {
 
                     //courses taken
-                    final CheckBox takenCheckbox = (CheckBox)v.findViewById(getResources()
+                    final CheckBox takenCheckbox = (CheckBox)getActivity().findViewById(getResources()
                             .getIdentifier(coursesTakenArray[i], "id", getActivity().getPackageName()));
                     if (takenCheckbox.isChecked()) {
                         coursesTaken.add(courseCodes[i]);
                     }
 
                     //courses tutoring
-                    final CheckBox tutoringCheckbox = (CheckBox)v.findViewById(getResources()
+                    final CheckBox tutoringCheckbox = (CheckBox)getActivity().findViewById(getResources()
                             .getIdentifier(coursesTutoringArray[i], "id", getActivity().getPackageName()));
 
                     if(tutoringCheckbox.isChecked()) {
