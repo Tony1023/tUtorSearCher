@@ -106,8 +106,8 @@ public class EditProfileFragment extends Fragment {
                          "cs170_tutoring", "cs201_tutoring", "cs270_tutoring",
                         "cs310_tutoring", "cs350_tutoring", "cs356_tutoring", "cs360_tutoring"};
 
-                String[] courseCodes = {"CS103", "CS104", "CS170", "CS201", "CS270",
-                "CS310", "CS350", "CS356", "CS360"};
+                String[] courseCodes = {"CSCI103", "CSCI104", "CSCI170", "CSCI201", "CSCI270", "CSCI310", "CSCI350",
+                        "CSCI356", "CSCI360"};
 
                 ArrayList<String> coursesTaken = new ArrayList<String>();
                 ArrayList<String> coursesTutoring = new ArrayList<String>();

@@ -86,6 +86,10 @@
                 android:textSize="20sp"
                 />
         <!--    use availability array to list all the open slots-->
+        <GridLayout
+                android:id="@+id/availability_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         <!--  TUTOR PROFILE -->
         <TextView

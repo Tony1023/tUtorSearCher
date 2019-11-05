@@ -3,13 +3,18 @@ package edu.usc.csci310.team16.tutorsearcher;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.google.android.material.checkbox.MaterialCheckBox;
 
 import org.w3c.dom.Text;
 
@@ -20,6 +25,8 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
 
     private UserProfile user;
+    private SearchModel searchModel;
+    private TextView time_toggle[][];
 
     @Override
     public void onCreate(Bundle savedBundleInstance) {
@@ -27,6 +34,10 @@ public class ProfileFragment extends Fragment {
 
         //get data from the singleton
         user = UserProfile.getCurrentUser();
+
+        //availability variables
+        searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
+        time_toggle = new TextView[searchModel.getDays().size()][searchModel.getBlocks().size()];
 
     }
 
@@ -57,6 +68,55 @@ public class ProfileFragment extends Fragment {
         //put grade on page
         TextView grade = (TextView)v.findViewById(R.id.grade);
         grade.setText(user.getGrade());
+
+        //AVAILABILITY
+        GridLayout timeSelectGrid = (GridLayout) v.findViewById(R.id.availability_grid);
+        timeSelectGrid.setColumnCount(time_toggle.length + 1);
+        timeSelectGrid.setRowCount(time_toggle[0].length + 1);
+        timeSelectGrid.setOrientation(GridLayout.VERTICAL);
+
+        TextView t = new TextView(v.getContext());
+        t.setText("");
+        timeSelectGrid.addView(t);
+
+        for(int j = 0; j < time_toggle[0].length; j++){
+            t = new TextView(v.getContext());
+            t.setText(searchModel.getBlocks().get(j));
+            timeSelectGrid.addView(t);
+        }
+
+        for(int i = 0; i < time_toggle.length; i++){
+            t = new TextView(v.getContext());
+            t.setWidth(100);
+            t.setText(searchModel.getDays().get(i));
+            t.setGravity(Gravity.CENTER);
+            timeSelectGrid.addView(t);
+
+
+            //t.setBackgroundColor();
+            //i*time_toggle[0].length + j
+
+            for(int j = 0; j < time_toggle[0].length; j++){
+
+                time_toggle[i][j] = new TextView(v.getContext());
+
+                //set green if available during that time
+                if(searchModel.getAvailability().contains(i*time_toggle[0].length + j)) {
+
+                    time_toggle[i][j].setBackgroundColor(0xff00ff00);
+                }
+
+                //set red otherwise
+
+                else {
+                    time_toggle[i][j].setBackgroundColor(0xFFFF0000);
+                }
+//                time_toggle[i][j] = new MaterialCheckBox(v.getContext());
+                timeSelectGrid.addView(time_toggle[i][j]);
+            }
+
+            //END CODE STOLEN FROM MICAH
+        }
 
         //TUTOR:
 
