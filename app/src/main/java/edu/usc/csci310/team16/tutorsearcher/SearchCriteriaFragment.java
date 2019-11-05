@@ -49,6 +49,10 @@ public class SearchCriteriaFragment extends Fragment {
         courseSpinnerArrayAdapter.setDropDownViewResource(R.layout.course_spinner_item);
         courseSpinner.setAdapter(courseSpinnerArrayAdapter);
 
+        int prevCourseIdx = searchModel.getCourses().indexOf(searchModel.getCourse());
+        if(prevCourseIdx >= 0){
+            courseSpinner.setSelection(prevCourseIdx);
+        }
 
         // Populate time select grid with check boxes for every time
 
