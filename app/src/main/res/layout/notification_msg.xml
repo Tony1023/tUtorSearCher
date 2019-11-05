@@ -29,10 +29,10 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                       android:orientation="vertical">
             <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/notification_type"
                     android:text="@{viewModel.notifications.get(position).getType()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/notification_type"
                     tools:text="Default Message"
             />
 
