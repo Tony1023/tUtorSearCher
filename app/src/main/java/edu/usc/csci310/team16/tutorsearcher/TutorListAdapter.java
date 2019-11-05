@@ -1,9 +1,13 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Button;
+import android.view.View.OnClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
@@ -14,6 +18,13 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import edu.usc.csci310.team16.tutorsearcher.databinding.TutorFragmentBinding;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentContainer;
 
 import edu.usc.csci310.team16.tutorsearcher.databinding.TutorMsgBinding;
 
@@ -58,6 +69,35 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
     }
 
 
+    public void setButtons(ViewHolder holder){
+        Log.d("DebugAdapter", "in setButtons");
+
+        /* trying other solution
+        Button btnSave = (Button)viewModel.findViewById(R.id.btnSave);
+
+        OnClickListener btnListener = new OnClickListener() {
+            @Override
+            public void onClick(android.view.View view) {
+                finish();
+            }
+        };
+        btnSave.setOnClickListener(btnListener);
+
+         */
+
+        holder.buttonToggleGroup.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.d("DebugAdapter", "onClick: ");
+                Activity a = viewModel.fragment.getActivity();
+
+                viewModel.fragment.getChildFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, new TutorProfileFragment())
+                        .commit();
+            }
+        });
+    }
+
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position){
 
@@ -67,30 +107,21 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
         }else{
             Tutor current = mTutors.get(position);
             holder.message.setText(current.getMsg());
-
             switch (current.getType()){
                 case "MSG":
+                    Log.d("DebugAdapter", "in case of msg");
                     holder.buttonToggleGroup.setVisibility(View.VISIBLE);
-                    holder.buttonToggleGroup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            FragmentTransaction fragmentTransaction =  ((MainActivity)holder.itemView.getContext())
-                                    .getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.fragment_container, new TutorProfileFragment());
-                            fragmentTransaction.commit();
-                        }
-                    });
+                    setButtons(holder);
                     break;
 
                 default:
-
-
             }
 
         }
 
     }
+
+
 
 
     public void setTutors(List<Tutor> tutors){
