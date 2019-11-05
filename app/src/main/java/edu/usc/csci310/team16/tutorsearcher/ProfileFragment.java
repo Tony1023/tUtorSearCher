@@ -90,7 +90,7 @@ public class ProfileFragment extends Fragment {
         for(String course : coursesTutoringList) {
             coursesTutoringString += course + ", ";
         }
-        
+
         if(coursesTutoringString.length() != 0)
             coursesTutoring.setText(coursesTutoringString.substring(0, coursesTutoringString.length()-2));
 

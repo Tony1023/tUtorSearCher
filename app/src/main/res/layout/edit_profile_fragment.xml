@@ -54,14 +54,20 @@
 
 
 
-        <!-- FIGURE OUT HOW TO DEAL WITH AVAILABILITY -->
+        <!-- AVAILABILITY -->
         <TextView
                 android:id="@+id/availability_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/availability_label"
                 android:textSize="20sp"
+                android:layout_marginBottom="15dp"
                 />
+
+        <GridLayout
+                android:id="@+id/time_select_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
         <!-- TUTOR PROFILE -->
