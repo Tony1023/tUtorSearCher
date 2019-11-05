@@ -80,6 +80,12 @@ public class SearchCriteriaFragment extends Fragment {
             }
         }
 
+        List<Integer> prevAvailability = searchModel.getAvailability();
+        for(int i = 0; i < prevAvailability.size(); i++){
+            int slot = prevAvailability.get(i);
+            time_toggle[slot / time_toggle[0].length][slot % time_toggle[0].length].setChecked(true);
+        }
+
 
         //when clicking search button, transition back to search page, with search results
         Button searchButton = (Button) v.findViewById(R.id.search_button);
@@ -99,6 +105,8 @@ public class SearchCriteriaFragment extends Fragment {
 
                 searchModel.setCourse(course);
                 searchModel.setAvailability(availability);
+
+                searchModel.search();
 
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, ((MainActivity)getActivity()).getSearch())

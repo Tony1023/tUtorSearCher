@@ -41,39 +41,8 @@ public class SearchFragment extends Fragment {
 
         Log.d("search fragment", searchModel.getCourse());
         Log.d("search fragment", searchModel.getAvailability().toString());
-
-        if(searchModel.getCourses().contains(searchModel.getCourse()) && !searchModel.getAvailability().isEmpty()){
-            Log.d("search fragment", "Less make da kalll");
-            searchModel.search();
-
-//            RemoteServerDAO.getDao().register(credentials.getValue()).enqueue(new Callback<Map<String, Object>>() {
-//                @Override
-//                public void onResponse(@NonNull Call<Map<String, Object>> call, @NonNull Response<Map<String, Object>> response) {
-//                    validating.postValue(false);
-//                    // Looks like postValue calls are queued
-//                    Map<String, Object> res = response.body();
-//                    Boolean success = (Boolean) res.get("success");
-//                    if (success) {
-//                        Integer id = (Integer) res.get("id");
-//                        token.postValue(response.headers().get("access-token"));
-//                        UserProfile profile = new UserProfile();
-//                        profile.setId(id);
-//                        profile.setEmail(credentials.getValue().email);
-//                        user.postValue(profile);
-//                    } else if (res.get("err") instanceof String){
-//                        errorMessage.postValue((String) res.get("err"));
-//                    } else {
-//                        errorMessage.postValue("Oof, something went wrong.");
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(@NonNull Call<Map<String, Object>> call, @NonNull Throwable t) {
-//                    validating.postValue(false);
-//                    errorMessage.postValue("Network errors");
-//                }
-//            });
-        }
+        if(searchModel.getQueryResults().getValue() != null)
+            Log.d("search fragment", searchModel.getQueryResults().getValue().toString());
 
         return v;
     }
