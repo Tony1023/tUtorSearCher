@@ -27,7 +27,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="#FFEB3B"
+            android:background="#FF3B3B"
             android:padding="10dp"
             android:text="Submit"
             android:textColor="#fff"

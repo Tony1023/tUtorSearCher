@@ -41,16 +41,10 @@
                 android:id="@+id/tutor_buttons"
                 android:visibility="gone">
                 <com.google.android.material.button.MaterialButton
-                    android:text="@string/notification_accept"
+                    android:text="Go to Profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/notification_accept"
-                    />
-                <com.google.android.material.button.MaterialButton
-                    android:text="@string/notification_reject"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/notification_reject"
+                    android:id="@+id/gotoprofile"
                     />
             </com.google.android.material.button.MaterialButtonToggleGroup>
         </LinearLayout>

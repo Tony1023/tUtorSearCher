@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationFragmentBinding;
@@ -27,25 +26,18 @@ public class NotificationFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = super.onCreateView(inflater,container,savedInstanceState);
-        binding = NotificationFragmentBinding.inflate(inflater,container,false);
         notificationModel = new NotificationModel();
-        binding.setViewModel(notificationModel);
 
+        View v = super.onCreateView(inflater,container,savedInstanceState);
+        //ViewDataBinding binding = DataBindingUtil.inflate(inflater, R.layout.notification_fragment, container,false);
+        binding = NotificationFragmentBinding.inflate(inflater,container,false);
+
+        binding.setBind(notificationModel);
         recyclerView = binding.notificationsView;
-
-        recyclerView.setAdapter(notificationModel.getAdapter());
+        final NotificationListAdapter adapter = new NotificationListAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
-
-        notificationModel.getNotifications().observe(this,
-                new Observer<List<Notification>>() {
-                    @Override
-                    public void onChanged(List<Notification> notifications) {
-                        notificationModel.getAdapter().setNotifications(notifications);
-                    }
-                });
 
         return binding.getRoot();
     }
@@ -56,8 +48,8 @@ public class NotificationFragment extends Fragment {
         Notification n1 = new Notification("fd_FD_f","MSG","Tutor with Mike");
         notes.add(n1);
 
-        n1 = new Notification("fd_FD_f","MSG","Tutor with Bob");
+        n1 = new Notification("fd_FD_f","MSG","Tutor with Mike");
         notes.add(n1);
-        notificationModel.getNotifications().postValue(notes);
+        ((NotificationListAdapter)recyclerView.getAdapter()).setNotifications(notes);
     }
 }

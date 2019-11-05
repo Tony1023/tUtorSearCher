@@ -1,58 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="position"
-            type="java.lang.Integer" />
-
-        <variable
-            name="viewModel"
-            type="edu.usc.csci310.team16.tutorsearcher.NotificationModel" />
-    </data>
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+<data>
+</data>
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/notification_card"
-        style="@style/Widget.MaterialComponents.CardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/mtrl_card_spacing"
-        android:layout_marginRight="@dimen/mtrl_card_spacing"
-        android:minHeight="200dp">
-
-        <LinearLayout android:layout_width="match_parent"
+            android:id="@+id/notification_card"
+            style="@style/Widget.MaterialComponents.CardView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <com.google.android.material.textview.MaterialTextView
-                android:text="@{viewModel.notifications.get(position).getType()}"
+            android:layout_marginTop="@dimen/mtrl_card_spacing"
+            android:layout_marginRight="@dimen/mtrl_card_spacing"
+            android:minHeight="200dp">
+
+        <com.google.android.material.textview.MaterialTextView
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/notification_type"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:text="@{viewModel.notifications.get(position).getMsg()}"
+        <com.google.android.material.textview.MaterialTextView
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/notification_text"/>
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/notification_buttons"
-                android:visibility="gone">
-                <com.google.android.material.button.MaterialButton
-                    android:text="@string/notification_accept"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/notification_accept"
-                    />
-                <com.google.android.material.button.MaterialButton
-                    android:text="@string/notification_reject"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/notification_reject"
-                    />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

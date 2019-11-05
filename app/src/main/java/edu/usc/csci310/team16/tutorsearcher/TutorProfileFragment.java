@@ -1,28 +1,21 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 // importing required libraries
+
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.RatingBar;
-import android.widget.TextView;
-
-import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.RatingBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 //import edu.usc.csci310.team16.tutorsearcher.databinding.TutorProfileFragmentBinding;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class TutorProfileFragment extends Fragment {
     RatingBar rt;
@@ -48,7 +41,7 @@ public class TutorProfileFragment extends Fragment {
     public void Call(View v)
     {
         // This function is called when button is clicked. 
-        // Display ratings, which is required to be converted into string first. 
+        // Display ratings, which is required to be converted into string first.
         //TextView t = (TextView)findViewById(R.id.textView2);
         //t.setText("You Rated :"+String.valueOf(rt.getRating()));
     }

@@ -16,6 +16,11 @@ import edu.usc.csci310.team16.tutorsearcher.databinding.TutorFragmentBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 /**
  * Fragment responsible for the TutorList/Tutor tab
  */
@@ -24,6 +29,7 @@ public class TutorFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     TutorFragmentBinding binding;
     RecyclerView recyclerView;
+    List<UserProfile> tutors;
 
 
     @Override
@@ -52,12 +58,31 @@ public class TutorFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        tutors = new ArrayList<UserProfile>();
+        RemoteServerDAO.getDao().getTutors().enqueue(new Callback<List<UserProfile>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<UserProfile>> call, @NonNull Response<List<UserProfile>> response) {
+                tutors.addAll(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<UserProfile>> call, Throwable t) {
+
+            }
+        });
+
         List<Tutor> notes = new ArrayList<>();
+
+        for(UserProfile up : tutors){
+            Tutor n1 = new Tutor("fd_FD_f","MSG",up.getName());
+            notes.add(n1);
+        }
+
         Tutor n1 = new Tutor("fd_FD_f","MSG","Tutor with Mike");
         notes.add(n1);
 
-        n1 = new Tutor("fd_FD_f","MSG","Tutor with Bob");
-        notes.add(n1);
+
         tutorModel.getTutors().postValue(notes);
     }
+
 }

@@ -95,6 +95,15 @@
                     android:onClick="onClickRegister"
                     android:enabled="true"
                 />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fake_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fake Login"
+                android:textStyle="bold"
+                android:onClick="onClickFakeLogin"
+                android:enabled="true"
+                />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
