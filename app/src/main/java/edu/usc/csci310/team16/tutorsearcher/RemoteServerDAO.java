@@ -52,15 +52,15 @@ interface RemoteServerServices {
     @POST("user/updateProfileImage")
     Call<String> uploadImage(@Part MultipartBody.Part file);
 
-    @GET("searchTutor")
-    Call<List<UserProfile>> searchTutor(@QueryMap Map<String, Object> q);
+    @POST("user/searchTutor")
+    Call<List<UserProfile>> searchTutor(@Body Map<String, Object> q);
 }
 
 public class RemoteServerDAO {
 
     private static Retrofit retrofit = null;
     private static RemoteServerServices dao = null;
-    final private static String url = "http:10.0.2.2:8080/";
+    final private static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
     private static Integer id = -1;
     private static String token = "";
 
