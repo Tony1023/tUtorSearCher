@@ -35,7 +35,7 @@ public class TutorFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = TutorFragmentBinding.inflate(inflater,container,false);
-        tutorModel = new TutorListModel();
+        tutorModel = new TutorListModel(this);
         binding.setViewModel(tutorModel);
 
         recyclerView = binding.tutorsView;
