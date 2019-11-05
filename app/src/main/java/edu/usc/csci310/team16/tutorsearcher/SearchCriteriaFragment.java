@@ -35,7 +35,7 @@ public class SearchCriteriaFragment extends Fragment {
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
         searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
-        time_toggle = new MaterialCheckBox[searchModel.getDays().length][searchModel.getBlocks().length];
+        time_toggle = new MaterialCheckBox[searchModel.getDays().size()][searchModel.getBlocks().size()];
     }
 
 
@@ -63,14 +63,14 @@ public class SearchCriteriaFragment extends Fragment {
 
         for(int j = 0; j < time_toggle[0].length; j++){
             t = new TextView(v.getContext());
-            t.setText(searchModel.getBlocks()[j]);
+            t.setText(searchModel.getBlocks().get(j));
             timeSelectGrid.addView(t);
         }
 
         for(int i = 0; i < time_toggle.length; i++){
             t = new TextView(v.getContext());
             t.setWidth(100);
-            t.setText(searchModel.getDays()[i]);
+            t.setText(searchModel.getDays().get(i));
             t.setGravity(Gravity.CENTER);
             timeSelectGrid.addView(t);
 
