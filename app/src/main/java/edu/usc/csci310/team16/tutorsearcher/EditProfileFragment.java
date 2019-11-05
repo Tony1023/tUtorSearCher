@@ -37,7 +37,6 @@ public class EditProfileFragment extends Fragment {
         //get values from all of the form elements on the page on click of button
         //borrow code from profileFragment for button onclick listener
 
-        final Fragment view = new ProfileFragment();
 
         Button editButton = (Button)v.findViewById(R.id.submit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +104,7 @@ public class EditProfileFragment extends Fragment {
 
                 //transition back to profile fragment
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, view)
+                        .replace(R.id.fragment_container, ((MainActivity)getActivity()).getProfile())
                         .commit();
             }
         });
