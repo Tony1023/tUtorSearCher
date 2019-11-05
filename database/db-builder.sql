@@ -62,6 +62,14 @@ CREATE TABLE IF NOT EXISTS CourseOffered (
 INSERT INTO CourseOffered(user_id, course_id) VALUES
 (1,1), (2,1), (2,2);
 
+CREATE TABLE IF NOT EXISTS CourseOffered (
+  id INT(11) PRIMARY KEY AUTO_INCREMENT,
+  user_id INT(11) NOT NULL,
+  course_id INT(11) NOT NULL,
+  FOREIGN KEY fk_usercourses_userid (user_id) REFERENCES Users(id),
+  FOREIGN KEY fk_usercourses_courseid (course_id) REFERENCES Courses(id)
+);
+
 CREATE TABLE IF NOT EXISTS Availability (
   user_id INT(11) NOT NULL,
   slot_num INT(11) NOT NULL,
