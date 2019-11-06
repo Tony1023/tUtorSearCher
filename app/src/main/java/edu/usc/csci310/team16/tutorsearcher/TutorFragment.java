@@ -103,7 +103,7 @@ public class TutorFragment extends Fragment {
     }
 
     public void goToProfile(Tutor tutor){
-        TutorProfileFragment profile = new TutorProfileFragment(tutor);
+        TutorProfileFragment profile = new TutorProfileFragment(tutor.getProfile());
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, profile)
                 .commit();

@@ -17,19 +17,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="parent"
             >
 
-            <Button
-                android:id="@+id/edit_button"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:backgroundTint="@color/colorAccent"
-                android:text="Edit"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
@@ -41,7 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="60dp"
-                android:background="#FF3B3B"
+                android:background="#FFFFFF"
+                android:progressTint="@color/colorAccent"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:rating="0" />
@@ -56,7 +48,8 @@
                 android:text="Submit"
                 android:textColor="#fff"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="updateRating"/>
 
 
         </FrameLayout>

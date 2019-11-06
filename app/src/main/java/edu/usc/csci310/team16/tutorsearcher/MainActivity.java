@@ -17,15 +17,21 @@ public class MainActivity extends AppCompatActivity
     private MainModel mainModel;
     private FragmentContainer fragmentContainer;
     private ProfileFragment profile;
+    private EditProfileFragment editProfile;
     private SearchFragment search;
     private NotificationFragment notification;
     private TutorFragment rating;
+
+    public EditProfileFragment getEditProfile() {
+        return editProfile;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         profile = new ProfileFragment();
+        editProfile = new EditProfileFragment();
         search = new SearchFragment();
         notification = new NotificationFragment();
         rating = new TutorFragment();
