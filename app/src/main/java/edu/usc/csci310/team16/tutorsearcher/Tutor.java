@@ -7,11 +7,20 @@ public class Tutor {
     private String mId= "";
     private String mType = "";
     private String mMsg = "";
+    private UserProfile profile;
 
     public Tutor(String id, String type, String msg){
         mType= type;
         mId = id;
         mMsg = msg;
+        //profile = p;
+    }
+
+    public Tutor(String id, String type, UserProfile p){
+        mType= type;
+        mId = id;
+        mMsg = p.getName();
+        profile = p;
     }
 
     public String getId() {
@@ -22,8 +31,10 @@ public class Tutor {
         return mType;
     }
 
-    public String getMsg() {
-        return mMsg;
+    public String getMsg() { return  mMsg; }
+
+    public UserProfile getProfile() {
+        return profile;
     }
 
 }

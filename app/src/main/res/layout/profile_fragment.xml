@@ -1,101 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        android:padding="10dp">
-    <TextView
-            android:id="@+id/name_label"
+        android:layout_height="wrap_content"
+        android:paddingBottom="75dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:text="@string/name_label"
-             />
-    <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            />
-    <TextView
-            android:id="@+id/grade_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/grade_label"
-            android:layout_marginBottom="15dp"
-             />
-    <TextView
-            android:id="@+id/availability_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/availability_label"
-            android:layout_marginBottom="15dp"
-            />
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-    <!--  TUTOR PROFILE -->
-    <TextView
-            android:id="@+id/tutor_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tutor_label"
-            android:layout_marginBottom="15dp"
-            android:textSize="20sp"
-            />
-    <TextView
-            android:id="@+id/courses_taken_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/courses_taken_label"
-            android:layout_marginBottom="15dp"
-            />
-    <TextView
-            android:id="@+id/courses_tutoring_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/courses_tutoring_label"
-            android:layout_marginBottom="15dp"
-            />
-    <TextView
-            android:id="@+id/rating_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rating_label"
-            android:layout_marginBottom="15dp"
-            />
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toTopOf="parent"
+                >
 
-    <!--  TUTEE PROFILE  -->
-    <TextView
-            android:id="@+id/tutee_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tutee_label"
-            android:layout_marginBottom="15dp"
-            android:textSize="20sp"
-            />
-    <TextView
-            android:id="@+id/previous_tutors_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/previous_tutors_label"
-            android:layout_marginBottom="15dp"
-            />
-</LinearLayout>
+            <Button
+                    android:id="@+id/edit_button"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:backgroundTint="@color/colorAccent"
+                    android:text="Edit"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--             android:layout_width="match_parent"-->
-<!--             android:layout_height="match_parent">-->
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:gravity="center"-->
-<!--        android:text="@string/title_profile" />-->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
-<!--    <TextView-->
-<!--            android:id="@+id/textView5"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="TextView" />-->
-<!--</FrameLayout>-->
+            <TextView
+                    android:id="@+id/name_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/name_label"
+                    android:textSize="20sp"
+                    />
+
+            <TextView
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                >
+            <TextView
+                    android:id="@+id/grade_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/grade_label"
+                    android:textSize="20sp"
+                    />
+            <TextView
+                    android:id="@+id/grade"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textSize="20sp"
+                    />
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/availability_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/availability_label"
+                android:layout_marginBottom="15dp"
+                android:textSize="20sp"
+                />
+        <!--    use availability array to list all the open slots-->
+        <GridLayout
+                android:id="@+id/availability_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <!--  TUTOR PROFILE -->
+        <TextView
+                android:id="@+id/tutor_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tutor_label"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="20dp"
+                android:textSize="25dp"
+                android:gravity="center"
+                />
+
+        <!-- put bio in tutor section -->
+        <TextView
+                android:id="@+id/bio_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginBottom="15dp"
+                android:textSize="20sp"
+                />
+        <!--    use courses taken array to list all courses -->
+        <TextView
+                android:id="@+id/bio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:textSize="20sp"
+                />
+
+        <TextView
+                android:id="@+id/courses_taken_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/courses_taken_label"
+                android:layout_marginBottom="15dp"
+                android:textSize="20sp"
+                />
+        <!--    use courses taken array to list all courses -->
+        <TextView
+                android:id="@+id/courses_taken"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:textSize="20sp"
+                />
+        <TextView
+                android:id="@+id/courses_tutoring_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/courses_tutoring_label"
+                android:layout_marginBottom="15dp"
+                android:textSize="20sp"
+                />
+        <TextView
+                android:id="@+id/courses_tutoring"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:textSize="20sp"
+                />
+        <!--    use courses tutoring array to list all courses tutoring -->
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                >
+            <TextView
+                    android:id="@+id/rating_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/rating_label"
+                    android:textSize="20sp"
+                    />
+            <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:textSize="20sp"
+                    />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+

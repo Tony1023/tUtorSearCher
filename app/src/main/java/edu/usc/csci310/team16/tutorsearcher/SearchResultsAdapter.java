@@ -57,14 +57,14 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
         if (mResults.isEmpty()){
             holder.name.setText(R.string.no_search_results);
         }else{
-            UserProfile current = mResults.get(position);
+            final UserProfile current = mResults.get(position);
             Log.d("search results adapter", "updating card with name " + current.getName());
             holder.name.setText(current.getName());
 
             holder.card.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     viewModel.getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new ProfileFragment())
+                            .replace(R.id.fragment_container, new TutorProfileFragment(current))
                             .commit();
                 }
             });

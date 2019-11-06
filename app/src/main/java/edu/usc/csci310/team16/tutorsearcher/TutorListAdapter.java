@@ -1,30 +1,18 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
-import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Button;
 import android.view.View.OnClickListener;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import edu.usc.csci310.team16.tutorsearcher.databinding.TutorFragmentBinding;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentContainer;
 
 import edu.usc.csci310.team16.tutorsearcher.databinding.TutorMsgBinding;
 
@@ -46,12 +34,21 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
             name =  binding.tutorType;
             message = binding.tutorText;
             buttonToggleGroup = binding.tutorButtons;
-
         }
 
-        public void bind(int position){
+        public void bind(int position) {
             binding.setViewModel(viewModel);
             binding.setPosition(position);
+
+            final Tutor tutor = viewModel.getTutors().getValue().get(position);
+            OnClickListener buttonListener = new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("TUTOR_ADAPTER","button clicked!");
+                    viewModel.fragment.goToProfile(tutor);
+                }
+            };
+            binding.gotoprofile.setOnClickListener(buttonListener);
         }
     }
 
@@ -64,54 +61,29 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         TutorMsgBinding binding = TutorMsgBinding.inflate(inflater, parent, false);
-        //TutorprofileFragmentBinding binding = TutorprofileFragmentBinding.inflate( inflater,parent,false);
         return new ViewHolder(binding);
     }
 
-
-    public void setButtons(ViewHolder holder){
-        Log.d("DebugAdapter", "in setButtons");
-
-        /* trying other solution
-        Button btnSave = (Button)viewModel.findViewById(R.id.btnSave);
-
-        OnClickListener btnListener = new OnClickListener() {
-            @Override
-            public void onClick(android.view.View view) {
-                finish();
-            }
-        };
-        btnSave.setOnClickListener(btnListener);
-
-         */
-
-        holder.buttonToggleGroup.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Log.d("DebugAdapter", "onClick: ");
-                Activity a = viewModel.fragment.getActivity();
-
-                viewModel.fragment.getChildFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, new TutorProfileFragment())
-                        .commit();
-            }
-        });
-    }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position){
 
         holder.bind(position);
+
+
         if (mTutors.isEmpty()){
             holder.message.setText(R.string.messages_unavailable);
         }else{
             Tutor current = mTutors.get(position);
-            holder.message.setText(current.getMsg());
+            String name = "Tutor profile null";
+            if (current.getProfile() != null){
+                name = current.getProfile().getName();
+            }
+            holder.message.setText(name);
             switch (current.getType()){
                 case "MSG":
                     Log.d("DebugAdapter", "in case of msg");
                     holder.buttonToggleGroup.setVisibility(View.VISIBLE);
-                    setButtons(holder);
                     break;
 
                 default:
@@ -120,8 +92,6 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
         }
 
     }
-
-
 
 
     public void setTutors(List<Tutor> tutors){
@@ -133,4 +103,6 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
     public int getItemCount() {
         return mTutors.size();
     }
+
+
 }
