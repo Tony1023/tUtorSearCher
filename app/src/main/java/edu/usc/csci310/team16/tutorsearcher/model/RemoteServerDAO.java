@@ -1,8 +1,16 @@
-package edu.usc.csci310.team16.tutorsearcher.model;
+package edu.usc.csci310.team16.tutorsearcher;
+
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -19,16 +27,18 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.QueryMap;
 
 public class RemoteServerDAO {
     private static Retrofit retrofit = null;
     private static RemoteServerServices dao = null;
-    final private static String url = "http:10.0.2.2:8080/";
+    final private static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
     private static Integer id = -1;
     private static String token = "";
     private static boolean headerChanged = false;
