@@ -81,10 +81,11 @@ public class TutorProfileFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("tutorprofilefragment", "in onClick");
-                RemoteServerDAO.getDao().rateTutor(user.getId(), UserProfile.getCurrentUser().getId(), (double)rt.getRating()).enqueue(new Callback<String>() {
+//                RemoteServerDAO.getDao().rateTutor(user.getId(), UserProfile.getCurrentUser().getId(), (double)rt.getRating()).enqueue(new Callback<String>()
+                RemoteServerDAO.getDao().rateTutor(2, 3, 5.0).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                        Log.d("tutorprofilefragment", "submit rating succeeded");
+                        Log.d("tutorprofilefragment", "submit rating succeeded " + response.body());
                     }
 
                     @Override
@@ -168,12 +169,14 @@ public class TutorProfileFragment extends Fragment {
         bio.setText(user.getBio());
 
         //put rating on page if not -1 (initial value)
+        Log.d("tutorProfileFragment", "before set rating");
         if(user.getRating() != -1) {
+            Log.d("tutorProfileFragment", "in set rating " + (float)user.getRating());
             TextView rating = (TextView)v.findViewById(R.id.rating);
             rating.setText(Double.toString(user.getRating()));
             rt.setRating((float)user.getRating());
-
         }
+
 
         //put list of courses taken on page
         TextView coursesTaken = (TextView)v.findViewById(R.id.courses_taken);
