@@ -21,8 +21,7 @@ public class MainActivity extends AppCompatActivity
     private EditProfileFragment editProfile;
     private SearchFragment search;
     private NotificationFragment notification;
-    private RatingFragment rating;
-
+    private TutorFragment rating;
 
     public EditProfileFragment getEditProfile() {
         return editProfile;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         editProfile = new EditProfileFragment();
         search = new SearchFragment();
         notification = new NotificationFragment();
-        rating = new RatingFragment();
+        rating = new TutorFragment();
 
         setContentView(R.layout.activity_main);
         mainModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainModel.class);
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         return notification;
     }
 
-    public RatingFragment getRating() {
+    public TutorFragment getRating() {
         return rating;
     }
 }

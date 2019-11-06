@@ -1,16 +1,8 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
-import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +19,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -35,8 +26,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 import retrofit2.http.Path;
-
-import retrofit2.http.QueryMap;
 
 interface RemoteServerServices {
     @POST("signup")
@@ -56,7 +45,7 @@ interface RemoteServerServices {
 
     @Multipart
     @POST("user/updateProfileImage")
-    Call<String> uploadImage(@Part MultipartBody.Part file);
+    Call<String> uploadImage(@Part("userId") Integer id, @Part MultipartBody.Part file);
 
     @GET("user/getProfileImage/{userId}")
     Call<ResponseBody> getImage(@Path("userId") Integer id);

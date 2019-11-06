@@ -1,7 +1,9 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ public class EditProfileFragment extends Fragment {
     private SearchModel searchModel;
     private MaterialCheckBox time_toggle[][];
 
+
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
@@ -42,7 +45,6 @@ public class EditProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
         View v = inflater.inflate(R.layout.edit_profile_fragment, container, false);
 
@@ -76,9 +78,8 @@ public class EditProfileFragment extends Fragment {
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
                 timeSelectGrid.addView(time_toggle[i][j]);
             }
-
-            //END CODE STOLEN FROM MICAH
         }
+        //END CODE STOLEN FROM MICAH
 
 
         Button editButton = (Button)v.findViewById(R.id.submit_button);
@@ -101,11 +102,11 @@ public class EditProfileFragment extends Fragment {
 
                 //checkboxes ones
                 String[] coursesTakenArray = {"cs103_taken", "cs104_taken",
-                         "cs170_taken", "cs201_taken", "cs270_taken", "cs310_taken",
+                        "cs170_taken", "cs201_taken", "cs270_taken", "cs310_taken",
                         "cs350_taken", "cs356_taken", "cs360_taken"};
 
                 String[] coursesTutoringArray = {"cs103_tutoring", "cs104_tutoring",
-                         "cs170_tutoring", "cs201_tutoring", "cs270_tutoring",
+                        "cs170_tutoring", "cs201_tutoring", "cs270_tutoring",
                         "cs310_tutoring", "cs350_tutoring", "cs356_tutoring", "cs360_tutoring"};
 
                 String[] courseCodes = {"CSCI103", "CSCI104", "CSCI170", "CSCI201", "CSCI270", "CSCI310", "CSCI350",
@@ -134,7 +135,6 @@ public class EditProfileFragment extends Fragment {
                 }
 
                 //determine availability (adapted from Micah's code)
-
                 ArrayList<Integer> availability = new ArrayList<Integer>();
                 for(int i = 0; i < time_toggle.length; i++){
                     for(int j = 0; j < time_toggle[0].length; j++){
@@ -144,9 +144,6 @@ public class EditProfileFragment extends Fragment {
                     }
                 }
 
-                /*
-                    cs103, cs104, cs109, cs170, cs201, cs270, cs350, cs356, cs360
-                 */
 
                 //put them in the UserProfile fields
                 user.setName(name);

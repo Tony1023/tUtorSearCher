@@ -11,6 +11,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.fragment.app.FragmentManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,10 +27,12 @@ public class SearchModel extends ViewModel {
             "CSCI103", "CSCI104", "CSCI170", "CSCI201", "CSCI270", "CSCI310", "CSCI350",
             "CSCI356", "CSCI360");
 
-    private String course = "";
+    private String course = "init";
     private List<Integer> availability = new ArrayList<>();
+    private FragmentManager fragmentManager;
 
-    private MutableLiveData<List<UserProfile>> queryResults = new MutableLiveData<>();
+    MutableLiveData<List<UserProfile>> searchResults = new MutableLiveData<>();
+    final SearchResultsAdapter adapter = new SearchResultsAdapter(this);
 
 
     public void search() {
@@ -41,7 +44,7 @@ public class SearchModel extends ViewModel {
             @Override
             public void onResponse(@NonNull Call<List<UserProfile>> call, @NonNull Response<List<UserProfile>> response) {
                 Log.d("search model", "succeeded " + call.toString() + " " + response.toString() + " " + response.body());
-                queryResults.postValue(response.body());
+                searchResults.postValue(response.body());
             }
 
             @Override
@@ -72,9 +75,13 @@ public class SearchModel extends ViewModel {
         return availability;
     }
 
-    public MutableLiveData<List<UserProfile>> getQueryResults() {
-        return queryResults;
+    public FragmentManager getFragmentManager() { return fragmentManager; }
+
+    public MutableLiveData<List<UserProfile>> getSearchResults() {
+        return searchResults;
     }
+
+    public SearchResultsAdapter getAdapter() { return adapter; }
 
     public void setCourse(String course) {
         this.course = course;
@@ -82,6 +89,10 @@ public class SearchModel extends ViewModel {
 
     public void setAvailability(List<Integer> availability) {
         this.availability = availability;
+    }
+
+    public void setFragmentManager(FragmentManager fragmentManager) {
+        this.fragmentManager = fragmentManager;
     }
 
 }

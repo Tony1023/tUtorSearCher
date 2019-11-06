@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+<data>
+    <variable
+        name="viewModel"
+        type="edu.usc.csci310.team16.tutorsearcher.SearchModel"
+        />
+</data>
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="75dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:paddingBottom="75dp" >
 
     <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/search_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/configure_search_button_label" />
+            android:text="@string/new_search_button_label" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/search_results_view"
+                app:setAdapter="@{viewModel.getAdapter()}"
+                tools:listitem="@layout/search_result_item">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </FrameLayout>
 
     </LinearLayout>
 
 </ScrollView>
+</layout>

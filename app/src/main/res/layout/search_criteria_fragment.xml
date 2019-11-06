@@ -16,11 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp">
+
             <TextView
                 android:id="@+id/course_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Course:"
+                android:text="@string/course_spinner_label"
                 android:textSize="20sp" />
             <Spinner
                 android:id="@+id/course_spinner"
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
-            android:text="Availability:"
+            android:text="@string/time_select_grid_label"
             android:textSize="20sp" />
         <GridLayout
             android:id="@+id/time_select_grid"
@@ -47,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Search" />
+            android:text="@string/submit_search_button_label" />
 
     </LinearLayout>
 
