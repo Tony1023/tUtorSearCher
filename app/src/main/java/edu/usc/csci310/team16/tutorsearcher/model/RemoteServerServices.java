@@ -33,4 +33,10 @@ public interface RemoteServerServices {
     @Multipart
     @POST("user/updateProfileImage")
     Call<String> uploadImage(@Part("userId") Integer id, @Part MultipartBody.Part file);
+
+    @POST("acceptRequest")
+    Call<String> acceptRequest(@Body Integer id);
+
+    @POST("acceptRequest")
+    Call<String> rejectRequest(@Body Integer id);
 }

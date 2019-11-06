@@ -1,9 +1,7 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.room.*;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -30,40 +28,127 @@ public class Notification {
 
     @ColumnInfo(name="receiver_id")
     @SerializedName("receiver_id")
-    private String receiver_id;
+    private int receiverId;
 
-    @ColumnInfo(name="request_id")
+    @ColumnInfo(name="transaction_id")
     @SerializedName("request_id")
-    private String request_id;
+    private int requestId;
 
     @ColumnInfo(name="sender_id")
     @SerializedName("receiver_id")
-    private String sender_id;
+    private int senderId;
+
+    @ColumnInfo(name="sender_name")
+    @SerializedName("sender_name")
+    private String senderName;
 
     @SerializedName("type")
     @ColumnInfo(name="type")
     private String mType = "";
 
+    @SerializedName("overlap")
+    private int[] overlap;
+
     @SerializedName("msg")
     @ColumnInfo(name = "msg")
     private String msg = "";
 
+    @ColumnInfo(name="status")
+    private String status="PENDING";
+
+    public Notification(@NonNull String id, int receiverId, int requestId, int senderId, String senderName, String mType, int[] overlap, String msg, String status) {
+        this.id = id;
+        this.receiverId = receiverId;
+        this.requestId = requestId;
+        this.senderId = senderId;
+        this.senderName = senderName;
+        this.mType = mType;
+        this.overlap = overlap;
+        this.msg = msg;
+        this.status = status;
+    }
+
+    @Ignore
+    public Notification(){}
+
+    @Ignore
     public Notification(@NonNull String id, String type, String msg){
         mType= type;
         this.id = id;
         this.msg = msg;
+
     }
 
+    @NonNull
     public String getId() {
         return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
+
+    public int getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(int receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public int getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(int requestId) {
+        this.requestId = requestId;
+    }
+
+    public int getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
     }
 
     public String getType() {
         return mType;
     }
 
+    public void setType(String mType) {
+        this.mType = mType;
+    }
+
     public String getMsg() {
         return msg;
     }
 
+    public String getSenderName(){
+        return senderName;
+    }
+
+    public void getSenderName(String name){
+        senderName = name;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public int[] getOverlap() {
+        return overlap;
+    }
+
+    public void setOverlap(int[] overlap) {
+        this.overlap = overlap;
+    }
 }

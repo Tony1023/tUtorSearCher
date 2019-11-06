@@ -8,9 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
+import edu.usc.csci310.team16.tutorsearcher.model.WebServiceRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         private final TextView name;
         private final TextView message;
         private final MaterialButtonToggleGroup buttonToggleGroup;
+        private MutableLiveData<Boolean> openButtons;
+
 
         public ViewHolder(ViewDataBinding bind) {
             super(bind.getRoot());
@@ -37,6 +41,24 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         public void bind(int position){
             binding.setViewModel(viewModel);
             binding.setPosition(position);
+
+            final Notification notification = viewModel.getNotifications().getValue().get(position);
+            binding.notificationAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebServiceRepository.getInstance(viewModel.getApplication()).acceptRequest(notification);
+                    binding.notificationButtons.setVisibility(View.GONE);
+                }
+            });
+
+            binding.notificationReject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WebServiceRepository.getInstance(viewModel.getApplication()).rejectRequest(notification);
+                    binding.getRoot().setVisibility(View.GONE);
+                }
+            });
+
         }
     }
 

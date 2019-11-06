@@ -4,11 +4,13 @@ import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
+import edu.usc.csci310.team16.tutorsearcher.NotificationModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WebServiceRepository {
@@ -51,8 +53,8 @@ public class WebServiceRepository {
                     List<Notification> webserviceResponseList;
                     webserviceResponseList = response.body();
 
-                    RoomDBRepository roomDBRepository = RoomDBRepository.getInstance(application);
 
+                    RoomDBRepository roomDBRepository = RoomDBRepository.getInstance(application);
                     roomDBRepository.insertPosts(webserviceResponseList);
                 }
 
@@ -68,9 +70,50 @@ public class WebServiceRepository {
         //  return retrofit.create(ResultModel.class);
     }
 
+    public void acceptRequest(final Notification notification) {
+        //  response = service.makeRequest().execute().body();
+
+        //TODO check userID type
+        service.acceptRequest(notification.getRequestId()).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if ("Success".equals(response.body())) {
+                    notification.setStatus("ACCEPTED");
+                    RoomDBRepository.getInstance(application).insertPosts(Arrays.asList(notification));
+                } else if ("Tutee taken".equals(response.body())) {
+                    notification.setStatus("REJECTED");
+                    RoomDBRepository.getInstance(application).insertPosts(Arrays.asList(notification));
+                } else {
+                    onFailure(call, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("WEBSERVICE_REPO", "ACCEPT_FAILURE");
+            }
+        });
+    }
+
+    public void rejectRequest(final Notification notification) {
+
+        service.rejectRequest(notification.getRequestId()).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                notification.setStatus("REJECTED");
+                RoomDBRepository.getInstance(application).insertPosts(Arrays.asList(notification));
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("WEBSERVICE_REPO", "REJECT_FAILURE");
+            }
+        });
+    }
+
+
     public void getNotificationUpdates() {
         String response = "";
-
 
         //  response = service.makeRequest().execute().body();
         //TODO check userID type
