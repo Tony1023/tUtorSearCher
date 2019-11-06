@@ -35,7 +35,7 @@ public class Notification {
     private int requestId;
 
     @ColumnInfo(name="sender_id")
-    @SerializedName("receiver_id")
+    @SerializedName("sender_id")
     private int senderId;
 
     @ColumnInfo(name="sender_name")
