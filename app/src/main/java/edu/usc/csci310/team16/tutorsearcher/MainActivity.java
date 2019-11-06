@@ -1,6 +1,7 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity
                     .commit();
             return true;
         }
+
     }
 
     public ProfileFragment getProfile() {

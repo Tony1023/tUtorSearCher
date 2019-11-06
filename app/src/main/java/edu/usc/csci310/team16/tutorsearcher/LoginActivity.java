@@ -5,11 +5,14 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
@@ -22,7 +25,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.InputStream;
+
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -194,6 +203,23 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClickFakeLogin(View view) {
         loginModel.fakeLogin();
+    }
+
+    public void loadImage(View view) {
+        final ImageView iv = findViewById(R.id.imageView);
+        RemoteServerDAO.getDao().getImage(1).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                InputStream in = response.body().byteStream();
+                Bitmap bmp = BitmapFactory.decodeStream(in);
+                iv.setImageBitmap(bmp);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("Network error.");
+            }
+        });
     }
 
 }
