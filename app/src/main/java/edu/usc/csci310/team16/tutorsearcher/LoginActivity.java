@@ -5,11 +5,14 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
@@ -22,7 +25,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.InputStream;
+
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         final MaterialButton registerBtn;
         // TODO: make network configs HTTP-secure (network_security_config.xml and AndroidManifest.xml)
 
-
         ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         loginModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(LoginModel.class);
@@ -45,25 +53,24 @@ public class LoginActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         SharedPreferences shared = getPreferences(Context.MODE_PRIVATE);
-        String email = shared.getString("email", null);
+        int id = shared.getInt("userId", -1);
         String token = shared.getString("accessToken", null);
-//        String email = "email";
-//        String token = "token";
-        if (email != null && token != null) {
-            loginModel.validate(email, token);
+        if (id != -1 && token != null) {
+            loginModel.validate(id, token);
         }
 
         loginBtn = findViewById(R.id.email_login_button);
         registerBtn = findViewById(R.id.email_register_button);
-
 
         loginModel.getUser().observe(this, new Observer<UserProfile>() {
             @Override
             public void onChanged(UserProfile profile) {
                 UserProfile.setCurrentUser(profile); // The user session object
                 SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+                editor.putInt("userId", profile.getId());
                 editor.putString("email", profile.getEmail());
                 editor.apply();
+                RemoteServerDAO.setId(profile.getId());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
@@ -82,15 +89,16 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
                 editor.putString("accessToken", s);
                 editor.apply();
+                RemoteServerDAO.setToken(s);
             }
         });
 
         loginModel.getCredentials().observe(this, new Observer<LoginData>() {
             @Override
             public void onChanged(LoginData loginData) {
-//                boolean enabled = loginData.email.endsWith("@usc.edu") && loginData.password.length() >= 6;
-//                loginBtn.setEnabled(enabled);
-//                registerBtn.setEnabled(enabled);
+                boolean enabled = loginData.email.endsWith("@usc.edu") && loginData.password.length() >= 6;
+                loginBtn.setEnabled(enabled);
+                registerBtn.setEnabled(enabled);
             }
         });
 
@@ -191,6 +199,27 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClickLogin(View view) {
         loginModel.login();
+    }
+
+    public void onClickFakeLogin(View view) {
+        loginModel.fakeLogin();
+    }
+
+    public void loadImage(View view) {
+        final ImageView iv = findViewById(R.id.imageView);
+        RemoteServerDAO.getDao().getImage(1).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                InputStream in = response.body().byteStream();
+                Bitmap bmp = BitmapFactory.decodeStream(in);
+                iv.setImageBitmap(bmp);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("Network error.");
+            }
+        });
     }
 
 }

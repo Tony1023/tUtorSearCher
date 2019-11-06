@@ -68,6 +68,48 @@ public class UserProfile {
         return currentUser;
     }
 
+//    public UserProfile(Map<String, Object> m) {
+//        if(m.containsKey("id")) {
+//            this.id = (Integer) m.get("id");
+//        }
+//
+//        if(m.containsKey("picture_url")) {
+//            this.picture_url = (String) m.get("picture_url");
+//        }
+//
+//        if(m.containsKey("name")) {
+//            this.name = (String) m.get("name");
+//        }
+//
+//        if(m.containsKey("grade")) {
+//            this.grade = (String) m.get("grade");
+//        }
+//
+//        if(m.containsKey("email")) {
+//            this.email = (String) m.get("email");
+//        }
+//
+//        if(m.containsKey("bio")) {
+//            this.bio = (String) m.get("bio");
+//        }
+//
+//        if(m.containsKey("availability")) {
+//            this.availability = (List<Integer>) m.get("email");
+//        }
+//
+//        if(m.containsKey("coursesTaken")) {
+//            this.coursesTaken = (List<String>) m.get("coursesTaken");
+//        }
+//
+//        if(m.containsKey("tutorClasses")) {
+//            this.tutorClasses = (List<String>) m.get("tutorClasses");
+//        }
+//
+//        if(m.containsKey("rating")) {
+//            this.rating = (Integer) m.get("rating");
+//        }
+//    }
+
     public String getEmail() {
         return email;
     }

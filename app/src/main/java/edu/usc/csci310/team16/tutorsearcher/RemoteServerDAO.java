@@ -19,6 +19,10 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+<<<<<<< HEAD
+=======
+import okhttp3.ResponseBody;
+>>>>>>> 969897231f7a912ec2521db730b7510c7c6a4b17
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,6 +34,10 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+<<<<<<< HEAD
+=======
+import retrofit2.http.Path;
+>>>>>>> 969897231f7a912ec2521db730b7510c7c6a4b17
 import retrofit2.http.QueryMap;
 
 interface RemoteServerServices {
@@ -44,24 +52,58 @@ interface RemoteServerServices {
     Call<UserProfile> validate(@Field("id") Integer id, @Field("token") String token);
     // TODO: change to UserProfile
     // TODO: make sure @FormUrlEncoded works
+<<<<<<< HEAD
     // TODO: add header to every method
+=======
+>>>>>>> 969897231f7a912ec2521db730b7510c7c6a4b17
 
     @GET("user/getTutors")
     Call<List<UserProfile>> getTutors();
 
     @Multipart
     @POST("user/updateProfileImage")
-    Call<String> uploadImage(@Part("userId") Integer id, @Part MultipartBody.Part file);
+    Call<String> uploadImage(@Part MultipartBody.Part file);
 
-    @GET("searchTutor")
-    Call<List<UserProfile>> searchTutor(@QueryMap Map<String, Object> q);
+    @GET("user/getProfileImage/{userId}")
+    Call<ResponseBody> getImage(@Path("userId") Integer id);
+
+    @POST("user/updateProfile")
+    Call<String> updateProfile(@Body UserProfile profile);
+
+    @POST("user/searchTutor")
+    Call<List<UserProfile>> searchTutor(@Body Map<String, Object> q);
+
+    /**
+     * body: {
+     *     "tutee_id": 1,
+     *     "tutor_id": 2,
+     *     "course": "CSCI103",
+     *     "availability": [0, 1, 2]
+     * }
+     */
+    @POST("user/sendRequest")
+    Call<String> sendRequest(@Body Map<String, Object> body);
+
+    @POST("user/acceptRequest")
+    Call<String> acceptRequest(@Body Integer requestId);
+
+    @POST("user/rejectRequest")
+    Call<String> rejectRequest(@Body Integer requestId);
+
+    @FormUrlEncoded
+    @POST("user/getRating")
+    Call<Double> getRating(@Field("tutor_id") Integer tutorId, @Field("tuteeId") Integer tuteeId);
+
+    @FormUrlEncoded
+    @POST("user/rateTutor")
+    Call<String> rateTutor(@Field("tutor_id") Integer tutorId, @Field("tuteeId") Integer tuteeId, @Field("rating") Double rating);
 }
 
 public class RemoteServerDAO {
 
     private static Retrofit retrofit = null;
     private static RemoteServerServices dao = null;
-    final private static String url = "http:10.0.2.2:8080/";
+    final private static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
     private static Integer id = -1;
     private static String token = "";
 
