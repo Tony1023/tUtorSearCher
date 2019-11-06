@@ -200,26 +200,4 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickLogin(View view) {
         loginModel.login();
     }
-
-    public void onClickFakeLogin(View view) {
-        loginModel.fakeLogin();
-    }
-
-    public void loadImage(View view) {
-        final ImageView iv = findViewById(R.id.imageView);
-        RemoteServerDAO.getDao().getImage(1).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                InputStream in = response.body().byteStream();
-                Bitmap bmp = BitmapFactory.decodeStream(in);
-                iv.setImageBitmap(bmp);
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                System.out.println("Network error.");
-            }
-        });
-    }
-
 }

@@ -96,31 +96,6 @@
                     android:onClick="onClickRegister"
                     android:enabled="true"
                 />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/fake_login_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fake Login"
-                android:textStyle="bold"
-                android:onClick="onClickFakeLogin"
-                android:enabled="true"
-                />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/showImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Show image"
-                android:textStyle="bold"
-                android:onClick="loadImage"
-                android:enabled="true"
-                />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_launcher_background" />
-
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
