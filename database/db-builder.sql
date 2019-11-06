@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Courses (
 );
 
 INSERT INTO Courses(course_number) VALUES
-('CSCI103'), ('CSCI104'), ('CSCI201');
+('CSCI103'), ('CSCI104'), ('CSCI170'), ('CSCI201'), ('CSCI270'), ('CSCI310'), ('CSCI350'), ('CSCI356'), ('CSCI360');
 
 CREATE TABLE IF NOT EXISTS UserCourses (
   user_id INT(11) NOT NULL,
@@ -52,6 +52,11 @@ CREATE TABLE IF NOT EXISTS UserCourses (
   CONSTRAINT pk_uc PRIMARY KEY(user_id, course_id)
 );
 
+INSERT into UserCourses(user_id, course_id) VALUES
+(1,1), (1,2), (1,3), (1,4), (1,5), (1,8),
+(2,1), (2,2), (2,3), (2,4), (2,5),
+(3,1), (3,2), (3,6), (3,4), (3,5);
+
 CREATE TABLE IF NOT EXISTS CourseOffered (
   user_id INT(11) NOT NULL,
   course_id INT(11) NOT NULL,
@@ -60,7 +65,9 @@ CREATE TABLE IF NOT EXISTS CourseOffered (
   CONSTRAINT pk_co PRIMARY KEY(user_id, course_id)
 );
 INSERT INTO CourseOffered(user_id, course_id) VALUES
-(1,1), (2,1), (2,2);
+(1,1), (1,2), (1,3), (1,8),
+(2,1), (2,2), (2,3),
+(3,1), (3,2), (3,6);
 
 CREATE TABLE IF NOT EXISTS Availability (
   user_id INT(11) NOT NULL,
@@ -113,15 +120,19 @@ CREATE TABLE IF NOT EXISTS Notifications (
 );
 
 INSERT INTO Notifications(req_id, sender_id, receiver_id, receiver_type, pushed) VALUES
-(1, 1, 2, 0, 1);
+(1, 1, 2, 0, 1),
+(1, 2, 1, 1, 1);
 
 CREATE TABLE IF NOT EXISTS Ratings (
   tutor_id INT(11) NOT NULL,
   tutee_id INT(11) NOT NULL,
-  rating TINYINT NOT NULL,
+  rating DOUBLE NOT NULL,
   review VARCHAR(1024) NULL,
   FOREIGN KEY fk_requests_tutorid (tutor_id) REFERENCES Users(id),
   FOREIGN KEY fk_requests_tuteeid (tutee_id) REFERENCES Users(id),
   INDEX idx_ratings_tutor_tutee (tutor_id, tutee_id),
   CONSTRAINT pk_r PRIMARY KEY(tutor_id, tutee_id)
 );
+
+INSERT INTO Ratings(tutee_id, tutor_id, rating) VALUES
+(1, 2, 4.0);
