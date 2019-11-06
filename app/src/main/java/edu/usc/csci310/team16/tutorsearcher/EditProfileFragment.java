@@ -26,7 +26,6 @@ import java.util.List;
 public class EditProfileFragment extends Fragment {
 
     private UserProfile user;
-    private SearchModel searchModel;
     private MaterialCheckBox time_toggle[][];
 
 
@@ -36,9 +35,7 @@ public class EditProfileFragment extends Fragment {
 
         //get data from the singleton
         user = UserProfile.getCurrentUser();
-
-        searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
-        time_toggle = new MaterialCheckBox[searchModel.getDays().size()][searchModel.getBlocks().size()];
+        time_toggle = new MaterialCheckBox[SearchModel.getDays().size()][SearchModel.getBlocks().size()];
 
     }
 
@@ -63,14 +60,14 @@ public class EditProfileFragment extends Fragment {
 
         for(int j = 0; j < time_toggle[0].length; j++){
             t = new TextView(v.getContext());
-            t.setText(searchModel.getBlocks().get(j));
+            t.setText(SearchModel.getBlocks().get(j));
             timeSelectGrid.addView(t);
         }
 
         for(int i = 0; i < time_toggle.length; i++){
             t = new TextView(v.getContext());
             t.setWidth(100);
-            t.setText(searchModel.getDays().get(i));
+            t.setText(SearchModel.getDays().get(i));
             t.setGravity(Gravity.CENTER);
             timeSelectGrid.addView(t);
 

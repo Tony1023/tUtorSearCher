@@ -1,11 +1,12 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+// importing required libraries
+
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,72 +14,88 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-import com.google.android.material.checkbox.MaterialCheckBox;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static androidx.annotation.InspectableProperty.ValueType.GRAVITY;
 
-//changed from extends Fragment
-public class ProfileFragment extends Fragment {
+//Tutor Profile -> go to from TutorList or Search Results
+public class SearchProfileFragment extends Fragment {
 
     private UserProfile user;
+    private SearchModel searchModel;
     private TextView time_toggle[][];
+
+    RatingBar rt;
+
+    public SearchProfileFragment() {}
+
+    public SearchProfileFragment(UserProfile user){
+        if(user!= null) {
+            this.user = user;
+        }
+        else{
+            this.user = new UserProfile();
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedBundleInstance) {
         super.onCreate(savedBundleInstance);
 
-        //get data from the singleton
-        user = UserProfile.getCurrentUser();
-
         //availability variables
+        searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
         time_toggle = new TextView[SearchModel.getDays().size()][SearchModel.getBlocks().size()];
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        View v = inflater.inflate(R.layout.searchprofile_fragment, container, false);
+        rt = (RatingBar) v.findViewById(R.id.simpleRatingBar);
 
-        View v = inflater.inflate(R.layout.profile_fragment, container, false);
-
-//        final Fragment view = new EditProfileFragment();
-//
-
-        //when clicking edit button, transition to edit profile page
-        Button editButton = (Button)v.findViewById(R.id.edit_button);
-        editButton.setOnClickListener(new View.OnClickListener() {
+        final Button sendRequestButton = (Button)v.findViewById(R.id.sendRequestButton);
+        final TextView sendRequestMessage = v.findViewById(R.id.sendRequestMessage);
+        sendRequestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, ((MainActivity)getActivity()).getEditProfile())
-                        .commit();
+                Map<String, Object> body = new HashMap<>();
+                body.put("tutee_id", UserProfile.getCurrentUser().getId());
+                body.put("tutor_id", user.getId());
+                body.put("course", searchModel.getCourse());
+                body.put("availability", searchModel.getAvailability());
+                RemoteServerDAO.getDao().sendRequest(body).enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                        Log.d("searchProfileFragment", "send request succeeded " + response.body() + " " + response.code());
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                        Log.e("searchProfileFragment", "send request failed " + t);
+                    }
+                });
+
+                sendRequestMessage.setText("Request sent!");
             }
         });
 
-        Button logoutButton = v.findViewById(R.id.logout_button);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
-                editor.putInt("userId", -1);
-                editor.putString("email", "");
-                editor.putString("token", "");
-                editor.commit();
-                RemoteServerDAO.setId(-1);
-                RemoteServerDAO.setToken("");
-                startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
-                getActivity().finish();
-            }
-        });
+        //finding the specific RatingBar with its unique ID
+        LayerDrawable stars=(LayerDrawable)rt.getProgressDrawable();
+
+        //Use for changing the color of RatingBar
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FFC107"), PorterDuff.Mode.SRC_ATOP);
+
 
         //SHOW PROFILE ATTRIBUTES ON PROFILE LAYOUT
         //put name on page
@@ -148,10 +165,15 @@ public class ProfileFragment extends Fragment {
         bio.setText(user.getBio());
 
         //put rating on page if not -1 (initial value)
+        Log.d("tutorProfileFragment", "before set rating");
         if(user.getRating() != -1) {
+            Log.d("tutorProfileFragment", "in set rating " + (float)user.getRating());
             TextView rating = (TextView)v.findViewById(R.id.rating);
             rating.setText(Double.toString(user.getRating()));
+            rt.setRating((float)user.getRating());
+            rt.setIsIndicator(true);
         }
+
 
         //put list of courses taken on page
         TextView coursesTaken = (TextView)v.findViewById(R.id.courses_taken);
@@ -189,4 +211,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    public void setUser(UserProfile user) {
+        this.user = user;
+    }
 }
