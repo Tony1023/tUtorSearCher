@@ -25,33 +25,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 //Tutor Profile -> go to from TutorList or Search Results
-public class TutorProfileFragment extends Fragment {
+public class SearchProfileFragment extends Fragment {
 
     private UserProfile user;
+    private SearchModel searchModel;
     private TextView time_toggle[][];
 
     RatingBar rt;
 
-    public TutorProfileFragment() {}
+    public SearchProfileFragment() {}
 
-    public TutorProfileFragment(Tutor tutor){
-        if(tutor != null && tutor.getProfile() != null) {
-            user = tutor.getProfile();
-        }
-        else{
-            user = new UserProfile();
-            user.setName("User null");
-        }
-
-    }
-
-    public TutorProfileFragment(UserProfile user){
-        //this.user = user;
-
+    public SearchProfileFragment(UserProfile user){
         if(user!= null) {
             this.user = user;
         }
@@ -65,36 +55,43 @@ public class TutorProfileFragment extends Fragment {
         super.onCreate(savedBundleInstance);
 
         //availability variables
+        searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
         time_toggle = new TextView[SearchModel.getDays().size()][SearchModel.getBlocks().size()];
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.tutorprofile_fragment, container, false);
+        View v = inflater.inflate(R.layout.searchprofile_fragment, container, false);
         rt = (RatingBar) v.findViewById(R.id.simpleRatingBar);
 
-//        final Fragment view = new EditProfileFragment();
-//
-
-        Button submitButton = (Button)v.findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        Button sendRequestButton = (Button)v.findViewById(R.id.sendRequestButton);
+        sendRequestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("tutorprofilefragment", "in onClick");
-                RemoteServerDAO.getDao().rateTutor(user.getId(), UserProfile.getCurrentUser().getId(), (double)rt.getRating()).enqueue(new Callback<String>() {
+                Map<String, Object> body = new HashMap<>();
+                body.put("tutee_id", UserProfile.getCurrentUser().getId());
+                body.put("tutor_id", user.getId());
+                body.put("course", searchModel.getCourse());
+                body.put("availability", searchModel.getAvailability());
+                RemoteServerDAO.getDao().sendRequest(body).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                        Log.d("tutorprofilefragment", "submit rating succeeded " + response.body() + " " + response.code());
+                        Log.d("searchProfileFragment", "send request succeeded " + response.body() + " " + response.code());
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                        Log.e("tutor profile fragment", "submit rating failed");
+                        Log.e("searchProfileFragment", "send request failed " + t);
                     }
                 });
             }
         });
+
+        //finding the specific RatingBar with its unique ID
+        LayerDrawable stars=(LayerDrawable)rt.getProgressDrawable();
+
+        //Use for changing the color of RatingBar
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#FFC107"), PorterDuff.Mode.SRC_ATOP);
 
 
         //SHOW PROFILE ATTRIBUTES ON PROFILE LAYOUT
@@ -171,7 +168,9 @@ public class TutorProfileFragment extends Fragment {
             TextView rating = (TextView)v.findViewById(R.id.rating);
             rating.setText(Double.toString(user.getRating()));
             rt.setRating((float)user.getRating());
+            rt.setIsIndicator(true);
         }
+
 
         //put list of courses taken on page
         TextView coursesTaken = (TextView)v.findViewById(R.id.courses_taken);
@@ -204,6 +203,8 @@ public class TutorProfileFragment extends Fragment {
         //take the results of those text boxes and change the UserProfile data members
         //once the user clicks another button at the bottom of that page
         //finish() that view and go back to the Profile view
+
+        //ignore the MutableLiveData for now
 
     }
 

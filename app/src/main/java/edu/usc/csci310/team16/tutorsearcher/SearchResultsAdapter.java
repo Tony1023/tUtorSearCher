@@ -64,7 +64,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
             holder.card.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     viewModel.getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new TutorProfileFragment(current))
+                            .replace(R.id.fragment_container, new SearchProfileFragment(current))
                             .commit();
                 }
             });

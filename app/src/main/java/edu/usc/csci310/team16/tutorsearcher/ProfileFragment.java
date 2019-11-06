@@ -29,7 +29,6 @@ import static androidx.annotation.InspectableProperty.ValueType.GRAVITY;
 public class ProfileFragment extends Fragment {
 
     private UserProfile user;
-    private SearchModel searchModel;
     private TextView time_toggle[][];
 
     @Override
@@ -40,8 +39,7 @@ public class ProfileFragment extends Fragment {
         user = UserProfile.getCurrentUser();
 
         //availability variables
-        searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
-        time_toggle = new TextView[searchModel.getDays().size()][searchModel.getBlocks().size()];
+        time_toggle = new TextView[SearchModel.getDays().size()][SearchModel.getBlocks().size()];
 
     }
 
@@ -85,14 +83,14 @@ public class ProfileFragment extends Fragment {
 
         for(int j = 0; j < time_toggle[0].length; j++){
             t = new TextView(v.getContext());
-            t.setText(searchModel.getBlocks().get(j));
+            t.setText(SearchModel.getBlocks().get(j));
             timeSelectGrid.addView(t);
         }
 
         for(int i = 0; i < time_toggle.length; i++){
             t = new TextView(v.getContext());
             t.setWidth(100);
-            t.setText(searchModel.getDays().get(i));
+            t.setText(SearchModel.getDays().get(i));
             t.setGravity(Gravity.CENTER);
             timeSelectGrid.addView(t);
 
