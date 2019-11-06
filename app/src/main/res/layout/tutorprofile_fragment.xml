@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="75dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:paddingBottom="75dp"
+xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,10 +16,19 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="50dp"
             app:layout_constraintTop_toTopOf="parent"
             >
 
+            <Button
+                android:id="@+id/edit_button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/colorAccent"
+                android:text="Edit"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
@@ -50,7 +58,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:onClick="updateRating"/>
-
 
         </FrameLayout>
 
@@ -131,7 +138,7 @@
             android:id="@+id/bio_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="@string/bio_label"
             android:layout_marginBottom="15dp"
             android:textSize="20sp"
             />
@@ -203,3 +210,221 @@
 
 </ScrollView>
 
+
+
+
+<!--    <?xml version="1.0" encoding="utf-8"?>-->
+<!--<ScrollView-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:paddingBottom="75dp"-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_marginTop="5dp"-->
+<!--    android:orientation="vertical"-->
+<!--    android:padding="10dp">-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        >-->
+
+<!--        <Button-->
+<!--            android:id="@+id/edit_button"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:backgroundTint="@color/colorAccent"-->
+<!--            android:text="Edit"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            />-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--        <RatingBar-->
+<!--            android:id="@+id/simpleRatingBar"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_marginTop="60dp"-->
+<!--            android:background="#FFFFFF"-->
+<!--            android:progressTint="@color/colorAccent"-->
+<!--            android:paddingLeft="5dp"-->
+<!--            android:paddingRight="5dp"-->
+<!--            android:rating="0" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/submitButton"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:padding="10dp"-->
+<!--            android:text="Submit"-->
+<!--            android:textColor="#fff"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:onClick="updateRating"/>-->
+
+<!--    </FrameLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/name_label"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="@string/name_label"-->
+<!--            android:textSize="20sp"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/name"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="3"-->
+<!--            android:textSize="20sp" />-->
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        >-->
+<!--        <TextView-->
+<!--            android:id="@+id/grade_label"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="@string/grade_label"-->
+<!--            android:textSize="20sp"-->
+<!--            />-->
+<!--        <TextView-->
+<!--            android:id="@+id/grade"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="3"-->
+<!--            android:textSize="20sp"-->
+<!--            />-->
+<!--    </LinearLayout>-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/availability_label"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/availability_label"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:textSize="20sp"-->
+<!--        />-->
+<!--    &lt;!&ndash;    use availability array to list all the open slots&ndash;&gt;-->
+<!--    <GridLayout-->
+<!--        android:id="@+id/availability_grid"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
+
+<!--    &lt;!&ndash;  TUTOR PROFILE &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/tutor_label"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/tutor_label"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:textSize="25dp"-->
+<!--        android:gravity="center"-->
+<!--        />-->
+
+<!--    &lt;!&ndash; put bio in tutor section &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/bio_label"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/bio_label"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:textSize="20sp"-->
+<!--        />-->
+<!--    &lt;!&ndash;    use courses taken array to list all courses &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/bio"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:textSize="20sp"-->
+<!--        />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/courses_taken_label"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/courses_taken_label"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:textSize="20sp"-->
+<!--        />-->
+<!--    &lt;!&ndash;    use courses taken array to list all courses &ndash;&gt;-->
+<!--    <TextView-->
+<!--        android:id="@+id/courses_taken"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:textSize="20sp"-->
+<!--        />-->
+<!--    <TextView-->
+<!--        android:id="@+id/courses_tutoring_label"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/courses_tutoring_label"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:textSize="20sp"-->
+<!--        />-->
+<!--    <TextView-->
+<!--        android:id="@+id/courses_tutoring"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="15dp"-->
+<!--        android:textSize="20sp"-->
+<!--        />-->
+<!--    &lt;!&ndash;    use courses tutoring array to list all courses tutoring &ndash;&gt;-->
+<!--    <LinearLayout-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        >-->
+<!--        <TextView-->
+<!--            android:id="@+id/rating_label"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="@string/rating_label"-->
+<!--            android:textSize="20sp"-->
+<!--            />-->
+<!--        <TextView-->
+<!--            android:id="@+id/rating"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="3"-->
+<!--            android:textSize="20sp"-->
+<!--            />-->
+<!--    </LinearLayout>-->
+
+<!--</LinearLayout>-->
+
+<!--</ScrollView>-->
+
+
+
+<!-- -->
