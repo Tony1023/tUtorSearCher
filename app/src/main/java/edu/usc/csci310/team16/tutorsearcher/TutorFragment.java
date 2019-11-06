@@ -68,7 +68,10 @@ public class TutorFragment extends Fragment {
         RemoteServerDAO.getDao().getTutors().enqueue(new Callback<List<UserProfile>>() {
             @Override
             public void onResponse(@NonNull Call<List<UserProfile>> call, @NonNull Response<List<UserProfile>> response) {
-                tutors.addAll(response.body());
+                List<UserProfile> body = response.body();
+                if(body != null) {
+                    tutors.addAll(body);
+                }
             }
 
             @Override
