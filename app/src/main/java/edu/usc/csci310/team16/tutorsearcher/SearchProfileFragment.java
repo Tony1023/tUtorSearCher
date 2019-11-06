@@ -65,7 +65,8 @@ public class SearchProfileFragment extends Fragment {
         View v = inflater.inflate(R.layout.searchprofile_fragment, container, false);
         rt = (RatingBar) v.findViewById(R.id.simpleRatingBar);
 
-        Button sendRequestButton = (Button)v.findViewById(R.id.sendRequestButton);
+        final Button sendRequestButton = (Button)v.findViewById(R.id.sendRequestButton);
+        final TextView sendRequestMessage = v.findViewById(R.id.sendRequestMessage);
         sendRequestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Map<String, Object> body = new HashMap<>();
@@ -84,6 +85,8 @@ public class SearchProfileFragment extends Fragment {
                         Log.e("searchProfileFragment", "send request failed " + t);
                     }
                 });
+
+                sendRequestMessage.setText("Request sent!");
             }
         });
 
