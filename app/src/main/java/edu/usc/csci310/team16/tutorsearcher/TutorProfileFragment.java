@@ -81,8 +81,7 @@ public class TutorProfileFragment extends Fragment {
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("tutorprofilefragment", "in onClick");
-//                RemoteServerDAO.getDao().rateTutor(user.getId(), UserProfile.getCurrentUser().getId(), (double)rt.getRating()).enqueue(new Callback<String>()
-                RemoteServerDAO.getDao().rateTutor(2, 3, 5.0).enqueue(new Callback<String>() {
+                RemoteServerDAO.getDao().rateTutor(user.getId(), UserProfile.getCurrentUser().getId(), (double)rt.getRating()).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                         Log.d("tutorprofilefragment", "submit rating succeeded " + response.body());

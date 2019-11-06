@@ -75,18 +75,18 @@ interface RemoteServerServices {
 
     @FormUrlEncoded
     @POST("user/getRating")
-    Call<Double> getRating(@Field("tutor_id") Integer tutorId, @Field("tuteeId") Integer tuteeId);
+    Call<Double> getRating(@Field("tutor_id") Integer tutorId, @Field("tutee_id") Integer tuteeId);
 
     @FormUrlEncoded
     @POST("user/rateTutor")
-    Call<String> rateTutor(@Field("tutor_id") Integer tutorId, @Field("tuteeId") Integer tuteeId, @Field("rating") Double rating);
+    Call<String> rateTutor(@Field("tutor_id") Integer tutorId, @Field("tutee_id") Integer tuteeId, @Field("rating") Double rating);
 }
 
 public class RemoteServerDAO {
 
     private static Retrofit retrofit = null;
     private static RemoteServerServices dao = null;
-    final private static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
+    final private static String url = "http://10.0.2.2:8080/";
     private static Integer id = -1;
     private static String token = "";
 
