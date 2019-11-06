@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
     private SearchFragment search;
     private NotificationFragment notification;
     private RatingFragment rating;
-    
+
 
     public EditProfileFragment getEditProfile() {
         return editProfile;

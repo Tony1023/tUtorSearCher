@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,8 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.annotation.InspectableProperty.ValueType.GRAVITY;
 
 //changed from extends Fragment
 public class ProfileFragment extends Fragment {
@@ -94,29 +97,28 @@ public class ProfileFragment extends Fragment {
             timeSelectGrid.addView(t);
 
 
-            //t.setBackgroundColor();
-            //i*time_toggle[0].length + j
-
-            //COLOR NOT SHOWING UP
-
             for(int j = 0; j < time_toggle[0].length; j++){
 
                 time_toggle[i][j] = new TextView(v.getContext());
-                time_toggle[i][j].setWidth(30);
-                time_toggle[i][j].setHeight(30);
+                time_toggle[i][j].setWidth(50);
+                time_toggle[i][j].setHeight(40);
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(25,0,0,0);
+                time_toggle[i][j].setLayoutParams(params);
+
+//                time_toggle[i][j].setGravity(Gravity.CENTER);
 
                 //set green if available during that time
-                if(searchModel.getAvailability().contains(i*time_toggle[0].length + j)) {
+                if(user.getAvailability().contains(i*time_toggle[0].length + j)) {
 
                     time_toggle[i][j].setBackgroundColor(Color.parseColor("#90ee90"));
                 }
 
                 //set red otherwise
-
                 else {
                     time_toggle[i][j].setBackgroundColor(Color.parseColor("#ff0000"));
                 }
-//                time_toggle[i][j] = new MaterialCheckBox(v.getContext());
                 timeSelectGrid.addView(time_toggle[i][j]);
             }
 

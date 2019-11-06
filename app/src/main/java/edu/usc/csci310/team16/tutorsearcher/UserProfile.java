@@ -154,6 +154,10 @@ public class UserProfile {
         return availability;
     }
 
+    public void setAvailability(ArrayList<Integer> times) {
+        availability = times;
+    }
+
     public String getPicture_url() {
         return picture_url;
     }

@@ -1,5 +1,6 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.android.material.checkbox.MaterialCheckBox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EditProfileFragment extends Fragment {
 
@@ -131,7 +133,16 @@ public class EditProfileFragment extends Fragment {
                     }
                 }
 
+                //determine availability (adapted from Micah's code)
 
+                ArrayList<Integer> availability = new ArrayList<Integer>();
+                for(int i = 0; i < time_toggle.length; i++){
+                    for(int j = 0; j < time_toggle[0].length; j++){
+                        if(time_toggle[i][j].isChecked()){
+                            availability.add(i*time_toggle[0].length + j);
+                        }
+                    }
+                }
 
                 /*
                     cs103, cs104, cs109, cs170, cs201, cs270, cs350, cs356, cs360
@@ -143,6 +154,7 @@ public class EditProfileFragment extends Fragment {
                 user.setBio(bio);
                 user.setCoursesTaken(coursesTaken);
                 user.setTutorClasses(coursesTutoring);
+                user.setAvailability(availability);
 
 
                 //transition back to profile fragment
