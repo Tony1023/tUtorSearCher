@@ -4,13 +4,15 @@ import android.content.Context;
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 import androidx.room.*;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 
-@Database(entities = {Notification.class}, version = 1)
+@Database(entities = {Notification.class}, version = 2, exportSchema = false)
 public abstract class DataDatabase extends RoomDatabase {
     public abstract NotificationDAO notificationDAO();
+
 
     // marking the instance as volatile to ensure atomic access to the variable
     private static volatile DataDatabase INSTANCE;
@@ -20,8 +22,7 @@ public abstract class DataDatabase extends RoomDatabase {
             synchronized (DataDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            DataDatabase.class, "data_database")
-                            .build();
+                            DataDatabase.class, "data_database").build();
                 }
             }
         }

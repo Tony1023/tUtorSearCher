@@ -1,13 +1,9 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import android.animation.Animator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,18 +11,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.io.InputStream;
-
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

@@ -3,13 +3,11 @@ package edu.usc.csci310.team16.tutorsearcher;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainer;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         rating = new TutorFragment();
 
         setContentView(R.layout.activity_main);
-        mainModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainModel.class);
+        mainModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(MainModel.class);
         BottomNavigationView menu = findViewById(R.id.navigation);
         menu.setOnNavigationItemSelectedListener(this);
 

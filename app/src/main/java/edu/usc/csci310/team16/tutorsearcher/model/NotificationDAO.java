@@ -12,9 +12,14 @@ import java.util.List;
 @Dao
 public interface NotificationDAO {
 
-    @Query("SELECT * FROM `data_database.notifications`")
+    @Query("SELECT * FROM `data_database.notifications` where `status` != 'DISMISSED'")
     LiveData<List<Notification>> loadAll();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<Notification> items);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void modify(Notification items);
+
+
 }

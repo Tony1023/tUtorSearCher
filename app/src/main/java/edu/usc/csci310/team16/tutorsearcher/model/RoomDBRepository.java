@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 
 import java.util.List;
@@ -44,6 +46,15 @@ public class RoomDBRepository {
 
     public void insertPosts (List<Notification> resultModel) {
         new insertAsyncTask(notificationDAO).execute(resultModel);
+    }
+
+    public void changeStatus (final Notification notification){
+        new insertAsyncTask(notificationDAO).execute(new Runnable() {
+            @Override
+            public void run() {
+                notificationDAO.modify(notification);
+            }
+        });
     }
 
     private static class insertAsyncTask extends AsyncTask<List<Notification>, Void, Void> {
