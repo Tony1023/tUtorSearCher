@@ -44,7 +44,7 @@ public class Notification {
 
     @SerializedName("type")
     @ColumnInfo(name="type")
-    private String mType = "";
+    private int mType;
 
     @SerializedName("overlap")
     @ColumnInfo(name = "overlap")
@@ -55,9 +55,10 @@ public class Notification {
     private String msg = "";
 
     @ColumnInfo(name="status")
-    private String status="PENDING";
+    @SerializedName("request_status")
+    private int status;
 
-    public Notification(@NonNull String id, int receiverId, int requestId, int senderId, String senderName, String mType, String overlap, String msg, String status) {
+    public Notification(@NonNull String id, int receiverId, int requestId, int senderId, String senderName, int mType, String overlap, String msg, int status) {
         this.id = id;
         this.receiverId = receiverId;
         this.requestId = requestId;
@@ -72,7 +73,7 @@ public class Notification {
     public Notification(){}
 
     @Ignore
-    public Notification(@NonNull String id, String type, String msg){
+    public Notification(@NonNull String id, int type, String msg){
         mType= type;
         this.id = id;
         this.msg = msg;
@@ -112,11 +113,11 @@ public class Notification {
         this.senderId = senderId;
     }
 
-    public String getType() {
+    public int getType() {
         return mType;
     }
 
-    public void setType(String mType) {
+    public void setType(int mType) {
         this.mType = mType;
     }
 
@@ -132,11 +133,11 @@ public class Notification {
         senderName = name;
     }
 
-    public void setStatus(String status){
+    public void setStatus(int status){
         this.status = status;
     }
 
-    public String getStatus(){
+    public int getStatus(){
         return status;
     }
 
