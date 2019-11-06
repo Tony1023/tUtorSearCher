@@ -1,6 +1,21 @@
 # tUtorSearCher
 A revolutionary new app that connects USC Viterbi students, tutor to tutee.
 
+## How to Run:
+
+### Requirements:
+- Android Studio 
+- Android Emulator, Pixel 2 with API 28 or 29
+    - To add, go to Tools->AVD Manager 
+
+### Steps:
+  - Download the project zip and extract the contents into a tUtorSearCher folder. Alternatively, clone the repo using git.
+  - Open Android Studio and select the project (it should be recognized as an Android Project, and have the same logo when viewing from     the AS file browser)
+  - Once the project opens, it should automatically start building. If not, press Build (Ctrl + F9)
+  - Android Studio may ask you to download certain packages for the project. Do so. However, ignore any other pop-ups, such as the        Gradle update suggestion.
+  - Once the project is done building, Run App (Shift + F10)
+
+
 ## Modules
 ### Android App
 The entire repository, except for [tUtorSearCher-server/](tUtorSearCher-server/) and [database/](database/), is the android application.
