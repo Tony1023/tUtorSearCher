@@ -24,11 +24,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.QueryMap;
 
 interface RemoteServerServices {
     @POST("signup")
@@ -50,13 +52,16 @@ interface RemoteServerServices {
     @Multipart
     @POST("user/updateProfileImage")
     Call<String> uploadImage(@Part("userId") Integer id, @Part MultipartBody.Part file);
+
+    @GET("searchTutor")
+    Call<List<UserProfile>> searchTutor(@QueryMap Map<String, Object> q);
 }
 
 public class RemoteServerDAO {
 
     private static Retrofit retrofit = null;
     private static RemoteServerServices dao = null;
-    final private static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
+    final private static String url = "http:10.0.2.2:8080/";
     private static Integer id = -1;
     private static String token = "";
 

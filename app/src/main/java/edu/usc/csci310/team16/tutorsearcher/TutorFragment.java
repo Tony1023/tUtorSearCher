@@ -8,10 +8,16 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.usc.csci310.team16.tutorsearcher.databinding.TutorFragmentBinding;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainer;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,15 +80,30 @@ public class TutorFragment extends Fragment {
         List<Tutor> notes = new ArrayList<>();
 
         for(UserProfile up : tutors){
-            Tutor n1 = new Tutor("fd_FD_f","MSG",up.getName());
+            Tutor n1 = new Tutor("fd_FD_f","MSG",up);
             notes.add(n1);
         }
 
-        Tutor n1 = new Tutor("fd_FD_f","MSG","Tutor with Mike");
+        Tutor n1 = new Tutor("fd_FD_f","MSG","Tutor example");
         notes.add(n1);
 
 
         tutorModel.getTutors().postValue(notes);
     }
 
+    public void goToProfile(View v){
+        ProfileFragment profile = new ProfileFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, profile)
+                .commit();
+
+    }
+
+    public void goToProfile(Tutor tutor){
+        TutorProfileFragment profile = new TutorProfileFragment(tutor);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, profile)
+                .commit();
+
+    }
 }

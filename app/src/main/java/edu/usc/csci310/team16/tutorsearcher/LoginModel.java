@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,94 +39,86 @@ public class LoginModel extends ViewModel {
 
     void register() {
         validating.setValue(true);
-        RemoteServerDAO.getDao().register(credentials.getValue()).enqueue(new Callback<Map<String, Object>>() {
+//        RemoteServerDAO.getDao().register(credentials.getValue()).enqueue(new Callback<Integer>() {
+//            @Override
+//            public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
+//                if (response.body() != null) {
+//                    // Looks like postValue calls are queued
+//                    token.postValue(response.headers().get("access-token"));
+//                    UserProfile profile = new UserProfile();
+//                    profile.setId(response.body());
+//                    profile.setEmail(credentials.getValue().email);
+//                    user.postValue(profile);
+//                } else {
+//                    validating.postValue(false);
+//                    errorMessage.postValue("Something wrong occurred.");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(@NonNull Call<Map<String, Object>> call, @NonNull Response<Map<String, Object>> response) {
-                validating.postValue(false);
-                // Looks like postValue calls are queued
-                Map<String, Object> res = response.body();
-                Boolean success = (Boolean) res.get("success");
-                if (success) {
-                    Integer id = (Integer) res.get("id");
-                    token.postValue(response.headers().get("access-token"));
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    token.postValue("ACCESS_TOKEN");
                     UserProfile profile = new UserProfile();
-                    profile.setId(id);
-                    profile.setEmail(credentials.getValue().email);
+                    profile.setId(1);
+                    profile.setEmail("email@usc.edu");
                     user.postValue(profile);
-                } else if (res.get("err") instanceof String){
-                    errorMessage.postValue((String) res.get("err"));
-                } else {
-                    errorMessage.postValue("Oof, something went wrong.");
                 }
             }
-
-            @Override
-            public void onFailure(@NonNull Call<Map<String, Object>> call, @NonNull Throwable t) {
-                validating.postValue(false);
-                errorMessage.postValue("Network errors");
-            }
-        });
+        }).start();
     }
 
     void login() {
-        validating.setValue(true);
-        RemoteServerDAO.getDao().login(credentials.getValue()).enqueue(new Callback<UserProfile>() {
-            @Override
-            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
-                validating.postValue(false);
-                UserProfile profile = response.body();
-                if (profile != null && profile.getId() >= 0) {
-                    token.postValue(response.headers().get("access-token"));
-                    user.postValue(profile);
-                } else {
-                    errorMessage.postValue("Wrong credentials");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserProfile> call, Throwable t) {
-                validating.postValue(false);
-                errorMessage.postValue("Network errors");
-                t.printStackTrace();
-            }
-        });
+//        validating.setValue(true);
+//        RemoteServerDAO.getDao().login(credentials.getValue()).enqueue(new Callback<UserProfile>() {
+//            @Override
+//            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UserProfile> call, Throwable t) {
+//
+//            }
+//        });
 
     }
 
-    void validate(Integer id, String token) {
+    void validate(String email, String token) {
         validating.setValue(true);
-        RemoteServerDAO.getDao().validate(id, token).enqueue(new Callback<UserProfile>() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
-                validating.postValue(false);
-                UserProfile profile = response.body();
-                if (profile != null && profile.getId() >= 0) {
-                    user.postValue(profile);
-                } else {
-                    errorMessage.postValue("Your session has ended, please log in again");
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    validating.postValue(false);
                 }
             }
-
-            @Override
-            public void onFailure(Call<UserProfile> call, Throwable t) {
-                validating.postValue(false);
-                errorMessage.postValue("Network errors");
-                t.printStackTrace();
-            }
-        });
-    }
-
-    void fakeLogin() {
-        UserProfile profile = new UserProfile();
-        profile.setId(2);
-        profile.setEmail("eye@usc.edu");
-        profile.getTutorClasses().add("CSCI103");
-        profile.getTutorClasses().add("CSCI104");
-        profile.getAvailability().add(0);
-        profile.getAvailability().add(1);
-        profile.getAvailability().add(2);
-        profile.getAvailability().add(3);
-        user.postValue(profile);
+        }).start();
+//        RemoteServerDAO.getDao().validate(email, token).enqueue(new Callback<Integer>() {
+//            @Override
+//            public void onResponse(Call<Integer> call, Response<Integer> response) {
+//                return;
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Integer> call, Throwable t) {
+//
+//            }
+//        });
     }
 
 }
