@@ -19,10 +19,9 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-<<<<<<< HEAD
-=======
+
 import okhttp3.ResponseBody;
->>>>>>> 969897231f7a912ec2521db730b7510c7c6a4b17
+
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -34,10 +33,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-<<<<<<< HEAD
-=======
+
 import retrofit2.http.Path;
->>>>>>> 969897231f7a912ec2521db730b7510c7c6a4b17
+
 import retrofit2.http.QueryMap;
 
 interface RemoteServerServices {
@@ -52,10 +50,6 @@ interface RemoteServerServices {
     Call<UserProfile> validate(@Field("id") Integer id, @Field("token") String token);
     // TODO: change to UserProfile
     // TODO: make sure @FormUrlEncoded works
-<<<<<<< HEAD
-    // TODO: add header to every method
-=======
->>>>>>> 969897231f7a912ec2521db730b7510c7c6a4b17
 
     @GET("user/getTutors")
     Call<List<UserProfile>> getTutors();

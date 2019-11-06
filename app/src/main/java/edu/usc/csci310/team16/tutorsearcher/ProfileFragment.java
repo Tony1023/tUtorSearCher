@@ -2,6 +2,7 @@ package edu.usc.csci310.team16.tutorsearcher;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -96,20 +97,24 @@ public class ProfileFragment extends Fragment {
             //t.setBackgroundColor();
             //i*time_toggle[0].length + j
 
+            //COLOR NOT SHOWING UP
+
             for(int j = 0; j < time_toggle[0].length; j++){
 
                 time_toggle[i][j] = new TextView(v.getContext());
+                time_toggle[i][j].setWidth(30);
+                time_toggle[i][j].setHeight(30);
 
                 //set green if available during that time
                 if(searchModel.getAvailability().contains(i*time_toggle[0].length + j)) {
 
-                    time_toggle[i][j].setBackgroundColor(0xff00ff00);
+                    time_toggle[i][j].setBackgroundColor(Color.parseColor("#90ee90"));
                 }
 
                 //set red otherwise
 
                 else {
-                    time_toggle[i][j].setBackgroundColor(0xFFFF0000);
+                    time_toggle[i][j].setBackgroundColor(Color.parseColor("#ff0000"));
                 }
 //                time_toggle[i][j] = new MaterialCheckBox(v.getContext());
                 timeSelectGrid.addView(time_toggle[i][j]);
