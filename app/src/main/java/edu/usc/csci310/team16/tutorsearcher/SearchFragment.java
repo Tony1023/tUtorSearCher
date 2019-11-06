@@ -7,42 +7,61 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.http.GET;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import edu.usc.csci310.team16.tutorsearcher.databinding.SearchFragmentBinding;
 
 public class SearchFragment extends Fragment {
 
     private SearchModel searchModel;
+    SearchFragmentBinding binding;
+    SearchCriteriaFragment criteriaFragment;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.search_fragment, container, false);
+        binding = SearchFragmentBinding.inflate(inflater,container,false);
+        binding.setViewModel(searchModel);
+
+        recyclerView = binding.searchResultsView;
+
+        recyclerView.setAdapter(searchModel.getAdapter());
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        searchModel.getSearchResults().observe(this,
+                new Observer<List<UserProfile>>() {
+                    @Override
+                    public void onChanged(List<UserProfile> results) {
+                        searchModel.getAdapter().setResults(results);
+                    }
+                });
+
+        View v = binding.getRoot();
+
+//        getActivity().getSupportFragmentManager().be
 
         //when clicking search button, transition to search criteria page
         Button searchButton = (Button)v.findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new SearchCriteriaFragment())
+                        .replace(R.id.fragment_container, criteriaFragment)
                         .commit();
             }
         });
 
         Log.d("search fragment", searchModel.getCourse());
         Log.d("search fragment", searchModel.getAvailability().toString());
-        if(searchModel.getQueryResults().getValue() != null)
-            Log.d("search fragment", searchModel.getQueryResults().getValue().toString());
+        if(searchModel.getSearchResults().getValue() != null)
+            Log.d("search fragment", searchModel.getSearchResults().getValue().toString());
 
         return v;
     }
@@ -52,6 +71,8 @@ public class SearchFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         searchModel = ViewModelProviders.of(requireActivity()).get(SearchModel.class);
+        searchModel.setFragmentManager(getActivity().getSupportFragmentManager());
+        criteriaFragment = new SearchCriteriaFragment();
     }
 
 

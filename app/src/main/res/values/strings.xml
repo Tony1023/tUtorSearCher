@@ -33,9 +33,11 @@
     <string name="previous_tutors_label">Current Tutors:</string>
     <string name="notification_accept">Accept</string>
     <string name="notification_reject">Reject</string>
+    <!-- search strings -->
     <string name="new_search_button_label">New Search</string>
     <string name="submit_search_button_label">Search</string>
     <string name="course_spinner_label">Select Course:</string>
     <string name="time_select_grid_label">Select Availability:</string>
+    <string name="no_search_results">There are no search results.</string>
 
 </resources>
