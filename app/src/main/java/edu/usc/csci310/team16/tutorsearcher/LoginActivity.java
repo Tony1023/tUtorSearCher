@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.setModel(loginModel);
         binding.setLifecycleOwner(this);
 
-        SharedPreferences shared = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences shared = getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE);
         int id = shared.getInt("userId", -1);
         String token = shared.getString("accessToken", null);
         if (id != -1 && token != null) {
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(UserProfile profile) {
                 UserProfile.setCurrentUser(profile); // The user session object
-                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
                 editor.putInt("userId", profile.getId());
                 editor.putString("email", profile.getEmail());
                 editor.apply();
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         loginModel.getToken().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
                 editor.putString("accessToken", s);
                 editor.apply();
                 RemoteServerDAO.setToken(s);
