@@ -1,6 +1,9 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,20 +17,17 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import edu.usc.csci310.team16.tutorsearcher.MainActivity;
-import edu.usc.csci310.team16.tutorsearcher.R;
-import edu.usc.csci310.team16.tutorsearcher.SearchModel;
-import edu.usc.csci310.team16.tutorsearcher.UserProfile;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EditProfileFragment extends Fragment {
 
     private UserProfile user;
-    private SearchModel searchModel;
     private MaterialCheckBox time_toggle[][];
+
 
     @Override
     public void onCreate(Bundle savedBundleInstance) {
@@ -35,16 +35,13 @@ public class EditProfileFragment extends Fragment {
 
         //get data from the singleton
         user = UserProfile.getCurrentUser();
-
-        searchModel = ViewModelProviders.of(getActivity()).get(SearchModel.class);
-        time_toggle = new MaterialCheckBox[searchModel.getDays().size()][searchModel.getBlocks().size()];
+        time_toggle = new MaterialCheckBox[SearchModel.getDays().size()][SearchModel.getBlocks().size()];
 
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
         View v = inflater.inflate(R.layout.edit_profile_fragment, container, false);
 
@@ -63,14 +60,14 @@ public class EditProfileFragment extends Fragment {
 
         for(int j = 0; j < time_toggle[0].length; j++){
             t = new TextView(v.getContext());
-            t.setText(searchModel.getBlocks().get(j));
+            t.setText(SearchModel.getBlocks().get(j));
             timeSelectGrid.addView(t);
         }
 
         for(int i = 0; i < time_toggle.length; i++){
             t = new TextView(v.getContext());
             t.setWidth(100);
-            t.setText(searchModel.getDays().get(i));
+            t.setText(SearchModel.getDays().get(i));
             t.setGravity(Gravity.CENTER);
             timeSelectGrid.addView(t);
 
@@ -78,9 +75,8 @@ public class EditProfileFragment extends Fragment {
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
                 timeSelectGrid.addView(time_toggle[i][j]);
             }
-
-            //END CODE STOLEN FROM MICAH
         }
+        //END CODE STOLEN FROM MICAH
 
 
         Button editButton = (Button)v.findViewById(R.id.submit_button);
@@ -103,11 +99,11 @@ public class EditProfileFragment extends Fragment {
 
                 //checkboxes ones
                 String[] coursesTakenArray = {"cs103_taken", "cs104_taken",
-                         "cs170_taken", "cs201_taken", "cs270_taken", "cs310_taken",
+                        "cs170_taken", "cs201_taken", "cs270_taken", "cs310_taken",
                         "cs350_taken", "cs356_taken", "cs360_taken"};
 
                 String[] coursesTutoringArray = {"cs103_tutoring", "cs104_tutoring",
-                         "cs170_tutoring", "cs201_tutoring", "cs270_tutoring",
+                        "cs170_tutoring", "cs201_tutoring", "cs270_tutoring",
                         "cs310_tutoring", "cs350_tutoring", "cs356_tutoring", "cs360_tutoring"};
 
                 String[] courseCodes = {"CSCI103", "CSCI104", "CSCI170", "CSCI201", "CSCI270", "CSCI310", "CSCI350",
@@ -135,11 +131,16 @@ public class EditProfileFragment extends Fragment {
                     }
                 }
 
+                //determine availability (adapted from Micah's code)
+                ArrayList<Integer> availability = new ArrayList<Integer>();
+                for(int i = 0; i < time_toggle.length; i++){
+                    for(int j = 0; j < time_toggle[0].length; j++){
+                        if(time_toggle[i][j].isChecked()){
+                            availability.add(i*time_toggle[0].length + j);
+                        }
+                    }
+                }
 
-
-                /*
-                    cs103, cs104, cs109, cs170, cs201, cs270, cs350, cs356, cs360
-                 */
 
                 //put them in the UserProfile fields
                 user.setName(name);
@@ -147,6 +148,7 @@ public class EditProfileFragment extends Fragment {
                 user.setBio(bio);
                 user.setCoursesTaken(coursesTaken);
                 user.setTutorClasses(coursesTutoring);
+                user.setAvailability(availability);
 
 
                 //transition back to profile fragment

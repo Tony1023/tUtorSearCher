@@ -47,7 +47,7 @@ public class LoginModel extends ViewModel {
                 Map<String, Object> res = response.body();
                 Boolean success = (Boolean) res.get("success");
                 if (success) {
-                    Integer id = (Integer) res.get("id");
+                    Integer id = ((Double)res.get("id")).intValue();
                     token.postValue(response.headers().get("access-token"));
                     UserProfile profile = new UserProfile();
                     profile.setId(id);
@@ -116,17 +116,17 @@ public class LoginModel extends ViewModel {
         });
     }
 
-    void fakeLogin() {
-        UserProfile profile = new UserProfile();
-        profile.setId(2);
-        profile.setEmail("eye@usc.edu");
-        profile.getTutorClasses().add("CSCI103");
-        profile.getTutorClasses().add("CSCI104");
-        profile.getAvailability().add(0);
-        profile.getAvailability().add(1);
-        profile.getAvailability().add(2);
-        profile.getAvailability().add(3);
-        user.postValue(profile);
-    }
+//    void fakeLogin() {
+//        UserProfile profile = new UserProfile();
+//        profile.setId(2);
+//        profile.setEmail("eye@usc.edu");
+//        profile.getTutorClasses().add("CSCI103");
+//        profile.getTutorClasses().add("CSCI104");
+//        profile.getAvailability().add(0);
+//        profile.getAvailability().add(1);
+//        profile.getAvailability().add(2);
+//        profile.getAvailability().add(3);
+//        user.postValue(profile);
+//    }
 
 }

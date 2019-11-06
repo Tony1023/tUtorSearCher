@@ -34,31 +34,12 @@ public class UserProfile {
     //just for tutors
     private List<String> coursesTaken = new ArrayList<>(); //tutor
     private List<String> tutorClasses = new ArrayList<>(); //tutor (which can they teach)
-    private double rating = -1;
+    private double rating = 0.0;
     private String bio = "";
 
 
     //singleton
     private static UserProfile currentUser;
-
-    //SET TO DEFAULT VALUES FOR TESTING
-    public UserProfile() {
-        name = "Teagan";
-        grade = "Junior";
-        rating = 4.57;
-
-        bio = "I like cats and dislike android apps. I'm a 103 cp. " +
-                "fuck writing xml i miss xcode";
-
-        coursesTaken.add("CS103");
-        coursesTaken.add("CS104");
-        coursesTaken.add("CS270");
-        coursesTaken.add("CS201");
-
-        tutorClasses.add("CS103");
-        tutorClasses.add("CS102");
-
-    }
 
     public static void setCurrentUser(UserProfile profile) {
         currentUser = profile;
@@ -110,6 +91,10 @@ public class UserProfile {
 
     public List<Integer> getAvailability() {
         return availability;
+    }
+
+    public void setAvailability(ArrayList<Integer> times) {
+        availability = times;
     }
 
     public String getPicture_url() {

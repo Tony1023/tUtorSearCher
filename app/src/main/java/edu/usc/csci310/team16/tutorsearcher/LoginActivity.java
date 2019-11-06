@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         binding.setModel(loginModel);
         binding.setLifecycleOwner(this);
 
-        SharedPreferences shared = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences shared = getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE);
         int id = shared.getInt("userId", -1);
         String token = shared.getString("accessToken", null);
         if (id != -1 && token != null) {
@@ -51,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(UserProfile profile) {
                 UserProfile.setCurrentUser(profile); // The user session object
-                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
                 editor.putInt("userId", profile.getId());
                 editor.putString("email", profile.getEmail());
                 editor.apply();
@@ -71,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         loginModel.getToken().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                SharedPreferences.Editor editor = getPreferences(Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
                 editor.putString("accessToken", s);
                 editor.apply();
                 RemoteServerDAO.setToken(s);
@@ -185,9 +190,4 @@ public class LoginActivity extends AppCompatActivity {
     public void onClickLogin(View view) {
         loginModel.login();
     }
-
-    public void onClickFakeLogin(View view) {
-        loginModel.fakeLogin();
-    }
-
 }

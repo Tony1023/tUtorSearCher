@@ -24,14 +24,12 @@ public class TutorListAdapter extends RecyclerView.Adapter<TutorListAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private final TutorMsgBinding binding;
-        private final TextView name;
         private final TextView message;
         private final MaterialButtonToggleGroup buttonToggleGroup;
 
         public ViewHolder(ViewDataBinding bind) {
             super(bind.getRoot());
             binding = (TutorMsgBinding) bind;
-            name =  binding.tutorType;
             message = binding.tutorText;
             buttonToggleGroup = binding.tutorButtons;
         }

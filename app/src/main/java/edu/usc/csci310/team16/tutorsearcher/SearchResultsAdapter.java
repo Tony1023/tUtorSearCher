@@ -21,8 +21,6 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     private final SearchModel viewModel;
     private List<UserProfile> mResults = new ArrayList<>();
 
-    private TutorProfileFragment profileFragment = new TutorProfileFragment();
-
     class ViewHolder extends RecyclerView.ViewHolder {
         private final SearchResultItemBinding binding;
         private final MaterialCardView card;
@@ -65,9 +63,8 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
             holder.card.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    profileFragment.setUser(current);
                     viewModel.getFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new TutorProfileFragment(current))
+                            .replace(R.id.fragment_container, new SearchProfileFragment(current))
                             .commit();
                 }
             });

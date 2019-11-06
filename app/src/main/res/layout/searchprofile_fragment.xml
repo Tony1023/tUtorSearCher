@@ -1,44 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="75dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_marginTop="5dp"
         android:orientation="vertical"
         android:padding="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:layout_constraintTop_toTopOf="parent"
-            >
-
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
-                android:id="@+id/edit_button"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:backgroundTint="@color/colorAccent"
-                android:text="Edit"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
-
-            <Button
-                android:id="@+id/logout_button"
-                android:layout_width="100dp"
+                android:id="@+id/sendRequestButton"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Log Out"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_centerInParent="true"
+                android:background="@color/colorPrimary"
+                android:padding="10dp"
+                android:text="Send Request"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
+            <TextView
+                android:id="@+id/sendRequestMessage"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RatingBar
+                android:id="@+id/simpleRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:progressTint="@color/colorAccent"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:rating="0" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,7 +131,7 @@
             android:id="@+id/bio_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bio_label"
+            android:text=""
             android:layout_marginBottom="15dp"
             android:textSize="20sp"
             />

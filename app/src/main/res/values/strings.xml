@@ -30,6 +30,17 @@
     <string name="courses_tutoring_label">Courses Tutoring:</string>
     <string name="rating_label">Rating:</string>
     <string name="bio_label">Bio:</string>
+
+    <!-- string array for spinner -->
+    <string-array name="grade_array">
+        <item>Freshman</item>
+        <item>Sophomore</item>
+        <item>Junior</item>
+        <item>Senior</item>
+        <item>Graduate</item>
+        <item>Other</item>
+    </string-array>
+
     <!--  tutees specifically  -->
     <string name="previous_tutors_label">Current Tutors:</string>
     <string name="notification_accept">Accept</string>
@@ -41,14 +52,5 @@
     <string name="time_select_grid_label">Select Availability:</string>
     <string name="no_search_results">There are no search results.</string>
 
-    <!-- string array for spinner -->
-    <string-array name="grade_array">
-        <item>Freshman</item>
-        <item>Sophomore</item>
-        <item>Junior</item>
-        <item>Senior</item>
-        <item>Graduate</item>
-        <item>Other</item>
-    </string-array>
 
 </resources>

@@ -87,10 +87,6 @@ public class TutorFragment extends Fragment {
             notes.add(n1);
         }
 
-        Tutor n1 = new Tutor("fd_FD_f","MSG","Tutor example");
-        notes.add(n1);
-
-
         tutorModel.getTutors().postValue(notes);
     }
 
