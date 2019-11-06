@@ -1,7 +1,9 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -61,6 +63,22 @@ public class ProfileFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, ((MainActivity)getActivity()).getEditProfile())
                         .commit();
+            }
+        });
+
+        Button logoutButton = v.findViewById(R.id.logout_button);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
+                editor.putInt("userId", -1);
+                editor.putString("email", "");
+                editor.putString("token", "");
+                editor.commit();
+                RemoteServerDAO.setId(-1);
+                RemoteServerDAO.setToken("");
+                startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
+                getActivity().finish();
             }
         });
 
