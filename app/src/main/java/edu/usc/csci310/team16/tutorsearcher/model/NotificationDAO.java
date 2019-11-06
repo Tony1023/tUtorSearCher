@@ -18,6 +18,8 @@ public interface NotificationDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<Notification> items);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Notification items);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void modify(Notification items);
+
+
 }

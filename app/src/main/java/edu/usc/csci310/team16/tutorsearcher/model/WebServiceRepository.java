@@ -5,10 +5,12 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import edu.usc.csci310.team16.tutorsearcher.NotificationModel;
+import edu.usc.csci310.team16.tutorsearcher.RemoteServerDAO;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,24 +47,44 @@ public class WebServiceRepository {
         String response = "";
 
         try {
-            //  response = service.makeRequest().execute().body();
-            //TODO check userID type
-            service.getNotifications().enqueue(new Callback<List<Notification>>() {
+//            //  response = service.makeRequest().execute().body();
+//
+            service.checkNotifications().enqueue(new Callback<List<Notification>>() {
                 @Override
                 public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
-                    List<Notification> webserviceResponseList;
-                    webserviceResponseList = response.body();
-
-
-                    RoomDBRepository roomDBRepository = RoomDBRepository.getInstance(application);
-                    roomDBRepository.insertPosts(webserviceResponseList);
+                    Log.d("WEB_REPO", response.body().get(0).getMsg());
                 }
 
                 @Override
                 public void onFailure(Call<List<Notification>> call, Throwable t) {
-                    Log.d("Repository","Failed:::");
+                    Log.d("WEB_REPO", t.getMessage());
                 }
             });
+
+            //TODO check userID type
+//            service.getNotifications().enqueue(new Callback<List<Notification>>() {
+//                @Override
+//                public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
+//                    List<Notification> webserviceResponseList = new ArrayList<>();
+//                    webserviceResponseList = response.body();
+//                    try {
+//                        Log.d("WEB_REPO",response.raw().body().string());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    //RoomDBRepository.getInstance(application).changeStatus(notification);
+//
+//
+//                    RoomDBRepository roomDBRepository = RoomDBRepository.getInstance(application);
+//                    roomDBRepository.insertPosts(webserviceResponseList);
+//                }
+//
+//                @Override
+//                public void onFailure(Call<List<Notification>> call, Throwable t) {
+//
+//                    Log.d("Repository","Failed:::");
+//                }
+//            });
         }catch (Exception e){
             e.printStackTrace();
         }

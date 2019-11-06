@@ -50,6 +50,9 @@ public class NotificationFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
+
+        notificationModel.onRefresh();
+
         binding.notificationSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -59,10 +62,5 @@ public class NotificationFragment extends Fragment {
         });
 
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        notificationModel.onCreate();
     }
 }

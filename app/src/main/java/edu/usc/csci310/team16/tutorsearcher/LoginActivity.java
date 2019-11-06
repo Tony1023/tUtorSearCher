@@ -10,18 +10,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
-import edu.usc.csci310.team16.tutorsearcher.model.RemoteServerDAO;
 
 public class LoginActivity extends AppCompatActivity {
 

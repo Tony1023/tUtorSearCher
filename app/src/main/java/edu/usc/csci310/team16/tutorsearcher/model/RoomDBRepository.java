@@ -48,6 +48,15 @@ public class RoomDBRepository {
         new insertAsyncTask(notificationDAO).execute(resultModel);
     }
 
+    public void changeStatus (final Notification notification){
+        new insertAsyncTask(notificationDAO).execute(new Runnable() {
+            @Override
+            public void run() {
+                notificationDAO.modify(notification);
+            }
+        });
+    }
+
     private static class insertAsyncTask extends AsyncTask<List<Notification>, Void, Void> {
 
         private NotificationDAO mAsyncTaskDao;

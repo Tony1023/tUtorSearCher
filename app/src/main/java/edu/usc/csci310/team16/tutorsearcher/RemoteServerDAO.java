@@ -17,6 +17,7 @@ import java.util.Map;
 import edu.usc.csci310.team16.tutorsearcher.LoginData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import edu.usc.csci310.team16.tutorsearcher.UserProfile;
+import edu.usc.csci310.team16.tutorsearcher.model.RemoteServerServices;
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;

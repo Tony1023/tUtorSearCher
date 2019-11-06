@@ -38,10 +38,7 @@ public class NotificationModel extends AndroidViewModel {
     public void onRefresh(){
         //TODO check userID type
         //TODO actually implement networking
-        WebServiceRepository.getInstance(getApplication()).getNotificationUpdates(/*UserProfile.getCurrentUser().getId()*/);
+        WebServiceRepository.getInstance(getApplication()).getNotificationUpdates(0);
     }
 
-    public void onCreate() {
-        //mNotifications.postValue();
-    }
 }
