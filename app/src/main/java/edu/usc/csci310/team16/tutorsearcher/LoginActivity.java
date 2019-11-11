@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -69,7 +71,8 @@ public class LoginActivity extends AppCompatActivity {
         loginModel.getErrorMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                System.out.println(s);
+                TextView error = findViewById(R.id.error_message);
+                error.setText(s);
             }
         });
 
