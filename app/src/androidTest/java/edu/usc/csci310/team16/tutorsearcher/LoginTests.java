@@ -6,6 +6,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,12 +26,22 @@ public class LoginTests  {
     @Rule
     public ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule<>(LoginActivity.class, true, false);
 
+    private LoginRobot robot = new LoginRobot();
+
     @Test
     public void testLanding() {
         Intent intent = new Intent();
         activityRule.launchActivity(intent);
 
         onView(withId(R.id.error_message)).check(matches(withText("Your session has ended, please log in again")));
+    }
+
+    @Test
+    public void testLogin() {
+        Intent intent = new Intent();
+        activityRule.launchActivity(intent);
+        robot.login("tony@usc.edu", "password");
+
     }
 
 }
