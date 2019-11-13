@@ -151,6 +151,9 @@ public class EditProfileFragment extends Fragment {
                 user.setAvailability(availability);
 
 
+                // TODO: Add call to update profile endpoint and test case to check for it
+
+
                 //transition back to profile fragment
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, ((MainActivity)getActivity()).getProfile())
