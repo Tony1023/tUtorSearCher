@@ -1,7 +1,6 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
-import androidx.test.filters.LargeTest;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.mockwebserver.MockResponse;
@@ -15,7 +14,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-@LargeTest
 public class LoginTests extends BaseTests {
 
     /**

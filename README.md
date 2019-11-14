@@ -1,6 +1,13 @@
 # tUtorSearCher
 A revolutionary new app that connects USC Viterbi students, tutor to tutee.
 
+## How to Run and Generate Test Reports (with Coverage)
+- Sync gradle
+- Open file `build.gradle` for app
+- Click the play button next to `task jacocoTestReport`
+- The reports can be found in `app/build/reports`. Coverage can be found in `/app/build/reports/coverage/debug/index.html`.
+- Yes, these web pages are generated
+
 ## How to Run:
 
 ### Requirements:
@@ -14,7 +21,6 @@ A revolutionary new app that connects USC Viterbi students, tutor to tutee.
   - Once the project opens, it should automatically start building. If not, press Build (Ctrl + F9)
   - Android Studio may ask you to download certain packages for the project. Do so. However, ignore any other pop-ups, such as the        Gradle update suggestion.
   - Once the project is done building, Run App (Shift + F10)
-
 
 ## Modules
 ### Android App
