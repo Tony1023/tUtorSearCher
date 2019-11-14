@@ -1,47 +1,22 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
-import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
-
-import edu.usc.csci310.team16.tutorsearcher.LoginData;
-import edu.usc.csci310.team16.tutorsearcher.Notification;
-import edu.usc.csci310.team16.tutorsearcher.UserProfile;
 import edu.usc.csci310.team16.tutorsearcher.model.RemoteServerServices;
 import okhttp3.Interceptor;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import okhttp3.ResponseBody;
-
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Part;
+
 
 public class RemoteServerDAO {
     private static Retrofit retrofit = null;
-    private static RemoteServerServices dao = null;
-    final private static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
+    private static RemoteServerServices service = null;
+    public static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
     private static Integer id = -1;
     private static String token = "";
     private static boolean headerChanged = false;
@@ -78,11 +53,11 @@ public class RemoteServerDAO {
                     .client(httpBuilder.build())
                     .build();
 
-            dao = retrofit.create(RemoteServerServices.class);
+            service = retrofit.create(RemoteServerServices.class);
         }
 
         headerChanged=false;
-        return dao;
+        return service;
     }
 
 }
