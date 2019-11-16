@@ -1,10 +1,7 @@
 package edu.usc.csci310.team16.tutorsearcher.model;
 
 import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
+import androidx.room.*;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 
 import java.util.List;
@@ -21,5 +18,6 @@ public interface NotificationDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void modify(Notification items);
 
-
+    @Query("DELETE FROM `data_database.notifications`")
+    void deleteAll();
 }
