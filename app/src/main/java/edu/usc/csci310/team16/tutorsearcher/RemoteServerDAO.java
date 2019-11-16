@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RemoteServerDAO {
     private static Retrofit retrofit = null;
     private static RemoteServerServices service = null;
-    public static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
+    private static String url = "http://104.248.66.152:8080/server_main_war_exploded/";
     private static Integer id = -1;
     private static String token = "";
     private static boolean headerChanged = false;
@@ -28,6 +28,11 @@ public class RemoteServerDAO {
 
     public static void setToken(String token) {
         RemoteServerDAO.token = token;
+        headerChanged = true;
+    }
+
+    public static void setUrl(String url) {
+        RemoteServerDAO.url = url;
         headerChanged = true;
     }
 

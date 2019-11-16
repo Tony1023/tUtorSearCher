@@ -53,6 +53,7 @@ android {
         }
     }
     testOptions {
+        animationsDisabled = true
         unitTests.all {
             jacoco {
                 includeNoLocationClasses = true

@@ -14,4 +14,9 @@ public class LoginRobot extends BaseTestRobot {
         super.clickButton(R.id.email_register_button);
     }
 
+    public void logout() {
+        super.clickButton(R.id.navigation_profile);
+        super.clickButton(R.id.logout_button);
+    }
+
 }

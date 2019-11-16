@@ -10,6 +10,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 
@@ -19,13 +20,15 @@ public abstract class BaseTests {
 
     // in order to
     @Rule
-    public ActivityTestRule<SplashActivity> loginTestRule = new ActivityTestRule<>(SplashActivity.class, true, false);
+    public ActivityTestRule<SplashActivity> loginTestRule = new ActivityTestRule<>(SplashActivity.class, false, true);
 
     @Before
     public void setUp() throws Exception {
         server = new MockWebServer();
         server.play();
-        RemoteServerDAO.url = server.getUrl("/").toString();
+        RemoteServerDAO.setUrl(server.getUrl("/").toString());
+        RemoteServerDAO.setToken("");
+        RemoteServerDAO.setId(-1);
 
         Intent intent = new Intent();
         loginTestRule.launchActivity(intent);
@@ -33,4 +36,10 @@ public abstract class BaseTests {
         editor.clear();
         editor.commit();
     }
+
+    @After
+    public void tearDown() {
+
+    }
+
 }
