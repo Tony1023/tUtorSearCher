@@ -24,7 +24,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class LoginTests extends BaseTests {
+public class LoginTest extends BaseTests {
 
     /**
      * Inherited:
@@ -48,41 +48,6 @@ public class LoginTests extends BaseTests {
         onView(withId(R.id.name)).check(matches(withText("Tony")));
         robot.logout();
         onView(withId(R.id.login_form)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testWrongCredentials() {
-        server.enqueue(new MockResponse().setBody("{}"));
-        robot.login("tony@usc.edu", "wrong-password");
-        onView(withId(R.id.error_message)).check(matches(withText("Wrong credentials")));
-    }
-
-    @Test
-    public void testRegistration() {
-        Gson gson = new Gson();
-        Map<String, Object> res = new HashMap<>();
-        res.put("err", "Email already registered");
-        res.put("success", false);
-        server.enqueue(new MockResponse().setBody(gson.toJson(res)));
-        res.remove("err");
-        res.put("success", true);
-        res.put("id", 20);
-        res.put("access-token", "access-token");
-        server.enqueue(new MockResponse().setBody(gson.toJson(res)));
-        robot.register("usedemail@usc.edu", "secure-password");
-        onView(withId(R.id.error_message)).check(matches(withText("Email already registered")));
-        robot.register("newemail@usc.edu", "secure-password");
-        onView(withId(R.id.name_label)).check(matches(isDisplayed()));
-        onView(withId(R.id.name)).check(matches(withText("")));
-    }
-
-    @Test
-    public void testNetworkErrors() throws Exception {
-        server.shutdown();
-        robot.register("newemail@usc.edu", "password");
-        onView(withId(R.id.error_message)).check(matches(withText("Network errors")));
-        robot.login("tony@usc.edu", "password");
-        onView(withId(R.id.error_message)).check(matches(withText("Network errors")));
     }
 
     @Test

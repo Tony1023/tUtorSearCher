@@ -75,7 +75,7 @@ public class LoginModel extends ViewModel {
             public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
                 validating.postValue(false);
                 UserProfile profile = response.body();
-                if (profile != null && profile.getId() >= 0) {
+                if (profile.getId() >= 0) {
                     token.postValue(response.headers().get("access-token"));
                     user.postValue(profile);
                 } else {
@@ -100,7 +100,7 @@ public class LoginModel extends ViewModel {
             public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
                 validating.postValue(false);
                 UserProfile profile = response.body();
-                if (profile != null && profile.getId() >= 0) {
+                if (profile.getId() >= 0) {
                     user.postValue(profile);
                 } else {
                     errorMessage.postValue("Your session has ended, please log in again");
