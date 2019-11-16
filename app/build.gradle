@@ -115,4 +115,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha02'
     androidTestImplementation 'com.squareup.okhttp:mockwebserver:1.2.1'
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+
+    androidTestImplementation "com.google.truth:truth:1.0"
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "com.google.truth:truth:1.0"
 }
