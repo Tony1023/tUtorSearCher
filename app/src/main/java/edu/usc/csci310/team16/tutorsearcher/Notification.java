@@ -20,6 +20,7 @@ import com.google.gson.annotations.SerializedName;
  */
 @Entity(tableName = "data_database.notifications")
 public class Notification {
+
     @PrimaryKey()
     @ColumnInfo(name = "id")
     @SerializedName("id")

@@ -102,7 +102,6 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 sb.append("\nUnfortunately, the tutee has found another tutor.\nBetter luck next time");
             }else{
                 sb.append("\nThis notification has lapsed");
-
             }
             holder.message.setText(sb.toString());
         }

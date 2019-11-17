@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "edu.usc.csci310.team16.tutorsearcher"
-        minSdkVersion 25
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -32,6 +32,7 @@ dependencies {
     def lifecycle_version = "2.1.0"
     def fragment_version = "1.1.0"
     def room_version = "2.2.1"
+    def work_version = "2.2.0"
 
 
     implementation "androidx.appcompat:appcompat:$fragment_version"
@@ -41,6 +42,12 @@ dependencies {
     implementation 'androidx.core:core:1.2.0-beta01'
     implementation 'com.google.android.material:material:1.2.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    //Android work
+    implementation "androidx.work:work-runtime:$work_version"
+
+    // optional - Test helpers
+    androidTestImplementation "androidx.work:work-testing:$work_version"
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
