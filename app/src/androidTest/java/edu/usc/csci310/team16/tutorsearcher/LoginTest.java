@@ -51,7 +51,7 @@ public class LoginTest extends BaseTests {
     }
 
     @Test
-    public void testAutoLogin() throws IOException {
+    public void testAutoLogin() {
         Gson gson = new Gson();
         UserProfile user = new UserProfile();
         user.setId(1);
@@ -71,15 +71,10 @@ public class LoginTest extends BaseTests {
         Intent intent = new Intent();
         loginRule.launchActivity(intent);
         onView(withId(R.id.name)).check(matches(withText("Tony")));
-        loginRule.finishActivity();
-        server.shutdown();
-        ActivityTestRule<LoginActivity> loginRule2 = new ActivityTestRule<>(LoginActivity.class, true, false);
-        intent = new Intent();
-        loginRule2.launchActivity(intent);
-        onView(withId(R.id.error_message)).check(matches(withText("Network errors")));
-        SharedPreferences.Editor editor = loginRule2.getActivity().getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = loginRule.getActivity().getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
         editor.clear();
         editor.commit();
+        loginRule.finishActivity();
     }
 
 
