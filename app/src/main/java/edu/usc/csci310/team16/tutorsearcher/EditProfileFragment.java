@@ -129,6 +129,9 @@ public class EditProfileFragment extends Fragment {
                 String[] courseCodes = {"CSCI103", "CSCI104", "CSCI170", "CSCI201", "CSCI270", "CSCI310", "CSCI350",
                         "CSCI356", "CSCI360"};
 
+                String[] courseNumbers = {"103", "104", "170", "201", "270", "310", "350",
+                        "356", "360"};
+
                 ArrayList<String> coursesTaken = new ArrayList<String>();
                 ArrayList<String> coursesTutoring = new ArrayList<String>();
 
@@ -138,6 +141,9 @@ public class EditProfileFragment extends Fragment {
                     //courses taken
                     final CheckBox takenCheckbox = (CheckBox)getActivity().findViewById(getResources()
                             .getIdentifier(coursesTakenArray[i], "id", getActivity().getPackageName()));
+
+//                    takenCheckbox.setTag(courseNumbers[i]+"taken"); //ADDED
+
                     if (takenCheckbox.isChecked()) {
                         coursesTaken.add(courseCodes[i]);
                     }
@@ -145,6 +151,8 @@ public class EditProfileFragment extends Fragment {
                     //courses tutoring
                     final CheckBox tutoringCheckbox = (CheckBox)getActivity().findViewById(getResources()
                             .getIdentifier(coursesTutoringArray[i], "id", getActivity().getPackageName()));
+
+//                    tutoringCheckbox.setTag(courseNumbers[i]+"tutoring");
 
                     if(tutoringCheckbox.isChecked()) {
                         coursesTutoring.add(courseCodes[i]);

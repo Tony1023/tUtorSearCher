@@ -113,18 +113,21 @@
             >
             <CheckBox
                 android:id="@+id/cs103_taken"
+                android:tag="103taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 103" />
             <CheckBox
                 android:id="@+id/cs104_taken"
+                    android:tag="104taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 104" />
             <CheckBox
                 android:id="@+id/cs170_taken"
+                    android:tag="170taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -138,18 +141,21 @@
             >
             <CheckBox
                 android:id="@+id/cs201_taken"
+                    android:tag="201taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 201" />
             <CheckBox
                 android:id="@+id/cs270_taken"
+                    android:tag="201taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 270" />
             <CheckBox
                 android:id="@+id/cs310_taken"
+                    android:tag="310taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -163,18 +169,21 @@
             >
             <CheckBox
                 android:id="@+id/cs350_taken"
+                    android:tag="350taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 350" />
             <CheckBox
                 android:id="@+id/cs356_taken"
+                    android:tag="356taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 356" />
             <CheckBox
                 android:id="@+id/cs360_taken"
+                    android:tag="360taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -197,18 +206,21 @@
             >
             <CheckBox
                 android:id="@+id/cs103_tutoring"
+                    android:tag="103tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 103" />
             <CheckBox
                 android:id="@+id/cs104_tutoring"
+                    android:tag="104tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 104" />
             <CheckBox
                 android:id="@+id/cs170_tutoring"
+                    android:tag="170tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -222,18 +234,21 @@
             >
             <CheckBox
                 android:id="@+id/cs201_tutoring"
+                    android:tag="201tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 201" />
             <CheckBox
                 android:id="@+id/cs270_tutoring"
+                    android:tag="270tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 270" />
             <CheckBox
                 android:id="@+id/cs310_tutoring"
+                    android:tag="310tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -247,18 +262,21 @@
             >
             <CheckBox
                 android:id="@+id/cs350_tutoring"
+                    android:tag="350tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 350" />
             <CheckBox
                 android:id="@+id/cs356_tutoring"
+                    android:tag="356tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="CS 356" />
             <CheckBox
                 android:id="@+id/cs360_tutoring"
+                    android:tag="360tutoring"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

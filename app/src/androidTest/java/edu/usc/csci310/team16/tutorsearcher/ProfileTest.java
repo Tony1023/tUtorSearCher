@@ -63,4 +63,29 @@ public class ProfileTest extends BaseTests {
         robot.fillAvailability(availability);
 
     }
+
+    @Test
+    public void testAll() {
+        onView(withId(R.id.edit_button)).perform(click());
+
+        String name = "teagan";
+        String grade = "Freshman";
+
+        String bio = "i hate android development";
+
+        List<Integer> availability = new ArrayList<Integer>();
+        availability.add(1);
+        availability.add(2);
+        availability.add(3);
+
+        List<String> coursesTaken = new ArrayList<String>();
+        coursesTaken.add("CSCI103");
+        coursesTaken.add("CSCI104");
+        List<String> coursesTutoring = new ArrayList<String>();
+        coursesTutoring.add("CSCI356");
+        coursesTutoring.add("CSCI360");
+
+        robot.fillAll(name, grade, bio, coursesTaken, coursesTutoring, availability);
+
+    }
 }
