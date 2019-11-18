@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.GridLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -23,10 +25,26 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class EditProfileFragment extends Fragment {
 
     private UserProfile user;
-    private MaterialCheckBox time_toggle[][];
+    private MaterialCheckBox time_toggle[][]; //for availability
+
+    //added instance fields to store the courses taken and tutoring courses
+//    private MaterialCheckBox coursesTakenBoxes[][];
+//    private MaterialCheckBox coursesTutoringBoxes[][];
+//
+//    public MaterialCheckBox[][] getCoursesTakenBoxes() {
+//        return coursesTakenBoxes;
+//    }
+//
+//    public MaterialCheckBox[][] getCoursesTutoringBoxes() {
+//        return coursesTutoringBoxes;
+//    }
 
 
     @Override
@@ -73,7 +91,9 @@ public class EditProfileFragment extends Fragment {
 
             for(int j = 0; j < time_toggle[0].length; j++){
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
+                time_toggle[i][j].setTag((i*time_toggle[0].length + j)+"box"); //ADDED DYNAMIC ID
                 timeSelectGrid.addView(time_toggle[i][j]);
+
             }
         }
         //END CODE STOLEN FROM MICAH
@@ -150,6 +170,17 @@ public class EditProfileFragment extends Fragment {
                 user.setTutorClasses(coursesTutoring);
                 user.setAvailability(availability);
 
+                //TODO: MAKE SURE THIS IS WORKING
+                //Add call to update profile endpoint and test case to check for it
+                RemoteServerDAO.getDao().updateProfile(user).enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                    }
+                });
 
                 //transition back to profile fragment
                 getActivity().getSupportFragmentManager().beginTransaction()
