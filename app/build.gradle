@@ -81,6 +81,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$fragment_version"
 
     implementation "androidx.fragment:fragment:$fragment_version"
+    androidTestImplementation "androidx.fragment:fragment-testing:$fragment_version"
+
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.core:core:1.2.0-beta01'
     implementation 'com.google.android.material:material:1.2.0-alpha01'

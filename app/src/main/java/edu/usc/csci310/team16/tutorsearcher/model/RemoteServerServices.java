@@ -18,6 +18,8 @@ public interface RemoteServerServices {
     @GET("user/getNotifications")
     Call<List<Notification>> checkNotifications();
 
+    @GET("user/getNotificationUpdates")
+    Call<Integer> getNotificationUpdates();
 
         @POST("signup")
         Call<Map<String, Object>> register(@Body LoginData credentials);

@@ -3,9 +3,6 @@ package edu.usc.csci310.team16.tutorsearcher;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.work.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class NotificationWorker extends Worker {
     public NotificationWorker(
@@ -21,15 +18,10 @@ public class NotificationWorker extends Worker {
         String token = getInputData().getString("TOKEN");
 
         int newNumber = 0;
-        OkHttpClient client = new OkHttpClient.Builder()
-                .build();
 
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        try(Response response = client.newCall(request).execute()){
-
-            newNumber = Integer.parseInt(String.valueOf(response.body()));
+        try{
+            Integer response = RemoteServerDAO.getDao().getNotificationUpdates().execute().body();
+            newNumber = response.intValue();
 
             //Launch the notification
             NotificationHelper helper = new NotificationHelper(getApplicationContext());
