@@ -32,7 +32,19 @@ import retrofit2.Response;
 public class EditProfileFragment extends Fragment {
 
     private UserProfile user;
-    private MaterialCheckBox time_toggle[][];
+    private MaterialCheckBox time_toggle[][]; //for availability
+
+    //added instance fields to store the courses taken and tutoring courses
+//    private MaterialCheckBox coursesTakenBoxes[][];
+//    private MaterialCheckBox coursesTutoringBoxes[][];
+//
+//    public MaterialCheckBox[][] getCoursesTakenBoxes() {
+//        return coursesTakenBoxes;
+//    }
+//
+//    public MaterialCheckBox[][] getCoursesTutoringBoxes() {
+//        return coursesTutoringBoxes;
+//    }
 
 
     @Override
@@ -79,7 +91,9 @@ public class EditProfileFragment extends Fragment {
 
             for(int j = 0; j < time_toggle[0].length; j++){
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
+                time_toggle[i][j].setTag((i*time_toggle[0].length + j)+"box"); //ADDED DYNAMIC ID
                 timeSelectGrid.addView(time_toggle[i][j]);
+
             }
         }
         //END CODE STOLEN FROM MICAH
