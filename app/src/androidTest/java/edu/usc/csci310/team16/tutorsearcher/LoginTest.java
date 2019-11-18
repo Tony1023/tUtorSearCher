@@ -9,13 +9,10 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -42,7 +39,6 @@ public class LoginTest extends BaseTests {
         user.setEmail("tony@usc.edu");
         server.enqueue(new MockResponse()
                 .setBody(gson.toJson(user))
-                .addHeader("access-token", "accessToken") // not used
         );
         robot.login("tony@usc.edu", "password");
         onView(withId(R.id.name)).check(matches(withText("Tony")));
@@ -51,7 +47,7 @@ public class LoginTest extends BaseTests {
     }
 
     @Test
-    public void testAutoLogin() {
+    public void testAutoLogin() throws InterruptedException {
         Gson gson = new Gson();
         UserProfile user = new UserProfile();
         user.setId(1);
@@ -74,6 +70,25 @@ public class LoginTest extends BaseTests {
         SharedPreferences.Editor editor = loginRule.getActivity().getSharedPreferences("tutorsearcher", Context.MODE_PRIVATE).edit();
         editor.clear();
         editor.commit();
+//        RecordedRequest recordedRequest = server.takeRequest();
+//        recordedRequest = server.takeRequest();
+//        final Thread currentThread = Thread.currentThread();
+//        Thread timeoutThread = new Thread() {
+//            @Override public void run() {
+//                try {
+//                    Thread.sleep(1000);
+//                    currentThread.interrupt();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        timeoutThread.start();
+//        try {
+//            recordedRequest = server.takeRequest();
+//        } catch (InterruptedException e) {
+//            recordedRequest = null;
+//        }
         loginRule.finishActivity();
     }
 
