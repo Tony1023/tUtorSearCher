@@ -62,7 +62,7 @@ public class ProfileRobot extends BaseTestRobot {
 
 //        super.fillEditText(R.id.bio, bio);
 
-//        onView(withId(R.id.bio)).perform(replaceText(bio));
+        onView(withId(R.id.bio)).perform(replaceText(bio));
     }
 
     //NOT WORKING BECAUSE OF SCROLLING ISSUES
@@ -72,7 +72,8 @@ public class ProfileRobot extends BaseTestRobot {
         for(int i = 0; i < coursesTaken.size(); i++) {
 
             String courseNumber = coursesTaken.get(i).substring(4);
-            onView(withTagValue(is((Object)(courseNumber+"taken")))).perform(scrollTo()).perform(closeSoftKeyboard()).perform(click());
+            onView(withId(R.id.submit_button)).perform(scrollTo());
+            onView(withTagValue(is((Object)(courseNumber+"taken")))).perform(click());
 
         }
 
@@ -114,6 +115,8 @@ public class ProfileRobot extends BaseTestRobot {
     }
 
     public void submitEdits() {
-        super.clickButton(R.id.submit_button);
+
+        onView(withId(R.id.submit_button)).perform(scrollTo(), click());
+//        super.clickButton(R.id.submit_button);
     }
 }
