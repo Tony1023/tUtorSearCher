@@ -32,8 +32,6 @@ public class NotificationWorker extends Worker {
 
         }
 
-
-
         // Indicate whether the task finished successfully with the Result
         return Result.failure();
     }

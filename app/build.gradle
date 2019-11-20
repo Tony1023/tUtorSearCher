@@ -54,15 +54,15 @@ android {
     }
     testOptions {
         animationsDisabled = true
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
         }
     }
     dataBinding {
         enabled = true
     }
+
 }
 
 configurations.all() {
@@ -93,6 +93,7 @@ dependencies {
 
     // optional - Test helpers
     androidTestImplementation "androidx.work:work-testing:$work_version"
+    testImplementation "androidx.work:work-testing:$work_version"
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
@@ -127,4 +128,8 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:1.0"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "com.google.truth:truth:1.0"
+    testImplementation 'org.robolectric:robolectric:4.3'
+    testImplementation "com.squareup.okhttp:mockwebserver:1.2.1"
+    testImplementation 'androidx.test:core:1.2.1-alpha02'
+
 }

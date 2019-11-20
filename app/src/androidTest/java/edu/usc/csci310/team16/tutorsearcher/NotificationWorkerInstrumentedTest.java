@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.fragment.app.testing.*;
 import androidx.lifecycle.Lifecycle;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 import androidx.work.OneTimeWorkRequest;
@@ -23,13 +24,14 @@ import org.junit.runners.JUnit4;
 
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(AndroidJUnit4.class)
-public class NotificationWorkerTest extends LiveDataTestBase {
+public class NotificationWorkerInstrumentedTest extends LiveDataTestBase {
     ActivityTestRule mainRule;
     OneTimeWorkRequest workerRequest;
     WorkManager manager;
@@ -41,6 +43,7 @@ public class NotificationWorkerTest extends LiveDataTestBase {
 
         workerRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class).build();
         manager = WorkManager.getInstance(getApplicationContext());
+
         //driver = WorkManagerTestInitHelper.getTestDriver(getApplicationContext());
     }
 

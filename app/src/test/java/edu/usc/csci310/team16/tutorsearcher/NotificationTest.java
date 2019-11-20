@@ -4,24 +4,30 @@ import edu.usc.csci310.team16.tutorsearcher.Notification;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.*;
 
-public class NotificationTest {
+@RunWith(RobolectricTestRunner.class)
+public class NotificationTest extends TestBase {
 
-    Notification nullNotification = new Notification();
-    Notification fullNotification = new Notification();
+    Notification nullNotification;
+    Notification fullNotification;
 
-    @Before
+    @Override
     public void setUp() throws Exception {
         nullNotification = new Notification();
         fullNotification = new Notification("id", 0, 0, 0, "Eric",
                 0, "1010101", "This is a test", 0);
     }
 
-    @After
-    public void tearDown() throws Exception {
+
+    @Test
+    public void checkNotifications(){
+
     }
+
 
     @Test
     public void getId() {
