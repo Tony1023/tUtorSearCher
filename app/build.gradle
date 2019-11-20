@@ -6,10 +6,6 @@ jacoco {
     toolVersion = "$jacocoVersion"
 }
 
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
-}
-
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
 
     reports {
@@ -30,6 +26,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
+    useJUnitPlatform()
 }
 
 android {
@@ -57,6 +54,12 @@ android {
         unitTests {
             returnDefaultValues = true
             includeAndroidResources = true
+        }
+
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
         }
     }
     dataBinding {

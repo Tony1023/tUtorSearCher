@@ -8,6 +8,7 @@ import androidx.fragment.app.testing.*;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SmallTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
@@ -31,6 +32,7 @@ import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(AndroidJUnit4.class)
+@SmallTest
 public class NotificationWorkerInstrumentedTest extends LiveDataTestBase {
     ActivityTestRule mainRule;
     OneTimeWorkRequest workerRequest;
@@ -49,8 +51,7 @@ public class NotificationWorkerInstrumentedTest extends LiveDataTestBase {
 
     @Test
     public void doWorkEmpty(){
-        server.enqueue(new MockResponse().setBody("0"));
-        manager.enqueue(workerRequest);
+        server.enqueue(new MockResponse().setBody("8"));
 
         try {
             manager.enqueue(workerRequest).getResult().get();
@@ -70,6 +71,20 @@ public class NotificationWorkerInstrumentedTest extends LiveDataTestBase {
 
     @Test
     public void doWorkMany(){
+        server.enqueue(new MockResponse().setBody("0"));
 
+        try {
+            manager.enqueue(workerRequest).getResult().get();
+            WorkInfo workInfo = manager.getWorkInfoById(workerRequest.getId()).get();
+
+            assertThat(workInfo.getState()).isEqualTo(WorkInfo.State.SUCCEEDED);
+
+        } catch (ExecutionException e) {
+            Assert.fail();
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            Assert.fail();
+            e.printStackTrace();
+        }
     }
 }
