@@ -148,7 +148,7 @@
                 android:text="CS 201" />
             <CheckBox
                 android:id="@+id/cs270_taken"
-                    android:tag="201taken"
+                    android:tag="270taken"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

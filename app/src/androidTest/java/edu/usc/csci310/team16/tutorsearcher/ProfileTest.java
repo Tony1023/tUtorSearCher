@@ -75,6 +75,43 @@ public class ProfileTest extends BaseTests {
 
     }
 
+    //check all class checkboxes to make sure they appear on page
+    @Test
+    public void testAllCheckboxes() {
+        List<String> coursesTaken = new ArrayList<String>();
+        coursesTaken.add("CSCI103");
+        coursesTaken.add("CSCI104");
+        coursesTaken.add("CSCI170");
+        coursesTaken.add("CSCI201");
+        coursesTaken.add("CSCI270");
+        coursesTaken.add("CSCI310");
+        coursesTaken.add("CSCI350");
+        coursesTaken.add("CSCI356");
+        coursesTaken.add("CSCI360");
+        robot.fillCoursesTaken(coursesTaken);
+
+        List<String> coursesTutoring = new ArrayList<String>();
+        coursesTutoring.add("CSCI103");
+        coursesTutoring.add("CSCI104");
+        coursesTutoring.add("CSCI170");
+        coursesTutoring.add("CSCI201");
+        coursesTutoring.add("CSCI270");
+        coursesTutoring.add("CSCI310");
+        coursesTutoring.add("CSCI350");
+        coursesTutoring.add("CSCI356");
+        coursesTutoring.add("CSCI360");
+        robot.fillTutoringCourses(coursesTutoring);
+
+        robot.submitEdits();
+
+        //check to make sure all the courses appear
+        onView(withId(R.id.rating)).perform(scrollTo()); //scroll down to see courses taken/tutoring
+        onView(withId(R.id.courses_taken)).perform(scrollTo()).check(matches(withText
+                ("CSCI103, CSCI104, CSCI170, CSCI201, CSCI270, CSCI310, CSCI350, CSCI356, CSCI360")));
+        onView(withId(R.id.courses_tutoring)).perform(scrollTo()).check(matches(withText
+                ("CSCI103, CSCI104, CSCI170, CSCI201, CSCI270, CSCI310, CSCI350, CSCI356, CSCI360")));
+    }
+
     //fill all the fields and make sure the data matches on the profile page
     @Test
     public void testAll() {
@@ -118,9 +155,12 @@ public class ProfileTest extends BaseTests {
         onView(withId(R.id.courses_taken)).perform(scrollTo()).check(matches(withText("CSCI103, CSCI104")));
         onView(withId(R.id.courses_tutoring)).perform(scrollTo()).check(matches(withText("CSCI356, CSCI360")));
     }
-
-
     //---------
+
+    //BLACK BOX TESTING
+    
+
+    //-------
 
     @Test
     public void testAvailability() {
