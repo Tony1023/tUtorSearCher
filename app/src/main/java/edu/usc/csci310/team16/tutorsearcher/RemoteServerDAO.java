@@ -43,7 +43,7 @@ public class RemoteServerDAO {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request req = chain.request().newBuilder()
-                            .addHeader("access-token", token)
+//                            .addHeader("access-token", token)
                             .addHeader("user-id", id.toString())
                             .build();
                     return chain.proceed(req);

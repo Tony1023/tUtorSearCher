@@ -116,7 +116,8 @@ public class ProfileRobot extends BaseTestRobot {
 
     public void submitEdits() {
 
-        onView(withId(R.id.submit_button)).perform(scrollTo(), click());
-//        super.clickButton(R.id.submit_button);
+        onView(withId(R.id.bottom_view)).perform(scrollTo());
+//        onView(withId(R.id.submit_button)).perform(click());
+        super.clickButton(R.id.submit_button);
     }
 }

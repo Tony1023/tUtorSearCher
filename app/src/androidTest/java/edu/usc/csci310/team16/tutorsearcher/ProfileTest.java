@@ -22,11 +22,14 @@ import java.util.Map;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 
@@ -52,6 +55,28 @@ public class ProfileTest extends BaseTests {
 
         onView(withId(R.id.edit_button)).perform(click());
     }
+
+    //WHITEBOX TESTING
+
+    //don't fill in any of the fields; make sure everything is empty on profile page
+    @Test
+    public void testNoEdits() {
+        robot.submitEdits(); //hit the submit button
+
+        //check that everything is empty on the profile page
+        onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("")));
+        onView(withId(R.id.grade)).check(matches(withText("Freshman"))); //default value
+
+        //can't check availability bc couldn't find way to check background color
+
+        onView(withId(R.id.bio)).check(matches(withText("")));
+        onView(withId(R.id.courses_taken)).check(matches(withText("")));
+        onView(withId(R.id.courses_tutoring)).check(matches(withText("")));
+
+    }
+
+
+    //---------
 
     @Test
     public void testAvailability() {
