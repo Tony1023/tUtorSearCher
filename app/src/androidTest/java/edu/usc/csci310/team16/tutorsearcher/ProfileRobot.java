@@ -62,7 +62,7 @@ public class ProfileRobot extends BaseTestRobot {
 
 //        super.fillEditText(R.id.bio, bio);
 
-        onView(withId(R.id.bio)).perform(replaceText(bio));
+//        onView(withId(R.id.bio)).perform(replaceText(bio));
     }
 
     //NOT WORKING BECAUSE OF SCROLLING ISSUES

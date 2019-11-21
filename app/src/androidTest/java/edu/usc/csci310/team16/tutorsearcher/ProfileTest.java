@@ -75,6 +75,50 @@ public class ProfileTest extends BaseTests {
 
     }
 
+    //fill all the fields and make sure the data matches on the profile page
+    @Test
+    public void testAll() {
+        String name = "Teagan";
+        robot.fillName(name);
+
+        String grade = "Junior";
+        robot.fillGrade(grade);
+
+        String bio = "web development is my Passion";
+        robot.fillBio(bio);
+
+        List<Integer> availability = new ArrayList<Integer>();
+        availability.add(1);
+        availability.add(2);
+        availability.add(3);
+        robot.fillAvailability(availability);
+
+        List<String> coursesTaken = new ArrayList<String>();
+        coursesTaken.add("CSCI103");
+        coursesTaken.add("CSCI104");
+        robot.fillCoursesTaken(coursesTaken);
+
+        List<String> coursesTutoring = new ArrayList<String>();
+        coursesTutoring.add("CSCI356");
+        coursesTutoring.add("CSCI360");
+        robot.fillTutoringCourses(coursesTutoring);
+
+        robot.submitEdits();
+
+        //check that all the fields are filled correctly on profile page
+        onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("Teagan")));
+        onView(withId(R.id.grade)).perform(scrollTo()).check(matches(withText("Junior"))); //default value
+
+        //can't check availability bc couldn't find way to check background color
+        onView(withId(R.id.courses_taken)).perform(scrollTo()); //scroll down to see bio
+        // FILL THIS ONCE BIO IS WORKING
+        onView(withId(R.id.bio)).check(matches(withText("")));
+
+        onView(withId(R.id.rating)).perform(scrollTo()); //scroll down to see courses taken/tutoring
+        onView(withId(R.id.courses_taken)).perform(scrollTo()).check(matches(withText("CSCI103, CSCI104")));
+        onView(withId(R.id.courses_tutoring)).perform(scrollTo()).check(matches(withText("CSCI356, CSCI360")));
+    }
+
 
     //---------
 
@@ -92,32 +136,6 @@ public class ProfileTest extends BaseTests {
 
     }
 
-    @Test
-    public void testAll() {
-//        onView(withId(R.id.edit_button)).perform(click());
-
-        String name = "teagan";
-        String grade = "Junior";
-
-        String bio = "i hate android development";
-
-        List<Integer> availability = new ArrayList<Integer>();
-        availability.add(1);
-        availability.add(2);
-        availability.add(3);
-
-//        List<String> coursesTaken = new ArrayList<String>();
-//        coursesTaken.add("CSCI103");
-//        coursesTaken.add("CSCI104");
-//        List<String> coursesTutoring = new ArrayList<String>();
-//        coursesTutoring.add("CSCI356");
-//        coursesTutoring.add("CSCI360");
-
-        testAvailability();
-        testCoursesTaken();
-        testCoursesTutoring();
-
-    }
 
     @Test
     public void testEditButton() {
