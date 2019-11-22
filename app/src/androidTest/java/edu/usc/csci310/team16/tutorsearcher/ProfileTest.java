@@ -175,21 +175,21 @@ public class ProfileTest extends BaseTests {
 
         List<Integer> availability = new ArrayList<Integer>();
         availability.add(0);
-        availability.add(7);
+        availability.add(1);
         robot.fillAvailability(availability);
 
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
         coursesTaken.add("CSCI104");
         coursesTaken.add("CSCI170");
+        coursesTaken.add("CSCI201");
         coursesTaken.add("CSCI270");
         coursesTaken.add("CSCI310");
-        coursesTaken.add("CSCI201");
         robot.fillCoursesTaken(coursesTaken);
 
         List<String> coursesTutoring = new ArrayList<String>();
-        coursesTutoring.add("CSCI310");
         coursesTutoring.add("CSCI104");
+        coursesTutoring.add("CSCI310");
         robot.fillTutoringCourses(coursesTutoring);
 
         robot.submitEdits();
@@ -199,6 +199,35 @@ public class ProfileTest extends BaseTests {
 
         //DO THIS FOR ALL OF THE FIELDS
         assertEquals(name, user.getName());
+        assertEquals(grade, user.getGrade());
+
+        //  FIX THIS WHEN FIXING BIO
+        assertEquals("", user.getBio());
+
+
+        for(int i = 0; i < availability.size(); i++) {
+            assertEquals(availability.get(i), user.getAvailability().get(i));
+        }
+
+        for(int i = 0; i < coursesTaken.size(); i++) {
+            assertEquals(coursesTaken.get(i), user.getCoursesTaken().get(i));
+        }
+
+        for(int j = 0; j < coursesTutoring.size(); j++) {
+            assertEquals(coursesTutoring.get(j), user.getTutorClasses().get(j));
+        }
+    }
+
+    //edits profile, then edits again and change nothing: the profile should stay the same
+    @Test
+    public void testEditTwice() {
+
+    }
+
+    //Edit profile, log out, log back in, and make sure the changes saved
+    @Test
+    public void testEditLogOutLogIn() {
+        
     }
 
     //-------
