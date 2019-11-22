@@ -24,11 +24,13 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
@@ -158,7 +160,46 @@ public class ProfileTest extends BaseTests {
     //---------
 
     //BLACK BOX TESTING
-    
+
+    //fill up user profile and check that singleton changes values
+    @Test
+    public void checkUserProfile() {
+        String name = "Eric";
+        robot.fillName(name);
+
+        String grade = "Junior";
+        robot.fillGrade(grade);
+
+        String bio = "I like League";
+        robot.fillBio(bio);
+
+        List<Integer> availability = new ArrayList<Integer>();
+        availability.add(0);
+        availability.add(7);
+        robot.fillAvailability(availability);
+
+        List<String> coursesTaken = new ArrayList<String>();
+        coursesTaken.add("CSCI103");
+        coursesTaken.add("CSCI104");
+        coursesTaken.add("CSCI170");
+        coursesTaken.add("CSCI270");
+        coursesTaken.add("CSCI310");
+        coursesTaken.add("CSCI201");
+        robot.fillCoursesTaken(coursesTaken);
+
+        List<String> coursesTutoring = new ArrayList<String>();
+        coursesTutoring.add("CSCI310");
+        coursesTutoring.add("CSCI104");
+        robot.fillTutoringCourses(coursesTutoring);
+
+        robot.submitEdits();
+
+        //check values of UserProfile singleton
+        UserProfile user = UserProfile.getCurrentUser();
+
+        //DO THIS FOR ALL OF THE FIELDS
+        assertEquals(name, user.getName());
+    }
 
     //-------
 
