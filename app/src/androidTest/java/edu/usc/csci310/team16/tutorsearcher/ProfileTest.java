@@ -126,12 +126,6 @@ public class ProfileTest extends BaseTests {
         String bio = "web development is my Passion";
         robot.fillBio(bio);
 
-        List<Integer> availability = new ArrayList<Integer>();
-        availability.add(1);
-        availability.add(2);
-        availability.add(3);
-        robot.fillAvailability(availability);
-
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
         coursesTaken.add("CSCI104");
@@ -150,8 +144,7 @@ public class ProfileTest extends BaseTests {
 
         //can't check availability bc couldn't find way to check background color
         onView(withId(R.id.courses_taken)).perform(scrollTo()); //scroll down to see bio
-        // FILL THIS ONCE BIO IS WORKING
-        onView(withId(R.id.bio)).check(matches(withText("")));
+        onView(withId(R.id.bio)).check(matches(withText("web development is my Passion")));
 
         onView(withId(R.id.rating)).perform(scrollTo()); //scroll down to see courses taken/tutoring
         onView(withId(R.id.courses_taken)).perform(scrollTo()).check(matches(withText("CSCI103, CSCI104")));
@@ -172,11 +165,6 @@ public class ProfileTest extends BaseTests {
 
         String bio = "I like League";
         robot.fillBio(bio);
-
-        List<Integer> availability = new ArrayList<Integer>();
-        availability.add(0);
-        availability.add(1);
-        robot.fillAvailability(availability);
 
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
@@ -200,15 +188,9 @@ public class ProfileTest extends BaseTests {
         //DO THIS FOR ALL OF THE FIELDS
         assertEquals(name, user.getName());
         assertEquals(grade, user.getGrade());
+        assertEquals(bio, user.getBio());
 
-        //  FIX THIS WHEN FIXING BIO
-        assertEquals("", user.getBio());
-
-
-        for(int i = 0; i < availability.size(); i++) {
-            assertEquals(availability.get(i), user.getAvailability().get(i));
-        }
-
+        //verify checkboxes
         for(int i = 0; i < coursesTaken.size(); i++) {
             assertEquals(coursesTaken.get(i), user.getCoursesTaken().get(i));
         }
@@ -226,6 +208,9 @@ public class ProfileTest extends BaseTests {
 
         String grade = "Junior";
         robot.fillGrade(grade);
+
+        String bio = "android development is hard :(";
+        robot.fillBio(bio);
 
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
@@ -249,9 +234,10 @@ public class ProfileTest extends BaseTests {
         //check values of UserProfile singleton
         UserProfile user = UserProfile.getCurrentUser();
 
-        //check that the name and grade are the same in UserProfile
+        //check that the name, grade, and bio are the same in UserProfile
         assertEquals(name, user.getName());
         assertEquals(grade, user.getGrade());
+        assertEquals(bio, user.getBio());
 
         //check that courses taken are the same
         assertEquals(coursesTaken.get(0), user.getCoursesTaken().get(0));
@@ -309,22 +295,9 @@ public class ProfileTest extends BaseTests {
 
         onView(withId(R.id.edit_button)).perform(click());
 
-        //CHECK ALL THE USERPROFILE FIELDS
+        //CHECK ALL THE USERPROFILE FIELDS (including bio)
     }
 
     //-------
-
-    @Test
-    public void testBio() {
-        String bio = "i hate android development";
-        robot.fillBio(bio);
-
-        robot.submitEdits();
-
-        onView(withId(R.id.courses_taken)).perform(scrollTo()); //scroll down to see bio
-        // FILL THIS ONCE BIO IS WORKING
-        onView(withId(R.id.bio)).check(matches(withText("i hate android development")));
-
-    }
 
 }
