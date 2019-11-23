@@ -61,8 +61,8 @@ public class ProfileRobot extends BaseTestRobot {
     public void fillBio(String bio) {
 
 //        super.fillEditText(R.id.bio, bio);
-
-//        onView(withId(R.id.bio)).perform(replaceText(bio));
+        onView(withId(R.id.courses_taken)).perform(scrollTo());
+        onView(withId(R.id.bio)).perform(replaceText(bio));
     }
 
     public void fillCoursesTaken(List<String> coursesTaken) {

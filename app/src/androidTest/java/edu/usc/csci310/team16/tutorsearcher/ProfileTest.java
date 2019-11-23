@@ -79,7 +79,7 @@ public class ProfileTest extends BaseTests {
 
     //check all class checkboxes to make sure they appear on page
     @Test
-    public void testAllCheckboxes() {
+    public void testCheckboxes() {
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
         coursesTaken.add("CSCI104");
@@ -313,5 +313,18 @@ public class ProfileTest extends BaseTests {
     }
 
     //-------
-    
+
+    @Test
+    public void testBio() {
+        String bio = "i hate android development";
+        robot.fillBio(bio);
+
+        robot.submitEdits();
+
+        onView(withId(R.id.courses_taken)).perform(scrollTo()); //scroll down to see bio
+        // FILL THIS ONCE BIO IS WORKING
+        onView(withId(R.id.bio)).check(matches(withText("i hate android development")));
+
+    }
+
 }
