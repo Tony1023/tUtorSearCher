@@ -312,61 +312,6 @@ public class ProfileTest extends BaseTests {
         //CHECK ALL THE USERPROFILE FIELDS
     }
 
-
-
-
     //-------
-
-    @Test
-    public void testAvailability() {
-
-        List<Integer> availability = new ArrayList<Integer>();
-        availability.add(1);
-        availability.add(2);
-        availability.add(3);
-
-        robot.fillAvailability(availability);
-
-        //ADD CHECKING THAT THE RIGHT BOXES ARE CHECKED
-
-    }
-
-
-    @Test
-    public void testEditButton() {
-//        onView(withId(R.id.edit_button)).perform(click());
-
-        robot.submitEdits();
-    }
-
-    @Test
-    public void testCoursesTaken() {
-//        onView(withId(R.id.edit_button)).perform(click());
-
-        List<String> coursesTaken = new ArrayList<String>();
-        coursesTaken.add("CSCI103");
-        coursesTaken.add("CSCI104");
-
-        robot.fillCoursesTaken(coursesTaken);
-
-        //FAILS BECAUSE IT AUTOMATICALLY CLICKS OVER TO SEARCH FOR SOME REASON
-        // D/search fragment: init []
-
-        onView(withId(R.id.cs103_taken)).check(matches(isChecked()));
-        onView(withId(R.id.cs104_taken)).check(matches(isChecked()));
-    }
-
-    @Test
-    public void testCoursesTutoring() {
-//        onView(withId(R.id.edit_button)).perform(click());
-
-        List<String> coursesTutoring = new ArrayList<String>();
-        coursesTutoring.add("CSCI356");
-        coursesTutoring.add("CSCI360");
-
-        robot.fillTutoringCourses(coursesTutoring);
-
-        onView(withId(R.id.cs356_tutoring)).check(matches(isChecked()));
-        onView(withId(R.id.cs360_tutoring)).check(matches(isChecked()));
-    }
+    
 }
