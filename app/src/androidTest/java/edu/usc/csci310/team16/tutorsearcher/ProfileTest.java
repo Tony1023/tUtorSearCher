@@ -241,7 +241,14 @@ public class ProfileTest extends BaseTests {
         //don't change anything and immediately submit
         robot.submitEdits();
 
-        //make sure the changes from before persisted
+        //check values of UserProfile singleton
+        UserProfile user = UserProfile.getCurrentUser();
+
+        //check that the name and grade are the same in UserProfile
+        assertEquals(name, user.getName());
+        assertEquals(grade, user.getGrade());
+
+        //make sure the changes from before persisted on Profile page
         onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("Teagan")));
         onView(withId(R.id.grade)).perform(scrollTo()).check(matches(withText("Junior")));
 
@@ -284,22 +291,21 @@ public class ProfileTest extends BaseTests {
 
         //log out and immediately log back in
         loginRobot.logout();
+
+
+        UserProfile user = UserProfile.getCurrentUser();
+
+        //CLICKING LOGIN BUTTON DOESN'T ACTUALLY LOG IT IN
+        Gson gson = new Gson();
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(user))
+//                .addHeader("access-token", "accessToken") // not used
+        );
         loginRobot.login("tony@usc.edu", "password");
 
         onView(withId(R.id.edit_button)).perform(click());
 
-//        //check that all the fields are filled correctly on profile page
-//        onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("Teagan")));
-//        onView(withId(R.id.grade)).perform(scrollTo()).check(matches(withText("Junior"))); //default value
-//
-//        //can't check availability bc couldn't find way to check background color
-//        onView(withId(R.id.courses_taken)).perform(scrollTo()); //scroll down to see bio
-//        // FILL THIS ONCE BIO IS WORKING
-//        onView(withId(R.id.bio)).check(matches(withText("")));
-//
-//        onView(withId(R.id.rating)).perform(scrollTo()); //scroll down to see courses taken/tutoring
-//        onView(withId(R.id.courses_taken)).perform(scrollTo()).check(matches(withText("CSCI103, CSCI104")));
-//        onView(withId(R.id.courses_tutoring)).perform(scrollTo()).check(matches(withText("CSCI356, CSCI360")));
+        //CHECK ALL THE USERPROFILE FIELDS
     }
 
 
