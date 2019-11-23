@@ -232,6 +232,11 @@ public class ProfileTest extends BaseTests {
         coursesTaken.add("CSCI104");
         robot.fillCoursesTaken(coursesTaken);
 
+        List<String> coursesTutoring = new ArrayList<String>();
+        coursesTutoring.add("CSCI170");
+        coursesTutoring.add("CSCI270");
+        robot.fillTutoringCourses(coursesTutoring);
+
 
         robot.submitEdits();
 
@@ -248,14 +253,13 @@ public class ProfileTest extends BaseTests {
         assertEquals(name, user.getName());
         assertEquals(grade, user.getGrade());
 
-        //make sure the changes from before persisted on Profile page
-        onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("Teagan")));
-        onView(withId(R.id.grade)).perform(scrollTo()).check(matches(withText("Junior")));
+        //check that courses taken are the same
+        assertEquals(coursesTaken.get(0), user.getCoursesTaken().get(0));
+        assertEquals(coursesTaken.get(1), user.getCoursesTaken().get(1));
 
-        onView(withId(R.id.rating)).perform(scrollTo()); //scroll down to see courses taken/tutoring
-        onView(withId(R.id.courses_taken)).perform(scrollTo()).check(matches(withText("CSCI103, CSCI104")));
-
-
+        //check that courses tutoring are the same
+        assertEquals(coursesTutoring.get(0), user.getTutorClasses().get(0));
+        assertEquals(coursesTutoring.get(1), user.getTutorClasses().get(1));
     }
 
     //Edit profile, log out, log back in, and make sure the changes saved
