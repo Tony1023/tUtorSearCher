@@ -94,7 +94,7 @@
             android:id="@+id/bio"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:inputType="text|textMultiLine"
+            android:inputType="textMultiLine"
             android:gravity="top"
             />
 

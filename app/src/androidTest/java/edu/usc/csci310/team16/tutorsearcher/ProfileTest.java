@@ -79,7 +79,7 @@ public class ProfileTest extends BaseTests {
 
     //check all class checkboxes to make sure they appear on page
     @Test
-    public void testAllCheckboxes() {
+    public void testCheckboxes() {
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
         coursesTaken.add("CSCI104");
@@ -126,12 +126,6 @@ public class ProfileTest extends BaseTests {
         String bio = "web development is my Passion";
         robot.fillBio(bio);
 
-        List<Integer> availability = new ArrayList<Integer>();
-        availability.add(1);
-        availability.add(2);
-        availability.add(3);
-        robot.fillAvailability(availability);
-
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
         coursesTaken.add("CSCI104");
@@ -150,8 +144,7 @@ public class ProfileTest extends BaseTests {
 
         //can't check availability bc couldn't find way to check background color
         onView(withId(R.id.courses_taken)).perform(scrollTo()); //scroll down to see bio
-        // FILL THIS ONCE BIO IS WORKING
-        onView(withId(R.id.bio)).check(matches(withText("")));
+        onView(withId(R.id.bio)).check(matches(withText("web development is my Passion")));
 
         onView(withId(R.id.rating)).perform(scrollTo()); //scroll down to see courses taken/tutoring
         onView(withId(R.id.courses_taken)).perform(scrollTo()).check(matches(withText("CSCI103, CSCI104")));
@@ -172,11 +165,6 @@ public class ProfileTest extends BaseTests {
 
         String bio = "I like League";
         robot.fillBio(bio);
-
-        List<Integer> availability = new ArrayList<Integer>();
-        availability.add(0);
-        availability.add(1);
-        robot.fillAvailability(availability);
 
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
@@ -200,15 +188,9 @@ public class ProfileTest extends BaseTests {
         //DO THIS FOR ALL OF THE FIELDS
         assertEquals(name, user.getName());
         assertEquals(grade, user.getGrade());
+        assertEquals(bio, user.getBio());
 
-        //  FIX THIS WHEN FIXING BIO
-        assertEquals("", user.getBio());
-
-
-        for(int i = 0; i < availability.size(); i++) {
-            assertEquals(availability.get(i), user.getAvailability().get(i));
-        }
-
+        //verify checkboxes
         for(int i = 0; i < coursesTaken.size(); i++) {
             assertEquals(coursesTaken.get(i), user.getCoursesTaken().get(i));
         }
@@ -221,67 +203,101 @@ public class ProfileTest extends BaseTests {
     //edits profile, then edits again and change nothing: the profile should stay the same
     @Test
     public void testEditTwice() {
+        String name = "Teagan";
+        robot.fillName(name);
 
+        String grade = "Junior";
+        robot.fillGrade(grade);
+
+        String bio = "android development is hard :(";
+        robot.fillBio(bio);
+
+        List<String> coursesTaken = new ArrayList<String>();
+        coursesTaken.add("CSCI103");
+        coursesTaken.add("CSCI104");
+        robot.fillCoursesTaken(coursesTaken);
+
+        List<String> coursesTutoring = new ArrayList<String>();
+        coursesTutoring.add("CSCI170");
+        coursesTutoring.add("CSCI270");
+        robot.fillTutoringCourses(coursesTutoring);
+
+
+        robot.submitEdits();
+
+        //now on profile page; click to edit again
+        onView(withId(R.id.edit_button)).perform(click());
+
+        //don't change anything and immediately submit
+        robot.submitEdits();
+
+        //check values of UserProfile singleton
+        UserProfile user = UserProfile.getCurrentUser();
+
+        //check that the name, grade, and bio are the same in UserProfile
+        assertEquals(name, user.getName());
+        assertEquals(grade, user.getGrade());
+        assertEquals(bio, user.getBio());
+
+        //check that courses taken are the same
+        assertEquals(coursesTaken.get(0), user.getCoursesTaken().get(0));
+        assertEquals(coursesTaken.get(1), user.getCoursesTaken().get(1));
+
+        //check that courses tutoring are the same
+        assertEquals(coursesTutoring.get(0), user.getTutorClasses().get(0));
+        assertEquals(coursesTutoring.get(1), user.getTutorClasses().get(1));
     }
 
     //Edit profile, log out, log back in, and make sure the changes saved
     @Test
     public void testEditLogOutLogIn() {
-        
-    }
 
-    //-------
+        String name = "Teagan";
+        robot.fillName(name);
 
-    @Test
-    public void testAvailability() {
+        String grade = "Junior";
+        robot.fillGrade(grade);
+
+        String bio = "web development is my Passion";
+        robot.fillBio(bio);
 
         List<Integer> availability = new ArrayList<Integer>();
         availability.add(1);
         availability.add(2);
         availability.add(3);
-
         robot.fillAvailability(availability);
-
-        //ADD CHECKING THAT THE RIGHT BOXES ARE CHECKED
-
-    }
-
-
-    @Test
-    public void testEditButton() {
-//        onView(withId(R.id.edit_button)).perform(click());
-
-        robot.submitEdits();
-    }
-
-    @Test
-    public void testCoursesTaken() {
-//        onView(withId(R.id.edit_button)).perform(click());
 
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
         coursesTaken.add("CSCI104");
-
         robot.fillCoursesTaken(coursesTaken);
-
-        //FAILS BECAUSE IT AUTOMATICALLY CLICKS OVER TO SEARCH FOR SOME REASON
-        // D/search fragment: init []
-
-        onView(withId(R.id.cs103_taken)).check(matches(isChecked()));
-        onView(withId(R.id.cs104_taken)).check(matches(isChecked()));
-    }
-
-    @Test
-    public void testCoursesTutoring() {
-//        onView(withId(R.id.edit_button)).perform(click());
 
         List<String> coursesTutoring = new ArrayList<String>();
         coursesTutoring.add("CSCI356");
         coursesTutoring.add("CSCI360");
-
         robot.fillTutoringCourses(coursesTutoring);
 
-        onView(withId(R.id.cs356_tutoring)).check(matches(isChecked()));
-        onView(withId(R.id.cs360_tutoring)).check(matches(isChecked()));
+        robot.submitEdits();
+
+        //log out and immediately log back in
+        loginRobot.logout();
+
+
+        UserProfile user = UserProfile.getCurrentUser();
+
+        //CLICKING LOGIN BUTTON DOESN'T ACTUALLY LOG IT IN
+        Gson gson = new Gson();
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(user))
+//                .addHeader("access-token", "accessToken") // not used
+        );
+        loginRobot.login("tony@usc.edu", "password");
+
+        onView(withId(R.id.edit_button)).perform(click());
+
+        //CHECK ALL THE USERPROFILE FIELDS (including bio)
     }
+
+    //-------
+
 }

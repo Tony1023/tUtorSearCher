@@ -61,11 +61,10 @@ public class ProfileRobot extends BaseTestRobot {
     public void fillBio(String bio) {
 
 //        super.fillEditText(R.id.bio, bio);
-
-//        onView(withId(R.id.bio)).perform(replaceText(bio));
+        onView(withId(R.id.courses_taken)).perform(scrollTo());
+        onView(withId(R.id.bio)).perform(replaceText(bio));
     }
 
-    //NOT WORKING BECAUSE OF SCROLLING ISSUES
     public void fillCoursesTaken(List<String> coursesTaken) {
 
         //loop through courses the user has taken
@@ -79,7 +78,6 @@ public class ProfileRobot extends BaseTestRobot {
 
     }
 
-    //NOT WORKING BECAUSE OF SCROLLING ISSUES
     public void fillTutoringCourses(List<String> tutorClasses) {
         //loop through courses the user has taken
         for(int i = 0; i < tutorClasses.size(); i++) {
