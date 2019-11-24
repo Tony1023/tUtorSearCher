@@ -13,10 +13,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.work.Data;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Fragment responsible for the Notifications tab
@@ -30,6 +34,7 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addNotificationWorker();
     }
 
     @Override
@@ -62,5 +67,20 @@ public class NotificationFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    public void addNotificationWorker(){
+//        Data data = new Data.Builder()
+//                .putString("TOKEN",getActivity().getSharedPreferences().getString(""))
+//                .build(); //TODO find name of token
+
+
+        PeriodicWorkRequest notificationUpdateRequest =
+                new PeriodicWorkRequest.Builder(NotificationWorker.class,5, TimeUnit.SECONDS)
+                        //.setInputData(data)
+                        .build();
+
+        WorkManager.getInstance(getContext())
+                .enqueue(notificationUpdateRequest);
     }
 }
