@@ -104,8 +104,8 @@ public class SearchModelTest extends LiveDataTestBase {
         model.getError().observeForever(new Observer<String>() {
             @Override
             public void onChanged(String e) {
-//                assertThat(e.equals("Search failed: network error"));
 //                assertThat(e).isEqualTo("This should fail");
+                assertThat(e).isEqualTo("Search failed: network error");
             }
         });
 
