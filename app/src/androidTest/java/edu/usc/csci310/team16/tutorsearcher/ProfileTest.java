@@ -58,7 +58,7 @@ public class ProfileTest extends BaseTests {
         onView(withId(R.id.edit_button)).perform(click());
     }
 
-    //WHITEBOX TESTING
+    //BLACK BOX TESTING: Espresso
 
     //don't fill in any of the fields; make sure everything is empty on profile page
     @Test
@@ -152,7 +152,7 @@ public class ProfileTest extends BaseTests {
     }
     //---------
 
-    //BLACK BOX TESTING
+    //WHITE BOX TESTING: JUnit
 
     //fill up user profile and check that singleton changes values
     @Test
@@ -260,12 +260,6 @@ public class ProfileTest extends BaseTests {
 
         String bio = "web development is my Passion";
         robot.fillBio(bio);
-
-        List<Integer> availability = new ArrayList<Integer>();
-        availability.add(1);
-        availability.add(2);
-        availability.add(3);
-        robot.fillAvailability(availability);
 
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
