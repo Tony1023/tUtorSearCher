@@ -271,6 +271,8 @@ public class ProfileTest extends BaseTests {
         coursesTutoring.add("CSCI360");
         robot.fillTutoringCourses(coursesTutoring);
 
+        server.enqueue(new MockResponse());
+
         robot.submitEdits();
 
         //log out and immediately log back in
@@ -283,7 +285,6 @@ public class ProfileTest extends BaseTests {
         Gson gson = new Gson();
         server.enqueue(new MockResponse()
                 .setBody(gson.toJson(user))
-//                .addHeader("access-token", "accessToken") // not used
         );
         loginRobot.login("tony@usc.edu", "password");
 
