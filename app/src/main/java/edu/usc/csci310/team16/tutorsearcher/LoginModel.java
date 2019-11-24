@@ -75,7 +75,7 @@ public class LoginModel extends ViewModel {
             public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
                 validating.postValue(false);
                 UserProfile profile = response.body();
-                if (profile != null && profile.getId() >= 0) {
+                if (profile.getId() >= 0) {
                     token.postValue(response.headers().get("access-token"));
                     user.postValue(profile);
                 } else {
@@ -100,7 +100,7 @@ public class LoginModel extends ViewModel {
             public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
                 validating.postValue(false);
                 UserProfile profile = response.body();
-                if (profile != null && profile.getId() >= 0) {
+                if (profile.getId() >= 0) {
                     user.postValue(profile);
                 } else {
                     errorMessage.postValue("Your session has ended, please log in again");
@@ -115,18 +115,4 @@ public class LoginModel extends ViewModel {
             }
         });
     }
-
-//    void fakeLogin() {
-//        UserProfile profile = new UserProfile();
-//        profile.setId(2);
-//        profile.setEmail("eye@usc.edu");
-//        profile.getTutorClasses().add("CSCI103");
-//        profile.getTutorClasses().add("CSCI104");
-//        profile.getAvailability().add(0);
-//        profile.getAvailability().add(1);
-//        profile.getAvailability().add(2);
-//        profile.getAvailability().add(3);
-//        user.postValue(profile);
-//    }
-
 }
