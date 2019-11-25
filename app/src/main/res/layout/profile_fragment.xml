@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="75dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -184,6 +183,13 @@
                 android:textSize="20sp"
                 />
         </LinearLayout>
+
+        <!--    added text view for padding    -->
+        <TextView
+                android:id="@+id/bottom_view"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                ></TextView>
 
     </LinearLayout>
 

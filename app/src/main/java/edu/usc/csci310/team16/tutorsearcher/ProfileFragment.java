@@ -118,6 +118,7 @@ public class ProfileFragment extends Fragment {
                 time_toggle[i][j] = new TextView(v.getContext());
                 time_toggle[i][j].setWidth(50);
                 time_toggle[i][j].setHeight(40);
+                //time_toggle[i][j].setTag((i*time_toggle[0].length + j)+"colorBox");
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.setMargins(25,0,0,0);
