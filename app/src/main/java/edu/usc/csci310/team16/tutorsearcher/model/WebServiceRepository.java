@@ -1,35 +1,33 @@
 package edu.usc.csci310.team16.tutorsearcher.model;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
-import edu.usc.csci310.team16.tutorsearcher.NotificationModel;
 import edu.usc.csci310.team16.tutorsearcher.RemoteServerDAO;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WebServiceRepository {
 
     private static volatile WebServiceRepository INSTANCE;
 
-    private Application application;
+    private Context application;
     private final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
     private final RemoteServerServices service;
 
-    private WebServiceRepository(Application application){
+    private WebServiceRepository(Context application){
         this.application = application;
         service = RemoteServerDAO.getDao();
     }
 
-    public static WebServiceRepository getInstance(Application app) {
+    public static WebServiceRepository getInstance(Context app) {
         if (INSTANCE == null){
             synchronized (WebServiceRepository.class){
                 if (INSTANCE == null){
@@ -57,12 +55,13 @@ public class WebServiceRepository {
 
                     RoomDBRepository roomDBRepository = RoomDBRepository.getInstance(application);
                     roomDBRepository.insertPosts(webserviceResponseList);
+                    Log.i("WEB_REPO","Notifications recieved success");
                 }
 
                 @Override
                 public void onFailure(Call<List<Notification>> call, Throwable t) {
 
-                    Log.d("Repository","Failed:::");
+                    Log.d("WEB_REPO","Failed:::");
                 }
             });
         }catch (Exception e){
@@ -121,6 +120,10 @@ public class WebServiceRepository {
                 Log.e("WEBSERVICE_REPO", "REJECT_FAILURE");
             }
         });
+    }
+
+    public Call<Integer> pollNotifications(){
+        return service.getNotificationUpdates();
     }
 
 

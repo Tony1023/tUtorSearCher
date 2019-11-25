@@ -32,7 +32,7 @@ public class Notification {
     private int receiverId;
 
     @ColumnInfo(name="transaction_id")
-    @SerializedName("request_id")
+    @SerializedName("req_id")
     private int requestId;
 
     @ColumnInfo(name="sender_id")
@@ -56,7 +56,7 @@ public class Notification {
     private String msg = "";
 
     @ColumnInfo(name="status")
-    @SerializedName("request_status")
+    @SerializedName("req_status")
     private int status;
 
     public Notification(@NonNull String id, int receiverId, int requestId, int senderId, String senderName, int mType, String overlap, String msg, int status) {

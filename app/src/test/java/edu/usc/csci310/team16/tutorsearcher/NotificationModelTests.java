@@ -5,7 +5,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class NotificationModelTests {
+public class NotificationModelTests extends TestBase {
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+    }
+
+
 
     @Test
     public void runNotifications(){

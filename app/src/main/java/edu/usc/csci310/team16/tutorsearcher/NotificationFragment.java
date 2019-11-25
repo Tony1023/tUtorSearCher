@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationFragmentBinding;
@@ -75,12 +76,12 @@ public class NotificationFragment extends Fragment {
 //                .build(); //TODO find name of token
 
 
-        PeriodicWorkRequest notificationUpdateRequest =
-                new PeriodicWorkRequest.Builder(NotificationWorker.class,5, TimeUnit.SECONDS)
+        //TODO redo this
+        OneTimeWorkRequest notificationUpdateRequest =
+                new OneTimeWorkRequest.Builder(NotificationWorker.class).addTag("WORKER")
                         //.setInputData(data)
                         .build();
 
-        WorkManager.getInstance(getContext())
-                .enqueue(notificationUpdateRequest);
+        WorkManager.getInstance(getContext()).enqueue(notificationUpdateRequest);
     }
 }
