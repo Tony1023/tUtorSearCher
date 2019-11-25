@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -28,6 +29,19 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = SearchFragmentBinding.inflate(inflater,container,false);
         binding.setViewModel(searchModel);
+
+        searchModel.getError().observe(this,
+                new Observer<String>() {
+                    @Override
+                    public void onChanged(String errorMessage) {
+                        ((TextView)getActivity().findViewById(R.id.error_message)).setText(errorMessage);
+                        if (errorMessage.equals("")) {
+                            getActivity().findViewById(R.id.error_message).setVisibility(View.GONE);
+                        } else {
+                            getActivity().findViewById(R.id.error_message).setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
 
         recyclerView = binding.searchResultsView;
 
