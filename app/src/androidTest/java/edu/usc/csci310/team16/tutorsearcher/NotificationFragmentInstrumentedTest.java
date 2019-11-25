@@ -1,5 +1,6 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.util.Log;
 import androidx.annotation.IntegerRes;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.espresso.ViewAssertion;
@@ -76,7 +77,9 @@ public class NotificationFragmentInstrumentedTest extends BaseTests {
         server.setDispatcher(new Dispatcher() {
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                Log.i("NOTIFICATION",request.getPath());
                 if (request.getPath().endsWith("ount")){
+
                     return new MockResponse().setBody(gson.toJson(0));
                 }else{
                     List<Notification> notifications = new ArrayList<>();
@@ -93,15 +96,6 @@ public class NotificationFragmentInstrumentedTest extends BaseTests {
 
         onView(withId(R.id.navigation_notifications)).perform(click());
 
-        synchronized (device){
-            device.wait(3000);
-        }
-
-        getView().perform(swipeDown());
-
-        synchronized (device){
-            device.wait(3000);
-        }
         getView().check(withItemCount(1));
 
         //assertThat(getView()).isNotNull();
@@ -109,19 +103,34 @@ public class NotificationFragmentInstrumentedTest extends BaseTests {
 
     @Test
     public void updateNotifications() throws InterruptedException {
+
         Notification notification1 = new Notification("uuid1",1,2,3,"me",0,"0111000111001101101010","msg",0);
         Notification notification2 = new Notification("uuid2",1,2,3,"me",0,"0111000111001101101010","msg",0);
-        List<Notification> notifications1 = new ArrayList<>();
+        final List<Notification> notifications1 = new ArrayList<>();
         notifications1.add(notification1);
 
-        List<Notification> notifications2 = new ArrayList<>();
+        final List<Notification> notifications2 = new ArrayList<>();
         notifications2.add(notification1);
         notifications2.add(notification2);
 
-        server.enqueue(new MockResponse()
-                .setBody(gson.toJson(notifications1)));
-        server.enqueue(new MockResponse()
-                .setBody(gson.toJson(notifications2)));
+        server.setDispatcher(new Dispatcher() {
+            int times = 1;
+            @Override
+            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                Log.i("NOTIFICATION",request.getPath());
+                if (request.getPath().endsWith("ount")){
+
+                    return new MockResponse().setBody(gson.toJson(0));
+                }else{
+                    if (times == 1) {
+                        times++;
+                        return new MockResponse().setBody(gson.toJson(notifications1));
+                    }else{
+                        return new MockResponse().setBody(gson.toJson(notifications2));
+                    }
+                }
+            }
+        });
 
         onView(withId(R.id.navigation_notifications)).perform(click());
 
@@ -134,14 +143,34 @@ public class NotificationFragmentInstrumentedTest extends BaseTests {
 
     @Test
     public void testNotificationPopup() throws UiObjectNotFoundException {
-        server.enqueue(new MockResponse()
-                .setBody(gson.toJson(new ArrayList<>())));
-
         Notification notification1 = new Notification("uuid1",1,2,3,"me",0,"0111000111001101101010","msg",0);
-        List<Notification> notifications1 = new ArrayList<>();
+        Notification notification2 = new Notification("uuid2",1,2,3,"me",0,"0111000111001101101010","msg",0);
+        final List<Notification> notifications1 = new ArrayList<>();
         notifications1.add(notification1);
-        server.enqueue(new MockResponse()
-                .setBody(gson.toJson(notifications1)));
+
+        final List<Notification> notifications2 = new ArrayList<>();
+        notifications2.add(notification1);
+        notifications2.add(notification2);
+
+        server.setDispatcher(new Dispatcher() {
+            int times = 1;
+            @Override
+            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                Log.i("NOTIFICATION",request.getPath());
+                if (request.getPath().endsWith("ount")){
+
+                    return new MockResponse().setBody(gson.toJson(0));
+                }else{
+                    if (times == 1) {
+                        times++;
+                        return new MockResponse().setBody(gson.toJson(notifications1));
+                    }else{
+                        return new MockResponse().setBody(gson.toJson(notifications2));
+                    }
+                }
+            }
+        });
+
 
         onView(withId(R.id.navigation_notifications)).perform(click());
 
@@ -158,6 +187,7 @@ public class NotificationFragmentInstrumentedTest extends BaseTests {
 
     @Override
     public void tearDown() {
+        super.tearDown();
         device.pressBack();
     }
 }

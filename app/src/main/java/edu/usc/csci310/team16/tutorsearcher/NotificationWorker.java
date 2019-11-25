@@ -1,6 +1,7 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import android.content.Context;
+import android.os.SystemClock;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.work.*;
@@ -23,24 +24,28 @@ public class NotificationWorker extends Worker {
 
         int newNumber = 0;
 
+        while(true) {
             Integer response = null;
             //Launch the notification
             NotificationHelper helper = new NotificationHelper(getApplicationContext());
             try {
+                SystemClock.sleep(2000);
                 response = WebServiceRepository.getInstance(getApplicationContext()).pollNotifications().execute().body();
                 newNumber = response.intValue();
-                helper.createNotification("tUtorSearCher", String.format("You have %d new messages",newNumber));
+                if (newNumber > 0) {
+                    helper.createNotification("tUtorSearCher", String.format("You have %d new messages", newNumber));
+                }
+                SystemClock.sleep(2000);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+
             }
-
-
-
-
+        }
             //TODO Infinite Loop?
 
 
         // Indicate whether the task finished successfully with the Result
-        return Result.failure();
+        //return Result.failure();
     }
 }
