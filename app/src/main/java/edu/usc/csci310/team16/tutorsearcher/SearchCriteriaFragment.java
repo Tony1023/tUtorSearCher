@@ -80,6 +80,7 @@ public class SearchCriteriaFragment extends Fragment {
 
             for(int j = 0; j < time_toggle[0].length; j++){
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
+                time_toggle[i][j].setTag("availability_checkbox_" + (i*time_toggle[0].length + j)); //ADDED DYNAMIC ID
                 timeSelectGrid.addView(time_toggle[i][j]);
             }
         }

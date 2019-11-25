@@ -32,6 +32,7 @@ public class SearchModel extends ViewModel {
     private FragmentManager fragmentManager;
 
     MutableLiveData<List<UserProfile>> searchResults = new MutableLiveData<>();
+    MutableLiveData<String> error = new MutableLiveData<>();
     final SearchResultsAdapter adapter = new SearchResultsAdapter(this);
 
 
@@ -45,11 +46,13 @@ public class SearchModel extends ViewModel {
             public void onResponse(@NonNull Call<List<UserProfile>> call, @NonNull Response<List<UserProfile>> response) {
                 Log.d("search model", "succeeded " + call.toString() + " " + response.toString() + " " + response.body());
                 searchResults.postValue(response.body());
+                error.setValue("");
             }
 
             @Override
             public void onFailure(@NonNull Call<List<UserProfile>> call, @NonNull Throwable t) {
                 Log.e("search model", "failed " + call.toString() + " " + t.toString());
+                error.setValue("Search failed: network error");
             }
         });
     }
@@ -79,6 +82,10 @@ public class SearchModel extends ViewModel {
 
     public MutableLiveData<List<UserProfile>> getSearchResults() {
         return searchResults;
+    }
+
+    public MutableLiveData<String> getError() {
+        return error;
     }
 
     public SearchResultsAdapter getAdapter() { return adapter; }
