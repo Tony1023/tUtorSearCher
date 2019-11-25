@@ -18,7 +18,7 @@ public interface RemoteServerServices {
     @GET("user/getNotifications")
     Call<List<Notification>> checkNotifications();
 
-    @GET("user/getNotificationUpdates")
+    @GET("user/getNotificationCount")
     Call<Integer> getNotificationUpdates();
 
         @POST("signup")

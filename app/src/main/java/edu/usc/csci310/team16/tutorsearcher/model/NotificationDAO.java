@@ -7,17 +7,23 @@ import edu.usc.csci310.team16.tutorsearcher.Notification;
 import java.util.List;
 
 @Dao
-public interface NotificationDAO {
+public abstract class NotificationDAO {
+
+    @Transaction
+    public void insertAll(List<Notification> items){
+        deleteAll();
+        addAll(items);
+    }
 
     @Query("SELECT * FROM `data_database.notifications` where `status` != 'DISMISSED'")
-    LiveData<List<Notification>> loadAll();
+    public abstract LiveData<List<Notification>> loadAll();
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertAll(List<Notification> items);
+    public abstract void addAll(List<Notification> items);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void modify(Notification items);
+    public abstract void modify(Notification items);
 
     @Query("DELETE FROM `data_database.notifications`")
-    void deleteAll();
+    public abstract void deleteAll();
 }

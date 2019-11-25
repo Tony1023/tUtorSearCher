@@ -2,6 +2,7 @@ package edu.usc.csci310.team16.tutorsearcher.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.room.*;
 import androidx.room.migration.Migration;
@@ -22,8 +23,18 @@ public abstract class DataDatabase extends RoomDatabase {
             synchronized (DataDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            DataDatabase.class, "data_database").build();
-                    INSTANCE.clearAllTables();
+                            DataDatabase.class, "data_database").
+                            addCallback(new Callback() {
+                                /**
+                                 * Called when the database has been opened.
+                                 *
+                                 * @param db The database.
+                                 */
+                                @Override
+                                public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                                    db.delete("`data_database.notifications`", null,null);
+                                }
+                            }).build();
                 }
             }
         }

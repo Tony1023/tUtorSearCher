@@ -1,13 +1,21 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import androidx.annotation.IntegerRes;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.uiautomator.*;
 import com.google.gson.Gson;
+import com.squareup.okhttp.mockwebserver.Dispatcher;
 import com.squareup.okhttp.mockwebserver.MockResponse;
+import com.squareup.okhttp.mockwebserver.RecordedRequest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -22,11 +30,14 @@ public class NotificationFragmentInstrumentedTest extends BaseTests {
     LoginRobot loginRobot;
     Gson gson;
     ViewInteraction view;
+    UiDevice device;
 
     @Override
     public void setUp() throws Exception{
         super.setUp();
         loginRobot = new LoginRobot();
+        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+
         UserProfile user = new UserProfile();
         user.setId(1);
         user.setName("Tony");
@@ -35,57 +46,118 @@ public class NotificationFragmentInstrumentedTest extends BaseTests {
         server.enqueue(new MockResponse()
                 .setBody(gson.toJson(user))
         );
-        loginRobot.login("tony@usc.edu", "password");
 
-        view = onView(withId(R.id.navigation_notifications)).perform(click());
+        loginRobot.login("tony@usc.edu", "password");
 
     }
 
     @Test
     public void fragmentExists(){
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        server.setDispatcher(new Dispatcher() {
+            @Override
+            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                if (request.getPath().endsWith("ount")){
+                    return new MockResponse().setBody(gson.toJson(0));
+                }else{
+                    return new MockResponse().setBody(gson.toJson(new ArrayList<>()));
+                }
+            }
+        });
+
+        onView(withId(R.id.navigation_notifications)).perform(click());
+
         getView().check(matches(isDisplayed())).check(matches(hasChildCount(0)));
     }
 
     @Test
-    public void getNotifications(){
-        Notification notification1 =
-                new Notification("uuid1",1,2,3,"me",0,
-                        "0111000111001101101010","msg",0);
+    public void getNotifications() throws InterruptedException {
 
-        server.enqueue(new MockResponse()
-                .setBody(gson.toJson(new Notification())));
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        server.setDispatcher(new Dispatcher() {
+            @Override
+            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                if (request.getPath().endsWith("ount")){
+                    return new MockResponse().setBody(gson.toJson(0));
+                }else{
+                    List<Notification> notifications = new ArrayList<>();
+                    notifications.add(
+                            new Notification("uuid1",1,2,3,"me",0,
+                                    "0111000111001101101010","msg",0)
+                    );
+                    return new MockResponse().setBody(gson.toJson(notifications));
+                }
+            }
+        });
+
+
+
+        onView(withId(R.id.navigation_notifications)).perform(click());
+
+        synchronized (device){
+            device.wait(3000);
         }
+
         getView().perform(swipeDown());
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        synchronized (device){
+            device.wait(3000);
         }
         getView().check(withItemCount(1));
+
         //assertThat(getView()).isNotNull();
     }
 
     @Test
-    public void updateNotifications(){
+    public void updateNotifications() throws InterruptedException {
         Notification notification1 = new Notification("uuid1",1,2,3,"me",0,"0111000111001101101010","msg",0);
         Notification notification2 = new Notification("uuid2",1,2,3,"me",0,"0111000111001101101010","msg",0);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        List<Notification> notifications1 = new ArrayList<>();
+        notifications1.add(notification1);
+
+        List<Notification> notifications2 = new ArrayList<>();
+        notifications2.add(notification1);
+        notifications2.add(notification2);
+
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(notifications1)));
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(notifications2)));
+
+        onView(withId(R.id.navigation_notifications)).perform(click());
+
+        getView().perform(swipeDown());
+        synchronized (device) {
+            device.wait(3000);
         }
+        getView().check(withItemCount(1));
     }
+
+    @Test
+    public void testNotificationPopup() throws UiObjectNotFoundException {
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(new ArrayList<>())));
+
+        Notification notification1 = new Notification("uuid1",1,2,3,"me",0,"0111000111001101101010","msg",0);
+        List<Notification> notifications1 = new ArrayList<>();
+        notifications1.add(notification1);
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(notifications1)));
+
+        onView(withId(R.id.navigation_notifications)).perform(click());
+
+        device.openNotification();
+        device.wait(Until.hasObject(By.textStartsWith("tUtorSearCher")),50000);
+        List<UiObject2> objects = device.findObjects(By.textStartsWith("tUtorSearCher"));
+        assertThat(objects).hasSize(1);
+    }
+
 
     public ViewInteraction getView(){
         return onView(withId(R.id.notifications_view));
+    }
+
+    @Override
+    public void tearDown() {
+        device.pressBack();
     }
 }

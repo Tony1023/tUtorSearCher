@@ -1,12 +1,11 @@
 package edu.usc.csci310.team16.tutorsearcher.model;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 
 import java.util.List;
@@ -14,17 +13,17 @@ import java.util.List;
 public class RoomDBRepository {
     private static volatile RoomDBRepository INSTANCE;
     private NotificationDAO notificationDAO;
-    private Application application;
+    private Context application;
 
     MutableLiveData<List<Notification>> mAllPosts = new MutableLiveData<>();
     private static MutableLiveData<Boolean> notificationUpdated = new MutableLiveData<>();
 
-    private RoomDBRepository(Application application){
+    private RoomDBRepository(Context application){
         DataDatabase db = DataDatabase.getDatabase(application);
         notificationDAO = db.notificationDAO();
     }
 
-    public static RoomDBRepository getInstance(Application app) {
+    public static RoomDBRepository getInstance(Context app) {
         if(INSTANCE == null){
             synchronized (RoomDBRepository.class) {
                 if (INSTANCE == null) {
@@ -53,6 +52,15 @@ public class RoomDBRepository {
             @Override
             public void run() {
                 notificationDAO.modify(notification);
+            }
+        });
+    }
+
+    public void deleteAll(){
+        new insertAsyncTask(notificationDAO).execute(new Runnable() {
+            @Override
+            public void run() {
+                notificationDAO.deleteAll();
             }
         });
     }
