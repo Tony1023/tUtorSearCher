@@ -27,6 +27,9 @@ public class RemoteServerDAO {
     }
 
     public static void setToken(String token) {
+        if (token == null) {
+            token = "";
+        }
         RemoteServerDAO.token = token;
         headerChanged = true;
     }
