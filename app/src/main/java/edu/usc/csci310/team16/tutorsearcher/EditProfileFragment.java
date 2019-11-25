@@ -55,7 +55,7 @@ public class EditProfileFragment extends Fragment {
         //get data from the singleton
         user = UserProfile.getCurrentUser();
         time_toggle = new MaterialCheckBox[SearchModel.getDays().size()][SearchModel.getBlocks().size()];
-
+        //size is [7][28]
     }
 
 

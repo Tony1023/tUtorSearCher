@@ -168,6 +168,8 @@ public class ProfileTest extends BaseTests {
         //CAN DELETE THIS PROBABLY
         ArrayList<Integer> availability = new ArrayList<>();
         availability.add(0);
+        availability.add(1);
+        robot.fillAvailability(availability);
 
         List<String> coursesTaken = new ArrayList<String>();
         coursesTaken.add("CSCI103");
@@ -216,6 +218,12 @@ public class ProfileTest extends BaseTests {
         for(int i = 0; i < coursesTutoring.size(); i++) {
 
             String tag = coursesTutoring.get(i).substring(4) + "tutoring";
+            onView(withTagValue(is((Object)tag))).check(matches(isChecked()));
+        }
+
+        //check availability
+        for(int i = 0; i < availability.size(); i++) {
+            String tag = availability.get(i) + "box";
             onView(withTagValue(is((Object)tag))).check(matches(isChecked()));
         }
 

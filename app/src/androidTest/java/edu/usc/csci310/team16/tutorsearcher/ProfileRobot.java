@@ -89,7 +89,7 @@ public class ProfileRobot extends BaseTestRobot {
 
         //access id equal to elements of the availability array
         for(int element : availability) {
-            onView(withTagValue(is((Object)(element+"box")))).perform(click());
+            onView(withTagValue(is((Object)(element+"box")))).perform(scrollTo(), click());
         }
 
     }
@@ -99,7 +99,6 @@ public class ProfileRobot extends BaseTestRobot {
                         List<String> tutorClasses, List<Integer> availability) {
         fillName(name);
         fillGrade(grade);
-        //BIO NOT WORKING BECAUSE APPARENTLY IT ISN'T ASSIGNABLE FROM ANDROID.WIDGET.EDITTEXT
         fillBio(bio);
         fillAvailability(availability);
         fillCoursesTaken(coursesTaken);
