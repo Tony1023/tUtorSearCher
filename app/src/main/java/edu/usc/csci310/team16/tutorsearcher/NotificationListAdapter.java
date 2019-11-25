@@ -25,7 +25,6 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private final NotificationMsgBinding binding;
-        private final TextView name;
         private final TextView message;
         private final MaterialButtonToggleGroup buttonToggleGroup;
         private MutableLiveData<Boolean> openButtons;
@@ -34,7 +33,6 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         public ViewHolder(ViewDataBinding bind) {
             super(bind.getRoot());
             binding = (NotificationMsgBinding) bind;
-            name =  binding.notificationType;
             message = binding.notificationText;
             buttonToggleGroup = binding.notificationButtons;
         }
@@ -55,20 +53,14 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                     binding.notificationAccept.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            WebServiceRepository.getInstance(viewModel.getApplication()).acceptRequest(notification);
-                            notification.setStatus("ACCEPTED");
-                            binding.notificationButtons.setClickable(false);
+                            WebServiceRepository.getInstance(viewModel.getApplication()).acceptRequest(notification,binding);
                         }
                     });
 
                     binding.notificationReject.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            WebServiceRepository.getInstance(viewModel.getApplication()).rejectRequest(notification);
-                            binding.getRoot().setVisibility(View.GONE);
-                            notification.setStatus("REJECTED");
-                            RoomDBRepository.getInstance(viewModel.getApplication()).changeStatus(notification);
-
+                            WebServiceRepository.getInstance(viewModel.getApplication()).rejectRequest(notification,binding);
                         }
                     });
                 }
@@ -97,21 +89,27 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             holder.message.setText(R.string.messages_unavailable);
         }else{
             Notification current = mNotifications.get(position);
-            holder.message.setText(current.getMsg());
-            switch (current.getType()){
-                case "MSG":
-                    holder.buttonToggleGroup.setVisibility(View.GONE);
-                    break;
-                case "TUTOR_REQUEST":
-                    holder.buttonToggleGroup.setVisibility(View.VISIBLE);
-                    break;
-                case "STUDENT_REQUEST":
-                    holder.buttonToggleGroup.setVisibility(View.VISIBLE);
-                    break;
-                default:
+            StringBuilder sb = new StringBuilder();
+            sb.append("From: ").append(current.getSenderName()).append("\n").append(current.getMsg());
+            holder.buttonToggleGroup.setVisibility(View.GONE);
+            if (current.getType() == 0 && current.getStatus() == 0){
+                holder.buttonToggleGroup.setVisibility(View.VISIBLE);
+            } else if(current.getStatus() == 1) {
+                sb.append("\nCongratulations, you have found a match.");
+            }else if (current.getStatus() == 2){
+                sb.append("\nUnfortunately, the tutee has found another tutor.\nBetter luck next time");
+            } else if (current.getStatus() == 3) {
+                sb.append("\nUnfortunately, the tutee has found another tutor.\nBetter luck next time");
+            }else{
+                sb.append("\nThis notification has lapsed");
             }
-
+            holder.message.setText(sb.toString());
         }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
     // Clean all elements of the recycler

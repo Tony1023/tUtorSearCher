@@ -1,10 +1,14 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainer;
 import androidx.lifecycle.ViewModelProvider;
@@ -68,6 +72,23 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+    }
+
+    private void showNotification(String message){
+        Intent intent=new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("data", message);
+        intent.putExtra("KEY", "YOUR VAL");
+        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        android.app.Notification.Builder builder=new android.app.Notification.Builder(this,"My ID")
+                .setAutoCancel(true)
+                .setContentTitle("Registry")
+                .setContentText(message)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentIntent(pendingIntent);
+        NotificationManager manager=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(0,builder.build());
     }
 
     public ProfileFragment getProfile() {
