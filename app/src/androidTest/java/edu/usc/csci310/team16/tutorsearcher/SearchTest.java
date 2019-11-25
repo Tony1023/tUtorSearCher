@@ -1,5 +1,7 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.os.Looper;
+
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -36,6 +38,26 @@ public class SearchTest extends BaseTests {
     private SearchRobot robot = new SearchRobot();
     private LoginRobot loginRobot = new LoginRobot();
 
+    public void assertRequest(String msg) {
+        try {
+            final Thread main = Looper.getMainLooper().getThread();
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    main.interrupt();
+                }
+            }.start();
+            server.takeRequest();
+        } catch (InterruptedException ignore) {
+            fail(msg);
+        }
+    }
+
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -48,6 +70,8 @@ public class SearchTest extends BaseTests {
                         .setBody(gson.toJson(user))
         );
         loginRobot.login("tony@usc.edu", "password");
+
+        server.takeRequest();
 
         robot.navToSearch();
         robot.startSearch();
@@ -63,6 +87,7 @@ public class SearchTest extends BaseTests {
         );
 
         robot.submitSearch();
+        assertRequest("search didn't make server call");
 
         try {
             onView(withId(R.id.search_result_name)).check(matches(isDisplayed()));
@@ -88,6 +113,7 @@ public class SearchTest extends BaseTests {
         );
 
         robot.submitSearch();
+        assertRequest("search didn't make server call");
 
         try {
             onView(withId(R.id.search_result_name)).check(matches(withText(user.getName())));
@@ -96,7 +122,7 @@ public class SearchTest extends BaseTests {
         }
     }
 
-    // Should display results when non-empty results
+    // Should display user profile when you click on a result
     @Test
     public void testDisplayResultProfile() {
         final List<UserProfile> r = new ArrayList<>();
@@ -112,6 +138,7 @@ public class SearchTest extends BaseTests {
         );
 
         robot.submitSearch();
+        assertRequest("search didn't make server call");
 
         try {
             onView(withId(R.id.search_result_card)).perform(click());
@@ -122,6 +149,36 @@ public class SearchTest extends BaseTests {
         onView(withId(R.id.name)).check(matches(withText(user.getName())));
     }
 
+    // Should send a notification when the button is pressed on the search result profile page
+    @Test
+    public void testSendRequest() {
+        final List<UserProfile> r = new ArrayList<>();
+        UserProfile user = new UserProfile();
+        user.setId(1);
+        user.setName("Micah");
+        user.setEmail("micah@usc.edu");
+        r.add(user);
+        final List<UserProfile> expectedResults = new ArrayList<>(r);
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(expectedResults))
+                .addHeader("access-token", "accessToken") // not used
+        );
+
+        robot.submitSearch();
+        assertRequest("search didn't make server call");
+
+        try {
+            onView(withId(R.id.search_result_card)).perform(click());
+        } catch (NoMatchingViewException nmve) {
+            fail("no search results displayed");
+        }
+
+        onView(withId(R.id.name)).check(matches(withText(user.getName())));
+
+        onView(withId(R.id.sendRequestButton)).perform(click());
+        assertRequest("send request didn't make server call");
+    }
+
     // Network error should display an error message
     @Test
     public void testErrorMessage() throws IOException {
@@ -129,7 +186,6 @@ public class SearchTest extends BaseTests {
 
         robot.submitSearch();
 
-        // TODO: add asserts
         try {
             onView(withId(R.id.error_message)).check(matches(withText("Search failed: network error")));
         } catch (NoMatchingViewException nmve) {
@@ -157,6 +213,7 @@ public class SearchTest extends BaseTests {
         );
 
         robot.submitSearch();
+        assertRequest("search didn't make server call");
 
         robot.startSearch();
 
@@ -183,6 +240,7 @@ public class SearchTest extends BaseTests {
         );
 
         robot.submitSearch();
+        assertRequest("search didn't make server call");
 
         robot.navAway();
         robot.navToSearch();
