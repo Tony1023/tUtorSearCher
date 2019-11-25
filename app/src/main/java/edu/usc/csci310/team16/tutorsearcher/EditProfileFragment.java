@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -54,7 +55,7 @@ public class EditProfileFragment extends Fragment {
         //get data from the singleton
         user = UserProfile.getCurrentUser();
         time_toggle = new MaterialCheckBox[SearchModel.getDays().size()][SearchModel.getBlocks().size()];
-
+        //size is [7][28]
     }
 
 
@@ -63,8 +64,54 @@ public class EditProfileFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.edit_profile_fragment, container, false);
 
-        //get values from all of the form elements on the page on click of button
-        //borrow code from profileFragment for button onclick listener
+        final String[] coursesTakenArray = {"cs103_taken", "cs104_taken",
+                "cs170_taken", "cs201_taken", "cs270_taken", "cs310_taken",
+                "cs350_taken", "cs356_taken", "cs360_taken"};
+
+        final String[] coursesTutoringArray = {"cs103_tutoring", "cs104_tutoring",
+                "cs170_tutoring", "cs201_tutoring", "cs270_tutoring",
+                "cs310_tutoring", "cs350_tutoring", "cs356_tutoring", "cs360_tutoring"};
+
+        //if UserProfile has filled values, prefill the corresponding fields of this form
+        //name
+        EditText name = (EditText) v.findViewById(R.id.name);
+        name.setText(user.getName(), TextView.BufferType.EDITABLE);
+
+        //grade
+        Spinner grade = (Spinner) v.findViewById(R.id.grade_spinner);
+        grade.setSelection(((ArrayAdapter)grade.getAdapter()).getPosition(user.getGrade()));
+
+        //bio
+        EditText bio = (EditText) v.findViewById(R.id.bio);
+        bio.setText(user.getBio(), TextView.BufferType.EDITABLE);
+
+        //availability dealt with below
+
+        //courses taken and courses tutoring
+        for(int i = 0; i < coursesTakenArray.length; i++) {
+
+            //courses taken
+            final CheckBox takenCheckbox = (CheckBox)v.findViewById(getResources()
+                    .getIdentifier(coursesTakenArray[i], "id", getActivity().getPackageName()));
+
+            String code = (String)takenCheckbox.getTag();
+            code =  "CSCI"+code.substring(0,3);
+
+            if (user.getCoursesTaken().contains(code)) {
+                takenCheckbox.setChecked(true);
+            }
+
+            //courses tutoring
+            final CheckBox tutoringCheckbox = (CheckBox)v.findViewById(getResources()
+                    .getIdentifier(coursesTutoringArray[i], "id", getActivity().getPackageName()));
+
+            String tutoringCode = (String)tutoringCheckbox.getTag();
+            tutoringCode = "CSCI"+tutoringCode.substring(0,3);
+
+            if(user.getTutorClasses().contains(code)) {
+                tutoringCheckbox.setChecked(true);
+            }
+        }
 
         //AVAILABILITY CODE STOLEN FROM MICAH
         GridLayout timeSelectGrid = (GridLayout) v.findViewById(R.id.time_select_grid);
@@ -91,12 +138,20 @@ public class EditProfileFragment extends Fragment {
 
             for(int j = 0; j < time_toggle[0].length; j++){
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
+
+                //if this availability is already in the user's list, check box
+                if(user.getAvailability().contains(i*time_toggle[0].length + j)) {
+                    time_toggle[i][j].setChecked(true);
+                }
+
                 time_toggle[i][j].setTag((i*time_toggle[0].length + j)+"box"); //ADDED DYNAMIC ID
                 timeSelectGrid.addView(time_toggle[i][j]);
 
             }
         }
         //END CODE STOLEN FROM MICAH
+
+
 
 
         Button editButton = (Button)v.findViewById(R.id.submit_button);
@@ -118,13 +173,7 @@ public class EditProfileFragment extends Fragment {
                 String bio = bioText.getText().toString();
 
                 //checkboxes ones
-                String[] coursesTakenArray = {"cs103_taken", "cs104_taken",
-                        "cs170_taken", "cs201_taken", "cs270_taken", "cs310_taken",
-                        "cs350_taken", "cs356_taken", "cs360_taken"};
 
-                String[] coursesTutoringArray = {"cs103_tutoring", "cs104_tutoring",
-                        "cs170_tutoring", "cs201_tutoring", "cs270_tutoring",
-                        "cs310_tutoring", "cs350_tutoring", "cs356_tutoring", "cs360_tutoring"};
 
                 String[] courseCodes = {"CSCI103", "CSCI104", "CSCI170", "CSCI201", "CSCI270", "CSCI310", "CSCI350",
                         "CSCI356", "CSCI360"};

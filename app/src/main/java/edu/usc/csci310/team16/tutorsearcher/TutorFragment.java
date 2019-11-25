@@ -71,6 +71,17 @@ public class TutorFragment extends Fragment {
                 List<UserProfile> body = response.body();
                 if(body != null) {
                     tutors.addAll(body);
+
+                    List<Tutor> notes = new ArrayList<>();
+
+                    for(UserProfile up : tutors){
+                        Tutor n1 = new Tutor("fd_FD_f","MSG",up);
+
+                        notes.add(n1);
+
+                    }
+
+                    tutorModel.getTutors().postValue(notes);
                 }
             }
 
@@ -80,14 +91,6 @@ public class TutorFragment extends Fragment {
             }
         });
 
-        List<Tutor> notes = new ArrayList<>();
-
-        for(UserProfile up : tutors){
-            Tutor n1 = new Tutor("fd_FD_f","MSG",up);
-            notes.add(n1);
-        }
-
-        tutorModel.getTutors().postValue(notes);
     }
 
     public void goToProfile(View v){

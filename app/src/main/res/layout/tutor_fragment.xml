@@ -11,10 +11,11 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tutors_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/tutors_view"
             app:setAdapter="@{viewModel.getAdapter()}"
             tools:listitem="@layout/tutor_msg">
 

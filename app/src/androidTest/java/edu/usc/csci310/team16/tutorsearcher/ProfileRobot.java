@@ -54,13 +54,10 @@ public class ProfileRobot extends BaseTestRobot {
         onView(withId(R.id.grade_spinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(grade))).perform(click());
 
-//        onView(allOf(withId(R.id.grade_spinner), withText(grade))).perform(click());
     }
 
-    //NOT WORKING BECAUSE OF EDIT TEXT ISSUES
     public void fillBio(String bio) {
 
-//        super.fillEditText(R.id.bio, bio);
         onView(withId(R.id.courses_taken)).perform(scrollTo());
         onView(withId(R.id.bio)).perform(replaceText(bio));
     }
@@ -92,7 +89,7 @@ public class ProfileRobot extends BaseTestRobot {
 
         //access id equal to elements of the availability array
         for(int element : availability) {
-            onView(withTagValue(is((Object)(element+"box")))).perform(click());
+            onView(withTagValue(is((Object)(element+"box")))).perform(scrollTo(), click());
         }
 
     }
@@ -102,7 +99,6 @@ public class ProfileRobot extends BaseTestRobot {
                         List<String> tutorClasses, List<Integer> availability) {
         fillName(name);
         fillGrade(grade);
-        //BIO NOT WORKING BECAUSE APPARENTLY IT ISN'T ASSIGNABLE FROM ANDROID.WIDGET.EDITTEXT
         fillBio(bio);
         fillAvailability(availability);
         fillCoursesTaken(coursesTaken);
