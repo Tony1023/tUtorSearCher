@@ -150,6 +150,63 @@ public class ProfileTest extends BaseTests {
         onView(withId(R.id.courses_taken)).perform(scrollTo()).check(matches(withText("CSCI103, CSCI104")));
         onView(withId(R.id.courses_tutoring)).perform(scrollTo()).check(matches(withText("CSCI356, CSCI360")));
     }
+
+    //make sure the fields on the edit profile page prefill with current values
+    @Test
+    public void checkEditProfilePrefill() {
+        String name = "Teagan";
+        robot.fillName(name);
+
+        String grade = "Junior";
+        robot.fillGrade(grade);
+
+        String bio = "web development is my Passion";
+        robot.fillBio(bio);
+
+        //CAN DELETE THIS PROBABLY
+        ArrayList<Integer> availability = new ArrayList<>();
+        availability.add(0);
+
+        List<String> coursesTaken = new ArrayList<String>();
+        coursesTaken.add("CSCI103");
+        coursesTaken.add("CSCI104");
+        robot.fillCoursesTaken(coursesTaken);
+
+        List<String> coursesTutoring = new ArrayList<String>();
+        coursesTutoring.add("CSCI356");
+        coursesTutoring.add("CSCI360");
+        robot.fillTutoringCourses(coursesTutoring);
+
+        server.enqueue(new MockResponse());
+
+        robot.submitEdits();
+
+        //log out and immediately log back in
+        loginRobot.logout();
+
+
+        UserProfile user = UserProfile.getCurrentUser();
+
+        Gson gson = new Gson();
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(user))
+        );
+        loginRobot.login("tony@usc.edu", "password");
+
+        //get to EditProfile page
+        onView(withId(R.id.edit_button)).perform(click());
+
+        onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("Teagan")));
+        onView(withId(R.id.grade)).check(matches(withText("Junior"))); //default value
+
+        //can't check availability bc couldn't find way to check background color
+
+        onView(withId(R.id.bio)).check(matches(withText(bio)));
+//        onView(withId(R.id.courses_taken)).check(matches(withText("")));
+//        onView(withId(R.id.courses_tutoring)).check(matches(withText("")));
+
+    }
+
     //---------
 
     //WHITE BOX TESTING: JUnit
@@ -281,16 +338,30 @@ public class ProfileTest extends BaseTests {
 
         UserProfile user = UserProfile.getCurrentUser();
 
-        //CLICKING LOGIN BUTTON DOESN'T ACTUALLY LOG IT IN
         Gson gson = new Gson();
         server.enqueue(new MockResponse()
                 .setBody(gson.toJson(user))
         );
         loginRobot.login("tony@usc.edu", "password");
 
-        onView(withId(R.id.edit_button)).perform(click());
+//        onView(withId(R.id.edit_button)).perform(click());
 
-        //CHECK ALL THE USERPROFILE FIELDS (including bio)
+        //check all the UserProfile fields
+        //check values of UserProfile singleton
+        user = UserProfile.getCurrentUser();
+
+        //check that the name, grade, and bio are the same in UserProfile
+        assertEquals(name, user.getName());
+        assertEquals(grade, user.getGrade());
+        assertEquals(bio, user.getBio());
+
+        //check that courses taken are the same
+        assertEquals(coursesTaken.get(0), user.getCoursesTaken().get(0));
+        assertEquals(coursesTaken.get(1), user.getCoursesTaken().get(1));
+
+        //check that courses tutoring are the same
+        assertEquals(coursesTutoring.get(0), user.getTutorClasses().get(0));
+        assertEquals(coursesTutoring.get(1), user.getTutorClasses().get(1));
     }
 
     //-------

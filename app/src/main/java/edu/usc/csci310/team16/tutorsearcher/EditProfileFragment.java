@@ -63,8 +63,13 @@ public class EditProfileFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.edit_profile_fragment, container, false);
 
-        //get values from all of the form elements on the page on click of button
-        //borrow code from profileFragment for button onclick listener
+        //if UserProfile has filled values, prefill the corresponding fields of this form
+        //name
+        EditText name = (EditText) v.findViewById(R.id.name);
+        name.setText(user.getName(), TextView.BufferType.EDITABLE);
+
+        //grade
+
 
         //AVAILABILITY CODE STOLEN FROM MICAH
         GridLayout timeSelectGrid = (GridLayout) v.findViewById(R.id.time_select_grid);
@@ -91,12 +96,20 @@ public class EditProfileFragment extends Fragment {
 
             for(int j = 0; j < time_toggle[0].length; j++){
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
+
+                //if this availability is already in the user's list, check box
+                if(user.getAvailability().contains(i*time_toggle[0].length + j)) {
+                    time_toggle[i][j].setChecked(true);
+                }
+
                 time_toggle[i][j].setTag((i*time_toggle[0].length + j)+"box"); //ADDED DYNAMIC ID
                 timeSelectGrid.addView(time_toggle[i][j]);
 
             }
         }
         //END CODE STOLEN FROM MICAH
+
+
 
 
         Button editButton = (Button)v.findViewById(R.id.submit_button);
