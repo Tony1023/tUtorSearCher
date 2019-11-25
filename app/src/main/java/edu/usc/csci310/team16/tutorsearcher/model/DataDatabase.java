@@ -23,6 +23,7 @@ public abstract class DataDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             DataDatabase.class, "data_database").build();
+                    INSTANCE.clearAllTables();
                 }
             }
         }
@@ -56,4 +57,5 @@ public abstract class DataDatabase extends RoomDatabase {
     protected InvalidationTracker createInvalidationTracker() {
         return null;
     }
+
 }

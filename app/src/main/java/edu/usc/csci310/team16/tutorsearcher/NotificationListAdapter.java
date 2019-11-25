@@ -93,6 +93,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             sb.append("From: ").append(current.getSenderName()).append("\n").append(current.getMsg());
             holder.buttonToggleGroup.setVisibility(View.GONE);
             if (current.getType() == 0 && current.getStatus() == 0){
+                sb.append("\nYou are a candidate for as a tutor.");
                 holder.buttonToggleGroup.setVisibility(View.VISIBLE);
             } else if(current.getStatus() == 1) {
                 sb.append("\nCongratulations, you have found a match.");

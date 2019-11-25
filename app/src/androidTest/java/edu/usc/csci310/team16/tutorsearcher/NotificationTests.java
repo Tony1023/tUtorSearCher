@@ -8,11 +8,18 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.swipeDown;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-public class NotificationTests {
+public class NotificationTests extends BaseTests {
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+    }
 
     public void prepareDB(){
 
     }
+
+
 
     @Test
     public void reloadNotifications(){
