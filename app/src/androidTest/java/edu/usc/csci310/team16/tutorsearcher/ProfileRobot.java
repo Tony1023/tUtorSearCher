@@ -54,13 +54,10 @@ public class ProfileRobot extends BaseTestRobot {
         onView(withId(R.id.grade_spinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(grade))).perform(click());
 
-//        onView(allOf(withId(R.id.grade_spinner), withText(grade))).perform(click());
     }
 
-    //NOT WORKING BECAUSE OF EDIT TEXT ISSUES
     public void fillBio(String bio) {
 
-//        super.fillEditText(R.id.bio, bio);
         onView(withId(R.id.courses_taken)).perform(scrollTo());
         onView(withId(R.id.bio)).perform(replaceText(bio));
     }

@@ -28,9 +28,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.TestCase.assertEquals;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
@@ -184,7 +186,6 @@ public class ProfileTest extends BaseTests {
         //log out and immediately log back in
         loginRobot.logout();
 
-
         UserProfile user = UserProfile.getCurrentUser();
 
         Gson gson = new Gson();
@@ -196,14 +197,27 @@ public class ProfileTest extends BaseTests {
         //get to EditProfile page
         onView(withId(R.id.edit_button)).perform(click());
 
+        //check that appropriate fields are filled/checked
         onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("Teagan")));
-        onView(withId(R.id.grade)).check(matches(withText("Junior"))); //default value
+        onView(withId(R.id.grade_spinner)).check(matches(withSpinnerText(containsString("Junior")))); //default value
 
-        //can't check availability bc couldn't find way to check background color
+        //CHECK AVAILABILITY
 
         onView(withId(R.id.bio)).check(matches(withText(bio)));
-//        onView(withId(R.id.courses_taken)).check(matches(withText("")));
-//        onView(withId(R.id.courses_tutoring)).check(matches(withText("")));
+
+        //check courses taken
+        for(int i = 0; i < coursesTaken.size(); i++) {
+
+            String tag = coursesTaken.get(i).substring(4) + "taken";
+            onView(withTagValue(is((Object)tag))).check(matches(isChecked()));
+        }
+
+        //check courses tutoring
+        for(int i = 0; i < coursesTutoring.size(); i++) {
+
+            String tag = coursesTutoring.get(i).substring(4) + "tutoring";
+            onView(withTagValue(is((Object)tag))).check(matches(isChecked()));
+        }
 
     }
 
