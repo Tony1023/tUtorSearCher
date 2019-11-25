@@ -36,6 +36,18 @@ import static org.hamcrest.Matchers.is;
 
 public class SearchRobot extends BaseTestRobot {
 
+    public void navToSearch() {
+        super.clickButton(R.id.navigation_search);
+    }
+
+    public void navAway() {
+        super.clickButton(R.id.navigation_profile);
+    }
+
+    public void startSearch() {
+        super.clickButton(R.id.search_button);
+    }
+
     public void fillCourse(String course) {
         onView(withId(R.id.course_spinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is(course))).perform(click());
@@ -50,7 +62,7 @@ public class SearchRobot extends BaseTestRobot {
     }
 
     public void submitSearch() {
-        onView(withId(R.id.submit_button)).perform(scrollTo());
-        super.clickButton(R.id.submit_button);
+        onView(withId(R.id.bottom_view)).perform(scrollTo());
+        super.clickButton(R.id.search_button);
     }
 }

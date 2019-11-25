@@ -11,15 +11,8 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.google.common.truth.Truth.assertThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -41,7 +34,7 @@ public class SearchModelTest extends LiveDataTestBase {
             public void onChanged(List<UserProfile> actualResults) {
                 assertThat(expectedResults.size() == actualResults.size());
                 for(int i = 0; i < actualResults.size(); i++) {
-                    assertThat(expectedResults.get(i).getName().equals(actualResults.get(i).getName()));
+                    assertThat(expectedResults.get(i).getName()).isEqualTo(actualResults.get(i).getName());
                 }
             }
         });
@@ -78,7 +71,7 @@ public class SearchModelTest extends LiveDataTestBase {
         user.setName("Eric");
         user.setEmail("eric@usc.edu");
         r.add(user);
-        final List<UserProfile> expectedResults = new ArrayList<>();
+        final List<UserProfile> expectedResults = new ArrayList<>(r);
         server.enqueue(new MockResponse()
                 .setBody(gson.toJson(expectedResults))
                 .addHeader("access-token", "accessToken") // not used
@@ -89,7 +82,7 @@ public class SearchModelTest extends LiveDataTestBase {
             public void onChanged(List<UserProfile> actualResults) {
                 assertThat(expectedResults.size() == actualResults.size());
                 for(int i = 0; i < actualResults.size(); i++) {
-                    assertThat(expectedResults.get(i).getName().equals(actualResults.get(i).getName()));
+                    assertThat(expectedResults.get(i).getName()).isEqualTo(actualResults.get(i).getName());
                 }
             }
         });
@@ -104,7 +97,6 @@ public class SearchModelTest extends LiveDataTestBase {
         model.getError().observeForever(new Observer<String>() {
             @Override
             public void onChanged(String e) {
-//                assertThat(e).isEqualTo("This should fail");
                 assertThat(e).isEqualTo("Search failed: network error");
             }
         });

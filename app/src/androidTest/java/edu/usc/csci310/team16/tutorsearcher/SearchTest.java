@@ -1,43 +1,22 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.mockwebserver.MockResponse;
 
-import org.bouncycastle.util.Integers;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withTagValue;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 
 public class SearchTest extends BaseTests {
 
+    private Gson gson = new Gson();
     private SearchRobot robot = new SearchRobot();
     private LoginRobot loginRobot = new LoginRobot();
 
@@ -45,66 +24,150 @@ public class SearchTest extends BaseTests {
     public void setUp() throws Exception {
         super.setUp();
 
-        Gson gson = new Gson();
         UserProfile user = new UserProfile();
         user.setId(1);
         user.setName("Tony");
         user.setEmail("tony@usc.edu");
         server.enqueue(new MockResponse()
                         .setBody(gson.toJson(user))
-                //.addHeader("access-token", "accessToken") // not used
         );
         loginRobot.login("tony@usc.edu", "password");
 
-        onView(withId(R.id.navigation)).perform(click());
+        robot.navToSearch();
+        robot.startSearch();
     }
 
-    // Searching with no availability should display no results
+    // Should display empty list when no results
     @Test
     public void testEmptySearch() {
+        final List<UserProfile> expectedResults = new ArrayList<>();
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(expectedResults))
+                .addHeader("access-token", "accessToken") // not used
+        );
 
+        robot.submitSearch();
+
+        // TODO: add asserts
     }
 
-    // Searching should return only users that match the query
+    // Should display results when non-empty results
     @Test
-    public void testSmallSearch() {
+    public void testNonemptySearch() {
+        final List<UserProfile> r = new ArrayList<>();
+        UserProfile user = new UserProfile();
+        user.setId(1);
+        user.setName("Micah");
+        user.setEmail("micah@usc.edu");
+        r.add(user);
+        user = new UserProfile();
+        user.setId(2);
+        user.setName("Adina");
+        user.setEmail("adina@usc.edu");
+        r.add(user);
+        user = new UserProfile();
+        user.setId(3);
+        user.setName("Tony");
+        user.setEmail("tony@usc.edu");
+        r.add(user);
+        user = new UserProfile();
+        user.setId(4);
+        user.setName("Teagan");
+        user.setEmail("teagan@usc.edu");
+        r.add(user);
+        user = new UserProfile();
+        user.setId(5);
+        user.setName("Eric");
+        user.setEmail("eric@usc.edu");
+        r.add(user);
+        final List<UserProfile> expectedResults = new ArrayList<>(r);
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(expectedResults))
+                .addHeader("access-token", "accessToken") // not used
+        );
 
-    }
+        robot.submitSearch();
 
-    // Searching should return all users that match the query
-    @Test
-    public void testLargeSearch() {
-
+        // TODO: add asserts
     }
 
     // Network error should display an error message
     @Test
-    public void testErrorMessage() {
+    public void testErrorMessage() throws IOException {
+        server.shutdown();
 
+        robot.submitSearch();
+
+        // TODO: add asserts
     }
 
     // Query parameters should persist between searches
     @Test
     public void testQueryPersistenceBetweenSearches() {
+        String course = "CSCI310";
 
+        List<Integer> availability = new ArrayList<>();
+        availability.add(1);
+        availability.add(2);
+        availability.add(3);
+
+        robot.fillCourse(course);
+        robot.fillAvailability(availability);
+
+        final List<UserProfile> expectedResults = new ArrayList<>();
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(expectedResults))
+                .addHeader("access-token", "accessToken") // not used
+        );
+
+        robot.submitSearch();
+
+        robot.startSearch();
+
+        // TODO: add asserts
     }
 
     // Search results should persist after changing tabs
     @Test
     public void testResultPersistenceAfterTabChange() {
+        final List<UserProfile> r = new ArrayList<>();
+        UserProfile user = new UserProfile();
+        user.setId(1);
+        user.setName("Micah");
+        user.setEmail("micah@usc.edu");
+        r.add(user);
+        user = new UserProfile();
+        user.setId(2);
+        user.setName("Adina");
+        user.setEmail("adina@usc.edu");
+        r.add(user);
+        user = new UserProfile();
+        user.setId(3);
+        user.setName("Tony");
+        user.setEmail("tony@usc.edu");
+        r.add(user);
+        user = new UserProfile();
+        user.setId(4);
+        user.setName("Teagan");
+        user.setEmail("teagan@usc.edu");
+        r.add(user);
+        user = new UserProfile();
+        user.setId(5);
+        user.setName("Eric");
+        user.setEmail("eric@usc.edu");
+        r.add(user);
+        final List<UserProfile> expectedResults = new ArrayList<>(r);
+        server.enqueue(new MockResponse()
+                .setBody(gson.toJson(expectedResults))
+                .addHeader("access-token", "accessToken") // not used
+        );
 
-    }
+        robot.submitSearch();
 
-    // Query parameters should persist after logging out (or not)
-    @Test
-    public void testQueryPersistenceAfterSignOut() {
+        robot.navAway();
+        robot.navToSearch();
 
-    }
-
-    // Search results should persist after logging out (or not)
-    @Test
-    public void testResultPersistenceAfterSignOut() {
-
+        // TODO: add asserts
     }
 
 //    @Test
