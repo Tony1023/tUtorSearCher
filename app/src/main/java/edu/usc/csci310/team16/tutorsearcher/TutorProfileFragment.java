@@ -69,6 +69,7 @@ public class TutorProfileFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -81,8 +82,15 @@ public class TutorProfileFragment extends Fragment {
         Button submitButton = (Button)v.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 Log.d("tutorprofilefragment", "in onClick");
+
+                TextView ratingText = (TextView)getActivity().findViewById(R.id.ratingText);
+                ratingText.setText(Double.toString(2.5));
+
+
                 RemoteServerDAO.getDao().rateTutor(user.getId(), UserProfile.getCurrentUser().getId(), (double)rt.getRating()).enqueue(new Callback<String>() {
+
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                         Log.d("tutorprofilefragment", "submit rating succeeded " + response.body() + " " + response.code());
@@ -171,6 +179,9 @@ public class TutorProfileFragment extends Fragment {
             TextView rating = (TextView)v.findViewById(R.id.rating);
             rating.setText(Double.toString(user.getRating()));
             rt.setRating((float)user.getRating());
+
+            TextView ratingText = (TextView)v.findViewById(R.id.ratingText);
+            ratingText.setText(Double.toString(user.getRating()));
         }
 
         //put list of courses taken on page

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-android:layout_width="match_parent"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:paddingBottom="75dp"
 xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_marginTop="5dp"
         android:orientation="vertical"
         android:padding="10dp">
@@ -17,6 +17,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <RatingBar
                 android:id="@+id/simpleRatingBar"
                 android:layout_width="wrap_content"
@@ -35,14 +36,21 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@color/colorPrimary"
+                android:onClick="updateRating"
                 android:padding="10dp"
                 android:text="Submit"
                 android:textColor="#fff"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:onClick="updateRating"/>
+                android:textStyle="bold" />
 
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/ratingText"
+            android:layout_width="53dp"
+            android:layout_height="48dp"
+            android:text="0"
+            android:textColor="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
