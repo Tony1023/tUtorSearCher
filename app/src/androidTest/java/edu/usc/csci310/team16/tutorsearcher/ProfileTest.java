@@ -68,7 +68,7 @@ public class ProfileTest extends BaseTests {
         robot.submitEdits(); //hit the submit button
 
         //check that everything is empty on the profile page
-        onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("")));
+        onView(withId(R.id.name)).perform(scrollTo()).check(matches(withText("Tony")));
         onView(withId(R.id.grade)).check(matches(withText("Freshman"))); //default value
 
         //can't check availability bc couldn't find way to check background color

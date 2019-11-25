@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         loginModel.getValidating().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean validating) {
-//                showProgress(validating);
+                showProgress(validating);
             }
         });
 
