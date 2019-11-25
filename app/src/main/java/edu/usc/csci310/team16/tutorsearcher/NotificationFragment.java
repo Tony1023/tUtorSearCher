@@ -78,7 +78,7 @@ public class NotificationFragment extends Fragment {
 
         //TODO redo this
         OneTimeWorkRequest notificationUpdateRequest =
-                new OneTimeWorkRequest.Builder(NotificationWorker.class)
+                new OneTimeWorkRequest.Builder(NotificationWorker.class).addTag("WORKER")
                         //.setInputData(data)
                         .build();
 

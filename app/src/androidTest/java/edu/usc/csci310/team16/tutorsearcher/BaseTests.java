@@ -14,6 +14,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 
+import java.io.IOException;
+
 public abstract class BaseTests {
 
     protected MockWebServer server;
@@ -38,8 +40,8 @@ public abstract class BaseTests {
     }
 
     @After
-    public void tearDown() {
-
+    public void tearDown() throws Exception {
+        server.shutdown();
     }
 
 }
