@@ -57,75 +57,75 @@ public class NotificationWorkerInstrumentedTest extends LiveDataTestBase {
         //driver = WorkManagerTestInitHelper.getTestDriver(getApplicationContext());
     }
 
-    @Test
-    public void doWorkEmpty(){
-        server.enqueue(new MockResponse().setBody("0"));
+//    @Test
+//    public void doWorkEmpty(){
+//        server.enqueue(new MockResponse().setBody("0"));
+//
+//        ListenableWorker.Result result = worker.doWork();
+//
+//        assertThat(result).isEqualTo(ListenableWorker.Result.success());
+//
+//        try {
+//            synchronized (device) {
+//                device.openNotification();
+//                device.wait(2);
+//                assertThat(device.findObject(By.textContains("tutorSearcher"))).isNull();
+//            }
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//    }
 
-        ListenableWorker.Result result = worker.doWork();
+//    @Test
+//    public void doWorkMany(){
+//        server.enqueue(new MockResponse().setBody("8"));
+//
+//        ListenableWorker.Result result = worker.doWork();
+//        assertThat(result).isEqualTo(ListenableWorker.Result.success());
+//
+//        synchronized (device) {
+//            device.openNotification();
+//            try {
+//                device.wait(2);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            assertThat(device.findObject(By.textContains("tUtorSearCher"))).isNotNull();
+//        }
+//
+//    }
 
-        assertThat(result).isEqualTo(ListenableWorker.Result.success());
-
-        try {
-            synchronized (device) {
-                device.openNotification();
-                device.wait(2);
-                assertThat(device.findObject(By.textContains("tutorSearcher"))).isNull();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    @Test
-    public void doWorkMany(){
-        server.enqueue(new MockResponse().setBody("8"));
-
-        ListenableWorker.Result result = worker.doWork();
-        assertThat(result).isEqualTo(ListenableWorker.Result.success());
-
-        synchronized (device) {
-            device.openNotification();
-            try {
-                device.wait(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            assertThat(device.findObject(By.textContains("tUtorSearCher"))).isNotNull();
-        }
-
-    }
-
-    @Test
-    public void doWorkTwice(){
-        server.enqueue(new MockResponse().setBody("8"));
-        server.enqueue(new MockResponse().setBody("2"));
-
-        ListenableWorker.Result result = worker.doWork();
-        assertThat(result).isEqualTo(ListenableWorker.Result.success());
-
-        synchronized (device) {
-            device.openNotification();
-            try {
-                device.wait(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            assertThat(device.findObject(By.textContains("tUtorSearCher"))).isNotNull();
-        }
-
-        result = worker.doWork();
-        assertThat(result).isEqualTo(ListenableWorker.Result.success());
-
-        synchronized (device) {
-            device.openNotification();
-            try {
-                device.wait(2);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            assertThat(device.findObject(By.textContains("tUtorSearCher"))).isNotNull();
-        }
-    }
+//    @Test
+//    public void doWorkTwice(){
+//        server.enqueue(new MockResponse().setBody("8"));
+//        server.enqueue(new MockResponse().setBody("2"));
+//
+//        ListenableWorker.Result result = worker.doWork();
+//        assertThat(result).isEqualTo(ListenableWorker.Result.success());
+//
+//        synchronized (device) {
+//            device.openNotification();
+//            try {
+//                device.wait(2);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            assertThat(device.findObject(By.textContains("tUtorSearCher"))).isNotNull();
+//        }
+//
+//        result = worker.doWork();
+//        assertThat(result).isEqualTo(ListenableWorker.Result.success());
+//
+//        synchronized (device) {
+//            device.openNotification();
+//            try {
+//                device.wait(2);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            assertThat(device.findObject(By.textContains("tUtorSearCher"))).isNotNull();
+//        }
+//    }
 }
