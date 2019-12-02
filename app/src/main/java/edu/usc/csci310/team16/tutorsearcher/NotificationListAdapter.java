@@ -5,8 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.databinding.Observable;
+import androidx.databinding.ObservableField;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
@@ -42,12 +47,23 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             if (notes != null) {
                 final Notification notification = notes.get(position);
 
+                final MutableLiveData<String> finished = new MutableLiveData<String>();
+
+                finished.observeForever(new Observer<String>() {
+                    @Override
+                    public void onChanged(String s) {
+                        if(s.equals("INVALID")){
+                            buttonToggleGroup.setVisibility(View.VISIBLE);
+                            // TODO: Implement error message view
+                        }
+                    }
+                });
 
                 binding.notificationAccept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         buttonToggleGroup.setVisibility(View.GONE);
-                        WebServiceRepository.getInstance(viewModel.getApplication()).acceptRequest(notification);
+                        WebServiceRepository.getInstance(viewModel.getApplication()).acceptRequest(notification, finished);
                     }
                 });
 
@@ -55,8 +71,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                     @Override
                     public void onClick(View v) {
                         buttonToggleGroup.setVisibility(View.GONE);
-                        WebServiceRepository.getInstance(viewModel.getApplication()).rejectRequest(notification);
-
+                        WebServiceRepository.getInstance(viewModel.getApplication()).rejectRequest(notification,finished);
                     }
                 });
             }

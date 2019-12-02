@@ -3,6 +3,7 @@ package edu.usc.csci310.team16.tutorsearcher.model;
 import android.content.Context;
 import android.util.Log;
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import edu.usc.csci310.team16.tutorsearcher.RemoteServerDAO;
@@ -14,7 +15,10 @@ import retrofit2.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class WebServiceRepository {
+
+    static final String TAG = "WEBSERVICE_REPO";
 
     private static volatile WebServiceRepository INSTANCE;
 
@@ -42,7 +46,7 @@ public class WebServiceRepository {
         return data;
     }
 
-    public void getNotificationUpdates() {
+    public void getNotificationUpdates(final MutableLiveData<List<Notification>> data) {
         String response = "";
 
         try {
@@ -52,6 +56,8 @@ public class WebServiceRepository {
                 public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
                     List<Notification> webserviceResponseList = new ArrayList<>();
                     webserviceResponseList = response.body();
+
+                    data.postValue(webserviceResponseList);
 
                     Log.i("WEB_REPO","Notifications recieved success");
                 }
@@ -69,20 +75,18 @@ public class WebServiceRepository {
         //  return retrofit.create(ResultModel.class);
     }
 
-    public void acceptRequest(final Notification notification) {
+    public void acceptRequest(final Notification notification, final MutableLiveData<String> callFinished) {
         //  response = service.makeRequest().execute().body();
-        final ObservableField<String> callFinished = new ObservableField<>();
         //TODO check userID type
         service.acceptRequest(notification.getRequestId()).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
+                Log.i(TAG, response.body());
 
                 if ("Success".equals(response.body())) {
-                    notification.setStatus(5);
-                    callFinished.set("ACCEPTED");
+                    callFinished.postValue("ACCEPTED");
                 } else if ("Tutee taken".equals(response.body())) {
-                    notification.setStatus(5);
-                    callFinished.set("REJECTED");
+                    callFinished.postValue("REJECTED");
                 } else {
                     onFailure(call, null);
                 }
@@ -90,31 +94,27 @@ public class WebServiceRepository {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                callFinished.set("FAILED");
+                Log.e(TAG, "ACCEPT_FAILURE");
 
-                Log.e("WEBSERVICE_REPO", "ACCEPT_FAILURE");
+                callFinished.postValue("FAILED");
             }
         });
     }
 
-    public ObservableField<String> rejectRequest(final Notification notification) {
-
-        final ObservableField<String> callFinished = new ObservableField<>();
+    public void rejectRequest(final Notification notification, final MutableLiveData<String> callFinished) {
         service.rejectRequest(notification.getRequestId()).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 notification.setStatus(5);
-                callFinished.set("SUCCESS");
+                callFinished.postValue("SUCCESS");
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                callFinished.set("FAILED");
+                callFinished.postValue("FAILED");
                 Log.e("WEBSERVICE_REPO", "REJECT_FAILURE");
             }
         });
-
-        return callFinished;
     }
 
     public Call<Integer> pollNotifications(){

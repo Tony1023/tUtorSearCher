@@ -67,6 +67,19 @@ public class NotificationFragment extends Fragment {
             }
         });
 
+        notificationModel.getNotifications().observe(getViewLifecycleOwner(), new Observer<List<Notification>>() {
+            /**
+             * Called when the data is changed.
+             *
+             * @param o The new data
+             */
+            @Override
+            public void onChanged(List<Notification> o) {
+                NotificationListAdapter adapter = (NotificationListAdapter) recyclerView.getAdapter();
+                adapter.setNotifications(o);
+            }
+        });
+
         return binding.getRoot();
     }
 
