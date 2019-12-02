@@ -52,7 +52,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 finished.observeForever(new Observer<String>() {
                     @Override
                     public void onChanged(String s) {
-                        if(s.equals("INVALID")){
+                        if(s.equals("FAILED")){
                             buttonToggleGroup.setVisibility(View.VISIBLE);
                             // TODO: Implement error message view
                         }

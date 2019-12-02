@@ -60,11 +60,13 @@ public interface RemoteServerServices {
         @POST("user/sendRequest")
         Call<String> sendRequest(@Body Map<String, Object> body);
 
+        @FormUrlEncoded
         @POST("user/acceptRequest")
-        Call<String> acceptRequest(@Body Integer requestId);
+        Call<String> acceptRequest(@Field("id") Integer requestId);
 
+        @FormUrlEncoded
         @POST("user/rejectRequest")
-        Call<String> rejectRequest(@Body Integer requestId);
+        Call<String> rejectRequest(@Field("id") Integer requestId);
 
         @FormUrlEncoded
         @POST("user/getRating")

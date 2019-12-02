@@ -17,7 +17,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RemoteServerDAO {
     private static Retrofit retrofit = null;
     private static RemoteServerServices service = null;
-    private static String url = "http://10.0.2.2:8080/";
+    private static String url = "http://104.248.66.152:9000/";
     private static Integer id = -1;
     private static String token = "";
     private static boolean headerChanged = false;

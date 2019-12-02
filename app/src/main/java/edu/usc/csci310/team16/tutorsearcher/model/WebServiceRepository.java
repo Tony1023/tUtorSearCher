@@ -81,7 +81,7 @@ public class WebServiceRepository {
         service.acceptRequest(notification.getRequestId()).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Log.i(TAG, response.body());
+                //Log.i(TAG, response.body());
 
                 if ("Success".equals(response.body())) {
                     callFinished.postValue("ACCEPTED");
@@ -105,7 +105,6 @@ public class WebServiceRepository {
         service.rejectRequest(notification.getRequestId()).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                notification.setStatus(5);
                 callFinished.postValue("SUCCESS");
             }
 
