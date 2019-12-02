@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,11 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import edu.usc.csci310.team16.tutorsearcher.databinding.ActivityLoginBinding;
-import edu.usc.csci310.team16.tutorsearcher.model.RoomDBRepository;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -193,6 +187,5 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClickLogin(View view) {
         loginModel.login();
-        RoomDBRepository.getInstance(getApplication()).deleteAll();
     }
 }

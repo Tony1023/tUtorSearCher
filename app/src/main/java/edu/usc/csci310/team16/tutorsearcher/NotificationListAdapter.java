@@ -1,18 +1,15 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
-import edu.usc.csci310.team16.tutorsearcher.model.RoomDBRepository;
 import edu.usc.csci310.team16.tutorsearcher.model.WebServiceRepository;
 
 import java.util.ArrayList;
@@ -41,29 +38,27 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             binding.setViewModel(viewModel);
             binding.setPosition(position);
 
-
-
             List<Notification> notes = mNotifications;
             if (notes != null) {
                 final Notification notification = notes.get(position);
 
-                if (0 == notification.getStatus() || 3 == notification.getStatus()){
-                    binding.notificationButtons.setVisibility(View.GONE);
-                }else {
-                    binding.notificationAccept.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            WebServiceRepository.getInstance(viewModel.getApplication()).acceptRequest(notification,binding);
-                        }
-                    });
 
-                    binding.notificationReject.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            WebServiceRepository.getInstance(viewModel.getApplication()).rejectRequest(notification,binding);
-                        }
-                    });
-                }
+                binding.notificationAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        buttonToggleGroup.setVisibility(View.GONE);
+                        WebServiceRepository.getInstance(viewModel.getApplication()).acceptRequest(notification);
+                    }
+                });
+
+                binding.notificationReject.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        buttonToggleGroup.setVisibility(View.GONE);
+                        WebServiceRepository.getInstance(viewModel.getApplication()).rejectRequest(notification);
+
+                    }
+                });
             }
 
 

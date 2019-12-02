@@ -1,8 +1,8 @@
 package edu.usc.csci310.team16.tutorsearcher.model;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import edu.usc.csci310.team16.tutorsearcher.RemoteServerDAO;
@@ -53,8 +53,6 @@ public class WebServiceRepository {
                     List<Notification> webserviceResponseList = new ArrayList<>();
                     webserviceResponseList = response.body();
 
-                    RoomDBRepository roomDBRepository = RoomDBRepository.getInstance(application);
-                    roomDBRepository.insertPosts(webserviceResponseList);
                     Log.i("WEB_REPO","Notifications recieved success");
                 }
 
@@ -71,25 +69,20 @@ public class WebServiceRepository {
         //  return retrofit.create(ResultModel.class);
     }
 
-    public void acceptRequest(final Notification notification,final NotificationMsgBinding binding) {
+    public void acceptRequest(final Notification notification) {
         //  response = service.makeRequest().execute().body();
-
+        final ObservableField<String> callFinished = new ObservableField<>();
         //TODO check userID type
         service.acceptRequest(notification.getRequestId()).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-                if (binding != null) {
-                    binding.notificationAccept.setClickable(false);
-                    binding.notificationReject.setClickable(false);
-                }
-
                 if ("Success".equals(response.body())) {
                     notification.setStatus(5);
-                    RoomDBRepository.getInstance(application).changeStatus(notification);
+                    callFinished.set("ACCEPTED");
                 } else if ("Tutee taken".equals(response.body())) {
                     notification.setStatus(5);
-                    RoomDBRepository.getInstance(application).changeStatus(notification);
+                    callFinished.set("REJECTED");
                 } else {
                     onFailure(call, null);
                 }
@@ -97,29 +90,31 @@ public class WebServiceRepository {
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                if (binding != null) {
-                    binding.notificationAccept.setClickable(true);
-                    binding.notificationReject.setClickable(true);
-                }
+                callFinished.set("FAILED");
 
                 Log.e("WEBSERVICE_REPO", "ACCEPT_FAILURE");
             }
         });
     }
 
-    public void rejectRequest(final Notification notification, final NotificationMsgBinding binding) {
+    public ObservableField<String> rejectRequest(final Notification notification) {
+
+        final ObservableField<String> callFinished = new ObservableField<>();
         service.rejectRequest(notification.getRequestId()).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 notification.setStatus(5);
-                RoomDBRepository.getInstance(application).changeStatus(notification);
+                callFinished.set("SUCCESS");
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                callFinished.set("FAILED");
                 Log.e("WEBSERVICE_REPO", "REJECT_FAILURE");
             }
         });
+
+        return callFinished;
     }
 
     public Call<Integer> pollNotifications(){
