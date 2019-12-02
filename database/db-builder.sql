@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS tUtorSearCher_test;
-CREATE DATABASE tUtorSearCher_test;
+DROP DATABASE IF EXISTS tUtorSearCher;
+CREATE DATABASE tUtorSearCher;
 USE tUtorSearCher;
 CREATE TABLE IF NOT EXISTS Users (
   id INT(11) PRIMARY KEY AUTO_INCREMENT,
@@ -68,14 +68,6 @@ INSERT INTO CourseOffered(user_id, course_id) VALUES
 (1,1), (1,2), (1,3), (1,8),
 (2,1), (2,2), (2,3),
 (3,1), (3,2), (3,6);
-
-CREATE TABLE IF NOT EXISTS CourseOffered (
-  id INT(11) PRIMARY KEY AUTO_INCREMENT,
-  user_id INT(11) NOT NULL,
-  course_id INT(11) NOT NULL,
-  FOREIGN KEY fk_usercourses_userid (user_id) REFERENCES Users(id),
-  FOREIGN KEY fk_usercourses_courseid (course_id) REFERENCES Courses(id)
-);
 
 CREATE TABLE IF NOT EXISTS Availability (
   user_id INT(11) NOT NULL,
