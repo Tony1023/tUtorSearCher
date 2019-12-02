@@ -35,9 +35,9 @@ public class NotificationWorkerTest extends TestBase {
         server.enqueue(new MockResponse().setBody("0"));
         NotificationWorker worker = (NotificationWorker) TestWorkerBuilder.from(mContext, NotificationWorker.class,mExecutor).build();
 
-        ListenableWorker.Result result = worker.doWork();
+        ListenableWorker.Result result = worker.getAndSendNotification();
 
-        assertThat(result).isEqualTo(ListenableWorker.Result.success());
+        assertThat(result).isEqualTo(ListenableWorker.Result.failure());
     }
 
     @Test
