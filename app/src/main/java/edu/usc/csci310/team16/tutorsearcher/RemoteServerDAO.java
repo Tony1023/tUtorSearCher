@@ -11,12 +11,13 @@ import okhttp3.Response;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class RemoteServerDAO {
     private static Retrofit retrofit = null;
     private static RemoteServerServices service = null;
-    private static String url = "http://104.248.66.152:9000/";
+    private static String url = "http://10.0.2.2:8080/";
     private static Integer id = -1;
     private static String token = "";
     private static boolean headerChanged = false;
@@ -53,10 +54,10 @@ public class RemoteServerDAO {
                 }
             });
 
-            GsonBuilder gsonbuilder = new GsonBuilder();
             // Might need to configure builder
             retrofit = new Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create(gsonbuilder.create()))
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(url) // Android emulator's hack to access localhost
                     .client(httpBuilder.build())
                     .build();
