@@ -108,7 +108,8 @@ public class EditProfileFragment extends Fragment {
             String tutoringCode = (String)tutoringCheckbox.getTag();
             tutoringCode = "CSCI"+tutoringCode.substring(0,3);
 
-            if(user.getTutorClasses().contains(code)) {
+            //changed from code to tutoringCode
+            if(user.getTutorClasses().contains(tutoringCode)) {
                 tutoringCheckbox.setChecked(true);
             }
         }
