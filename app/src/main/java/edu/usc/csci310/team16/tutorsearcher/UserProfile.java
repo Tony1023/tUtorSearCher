@@ -4,8 +4,10 @@ import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class UserProfile {
 
@@ -30,6 +32,9 @@ public class UserProfile {
     //divide by 28 to get day (0: Monday, 1: Tuesday, ...)
     //mod by 28 to get the time block on that day
     private List<Integer> availability = new ArrayList<>();
+
+    //corresponds to ids of availability slots that have a tutor is using to tutor an accepted tutee
+    private Set<Integer> disabledSlots = new HashSet<>();
 
     //just for tutors
     private List<String> coursesTaken = new ArrayList<>(); //tutor
@@ -127,6 +132,14 @@ public class UserProfile {
 
     public double getRating() {
         return rating;
+    }
+
+    public Set<Integer> getDisabledSlots() { return disabledSlots; }
+
+    //adds slot to disabled array and removes it from availability array automatically
+    public void disableSlot(int availabilityID) {
+        disabledSlots.add(availabilityID);
+        availability.remove(availabilityID);
     }
 
 }

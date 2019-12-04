@@ -140,10 +140,17 @@ public class EditProfileFragment extends Fragment {
             for(int j = 0; j < time_toggle[0].length; j++){
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
 
+
+                //disable checkbox if tutor already has a tutee at that time
+                if(user.getDisabledSlots().contains(i*time_toggle[0].length + j)) {
+                    time_toggle[i][j].setClickable(false);
+                }
                 //if this availability is already in the user's list, check box
-                if(user.getAvailability().contains(i*time_toggle[0].length + j)) {
+                else if(user.getAvailability().contains(i*time_toggle[0].length + j)) {
                     time_toggle[i][j].setChecked(true);
                 }
+
+
 
                 time_toggle[i][j].setTag((i*time_toggle[0].length + j)+"box"); //ADDED DYNAMIC ID
                 timeSelectGrid.addView(time_toggle[i][j]);
