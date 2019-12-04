@@ -58,6 +58,17 @@ public class SearchModel extends ViewModel {
     }
 
 
+    public List<Integer> intersect(List<Integer> a1, List<Integer> a2) {
+        List<Integer> r = new ArrayList<>();
+        for(int i : a1) {
+            if(a2.contains(i)) {
+                r.add(i);
+            }
+        }
+        return r;
+    }
+
+
     public static List<String> getDays() {
         return days;
     }

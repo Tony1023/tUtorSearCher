@@ -73,7 +73,8 @@ public class SearchProfileFragment extends Fragment {
                 body.put("tutee_id", UserProfile.getCurrentUser().getId());
                 body.put("tutor_id", user.getId());
                 body.put("course", searchModel.getCourse());
-                body.put("availability", searchModel.getAvailability());
+                body.put("availability", searchModel.intersect(user.getAvailability(), searchModel.getAvailability()));
+                Log.d("searchProfileFragment", "send request availability " + searchModel.intersect(user.getAvailability(), searchModel.getAvailability()).toString());
                 RemoteServerDAO.getDao().sendRequest(body).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
