@@ -78,15 +78,17 @@ public class SearchProfileFragment extends Fragment {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                         Log.d("searchProfileFragment", "send request succeeded " + response.body() + " " + response.code());
+                        sendRequestMessage.setText(response.body());
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                         Log.e("searchProfileFragment", "send request failed " + t);
+                        sendRequestMessage.setText("Server error");
                     }
                 });
 
-                sendRequestMessage.setText("Request sent!");
+                sendRequestMessage.setText("Sending request...");
             }
         });
 
