@@ -235,17 +235,25 @@ public class EditProfileFragment extends Fragment {
                 user.setTutorClasses(coursesTutoring);
                 user.setAvailability(availability);
 
+                //get the reference to the view where the error message will be located
+                final TextView errorMessageLocation = (TextView) getActivity().findViewById(R.id.bottom_view);
+
                 //TODO: MAKE SURE THIS IS WORKING
-                //Add call to update profile endpoint and test case to check for it
+                //call to update the profile endpoint
                 RemoteServerDAO.getDao().updateProfile(user).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                        Log.d("editProfileFragment", "updating profile on server succeeded "+
+                                response.body() + " " + response.code());
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                        Log.e("editProfileFragment", "updating profile failed "+t);
+                        errorMessageLocation.setText("Error uploading profile to server");
                     }
                 });
+
 
                 //transition back to profile fragment
                 getActivity().getSupportFragmentManager().beginTransaction()
