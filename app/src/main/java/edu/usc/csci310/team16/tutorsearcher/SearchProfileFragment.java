@@ -73,20 +73,23 @@ public class SearchProfileFragment extends Fragment {
                 body.put("tutee_id", UserProfile.getCurrentUser().getId());
                 body.put("tutor_id", user.getId());
                 body.put("course", searchModel.getCourse());
-                body.put("availability", searchModel.getAvailability());
+                body.put("availability", searchModel.intersect(user.getAvailability(), searchModel.getAvailability()));
+                Log.d("searchProfileFragment", "send request availability " + searchModel.intersect(user.getAvailability(), searchModel.getAvailability()).toString());
                 RemoteServerDAO.getDao().sendRequest(body).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
                         Log.d("searchProfileFragment", "send request succeeded " + response.body() + " " + response.code());
+                        sendRequestMessage.setText(response.body());
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                         Log.e("searchProfileFragment", "send request failed " + t);
+                        sendRequestMessage.setText("Server error");
                     }
                 });
 
-                sendRequestMessage.setText("Request sent!");
+                sendRequestMessage.setText("Sending request...");
             }
         });
 
