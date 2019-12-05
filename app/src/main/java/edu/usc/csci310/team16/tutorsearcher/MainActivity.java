@@ -50,27 +50,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == mainModel.getPage()) {
-            return false;
-        } else {
-            Fragment view;
-            switch (item.getItemId()) {
-                case R.id.navigation_search:
-                    view = search; break;
-                case R.id.navigation_notifications:
-                    view = notification; break;
-                case R.id.navigation_tutors:
-                    view = rating; break;
-                case R.id.navigation_profile:
-                default:
-                    view = profile;
-            }
-            mainModel.setPage(item.getItemId());
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, view)
-                    .commit();
-            return true;
+        Fragment view;
+        switch (item.getItemId()) {
+            case R.id.navigation_search:
+                view = search; break;
+            case R.id.navigation_notifications:
+                view = notification; break;
+            case R.id.navigation_tutors:
+                view = rating; break;
+            case R.id.navigation_profile:
+            default:
+                view = profile;
         }
+        mainModel.setPage(item.getItemId());
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, view)
+                .commit();
+        return true;
 
     }
 
