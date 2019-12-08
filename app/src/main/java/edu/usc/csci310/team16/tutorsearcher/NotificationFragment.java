@@ -1,5 +1,6 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class NotificationFragment extends Fragment {
     NotificationFragmentBinding binding;
     RecyclerView recyclerView;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,9 @@ public class NotificationFragment extends Fragment {
 
         recyclerView = binding.notificationsView;
 
-        recyclerView.setAdapter(notificationModel.getAdapter());
+        NotificationListAdapter adapter = new NotificationListAdapter(getActivity(),notificationModel);
+        notificationModel.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
@@ -79,6 +83,8 @@ public class NotificationFragment extends Fragment {
                 adapter.setNotifications(o);
             }
         });
+
+
 
         return binding.getRoot();
     }

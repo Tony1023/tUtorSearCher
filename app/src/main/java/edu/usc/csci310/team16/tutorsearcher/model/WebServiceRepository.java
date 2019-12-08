@@ -23,7 +23,6 @@ public class WebServiceRepository {
     private static volatile WebServiceRepository INSTANCE;
 
     private Context application;
-    private final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
     private final RemoteServerServices service;
 
     private WebServiceRepository(Context application){
@@ -40,10 +39,6 @@ public class WebServiceRepository {
             }
         }
         return INSTANCE;
-    }
-
-    public MutableLiveData<List<Notification>> getNotifications(){
-        return data;
     }
 
     public void getNotificationUpdates(final MutableLiveData<List<Notification>> data) {
@@ -71,8 +66,6 @@ public class WebServiceRepository {
         }catch (Exception e){
             Log.e("WEB_REPO",e.getMessage());
         }
-
-        //  return retrofit.create(ResultModel.class);
     }
 
     public void acceptRequest(final Notification notification, final MutableLiveData<String> callFinished) {
