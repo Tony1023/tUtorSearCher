@@ -9,6 +9,8 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,7 +47,7 @@ public class NotificationFragment extends Fragment {
         View v = super.onCreateView(inflater,container,savedInstanceState);
         binding = NotificationFragmentBinding.inflate(inflater,container,false);
 
-        notificationModel = new ViewModelProvider(this,
+        notificationModel = new ViewModelProvider(getActivity(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(
                         getActivity().getApplication()
                 )).get(NotificationModel.class);
@@ -54,7 +56,7 @@ public class NotificationFragment extends Fragment {
 
         recyclerView = binding.notificationsView;
 
-        NotificationListAdapter adapter = new NotificationListAdapter(getActivity(),notificationModel);
+        NotificationListAdapter adapter = new NotificationListAdapter(notificationModel);
         notificationModel.setAdapter(adapter);
         recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -84,7 +86,14 @@ public class NotificationFragment extends Fragment {
             }
         });
 
-
+        notificationModel.getPickerView().observe(getActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean.booleanValue()){
+                    openPicker();
+                }
+            }
+        });
 
         return binding.getRoot();
     }
@@ -109,5 +118,35 @@ public class NotificationFragment extends Fragment {
         Notification data = notificationModel.mNotifications.getValue().get(position);
         data.setOverlap(updated);
         adapter.notifyItemChanged(position,data);
+    }
+
+    public void openPicker(){
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+
+        TimePickerFragment timePickerFragment = (TimePickerFragment)
+                manager.findFragmentById(R.id.time);
+
+        if (timePickerFragment != null) {
+            // If article frag is available, we're in two-pane layout...
+
+            // Call a method in the ArticleFragment to update its content
+            timePickerFragment.updateScreen();
+            manager.popBackStackImmediate("RETURN_NOTIFICATION",FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else {
+            // Otherwise, we're in the one-pane layout and must swap frags...
+
+            // Create fragment and give it an argument for the selected article
+            TimePickerFragment newFragment = new TimePickerFragment();
+
+            FragmentTransaction transaction = manager.beginTransaction();
+
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, newFragment, "picker");
+            transaction.addToBackStack("OPEN_PICKER");
+
+            // Commit the transaction
+            transaction.commit();
+        }
     }
 }

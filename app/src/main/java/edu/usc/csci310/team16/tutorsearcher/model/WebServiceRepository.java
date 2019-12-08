@@ -71,7 +71,7 @@ public class WebServiceRepository {
         }
     }
 
-    public void acceptRequest(final Notification notification, final Observable callFinished) {
+    public void acceptRequest(final Notification notification, final MutableLiveData<Object> callFinished) {
         //  response = service.makeRequest().execute().body();
         Log.i(TAG, String.valueOf(notification.hashCode()));
 
@@ -85,7 +85,7 @@ public class WebServiceRepository {
                 if ((Boolean) body.getOrDefault("success", false)) {
                     Object profile = (Object) body.getOrDefault("payload",null);
                     if(profile instanceof UserProfile){
-                        callFinished.notifyObservers(profile);
+                        callFinished.postValue(profile);
                     }else{
                         onFailure(call, new Throwable("Payload not profile"));
                     }
@@ -99,7 +99,7 @@ public class WebServiceRepository {
                 Log.e(TAG, "ACCEPT_FAILURE"+t.getMessage());
                 Log.i(TAG, call.toString());
 
-                callFinished.notifyObservers(t);
+                callFinished.postValue(t);
             }
         });
     }

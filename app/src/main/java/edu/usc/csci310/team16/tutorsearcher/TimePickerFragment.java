@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.*;
+import androidx.databinding.Observable;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableParcelable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import edu.usc.csci310.team16.tutorsearcher.model.WebServiceRepository;
-
-import java.util.Observable;
 
 /**
  * A fragment with a Google +1 button.
@@ -29,12 +34,11 @@ public class TimePickerFragment extends Fragment {
     private static final String ARG_PARAM2 = "availability";
     private static final String TAG = "TIME_PICKER_FRAGMENT";
     private NotificationModel model;
+    Notification notification;
 
     private boolean[][] availability =  new boolean[7][28];
     private final MaterialCheckBox[][] buttons = new MaterialCheckBox[7][28];
     private int index;
-
-    private OnAvailabilityUpdatedListener mListener;
 
     public TimePickerFragment() {
         // Required empty public constructor
@@ -60,15 +64,16 @@ public class TimePickerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        availability = new boolean[7][28];
-        if (getArguments() != null) {
-            int arg1 = getArguments().getInt(ARG_PARAM1);
-            String arg2 = getArguments().getString(ARG_PARAM2);
-            if (arg2 != null){
-                Log.i(TAG, "Input bundle: "+arg2);
-                parseAvailability(arg2);
+        model = new ViewModelProvider(
+                getActivity(),
+                ViewModelProvider.AndroidViewModelFactory.getInstance(
+                        getActivity().getApplication()
+                )).get(NotificationModel.class);
+        model.getPickerView().observe(this, aBoolean -> {
+            if (!aBoolean.booleanValue()){
+                openNotifications();
             }
-        }
+        });
     }
 
     @Override
@@ -77,12 +82,9 @@ public class TimePickerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_time_picker, container, false);
 
-        model = new ViewModelProvider(
-                this,
-                ViewModelProvider.AndroidViewModelFactory.getInstance(
-                        getActivity().getApplication()
-                )).get(NotificationModel.class);
+        notification = model.getNotifications().getValue().get(model.getPosition());
 
+        availability = parseAvailability(notification.getOverlap());
 
         //AVAILABILITY
         GridLayout timeSelectGrid = (GridLayout) view.findViewById(R.id.time_select_grid);
@@ -180,71 +182,34 @@ public class TimePickerFragment extends Fragment {
         return sb.toString();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
-    public void changeScreens() {
-        Log.i(TAG,"Saving preferred times");
-
-        if (mListener != null) {
-            mListener.onAvailabilityUpdated(index,serializeAvailability(availability));
+    public void updateScreen(){
+        notification = model.getNotification();
+        String overlap = notification.getOverlap();
+        availability = parseAvailability(overlap);
+        for (int i =0; i < 7; i++){
+            for(int j = 0; j <28; j++){
+                setButton(i,j);
+            }
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnAvailabilityUpdatedListener) {
-            mListener = (OnAvailabilityUpdatedListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     public void pushAvailability(){
         getView().findViewById(R.id.notification_load_accept).setVisibility(View.VISIBLE);
 
-        Observable o = new Observable();
-        o.addObserver((o1, arg) -> {
-            o1.deleteObservers();
+        MutableLiveData<Object> o = new MutableLiveData<>();
 
-            if (arg instanceof Throwable){
-                //changeScreen
+        o.observe(getActivity(), new Observer<Object>() {
+            @Override
+            public void onChanged(Object s) {
+                //TODO finished
+                model.getPickerView().postValue(false);
+                openNotifications();
             }
-            else if (arg instanceof UserProfile){
-                synchronized (UserProfile.class) {
-                    UserProfile.setCurrentUser((UserProfile) arg);
-                }
-            }
-
-            changeScreens();
         });
 
         //TODO not finding notifications....
-        WebServiceRepository.getInstance(getContext()).acceptRequest(model.getNotifications().getValue().get(index),o);
-    }
-
-    public void updateInformation(int position, String availability) {
-        index = position;
-
-        Log.e(TAG, "Availability update: "+ availability);
-        getView().findViewById(R.id.notification_load_accept).setVisibility(View.GONE);
-        this.availability = parseAvailability(availability);
-
-        for(int i = 0; i < 7; i++){
-            for(int j = 0; j < 28; j++){
-                setButton(i, j);
-            }
-        }
+        WebServiceRepository.getInstance(getContext()).acceptRequest(notification,o);
     }
 
     /**
@@ -282,6 +247,35 @@ public class TimePickerFragment extends Fragment {
         }
     }
 
+    public void openNotifications() {
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        NotificationFragment notificationFragment = (NotificationFragment)
+                manager.findFragmentById(R.id.notification_fragment);
+
+        if (notificationFragment != null) {
+            // If article frag is available, we're in two-pane layout...
+
+            // Call a method in the ArticleFragment to update its content
+            manager.popBackStackImmediate("OPEN_PICKER", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else {
+            // Otherwise, we're in the one-pane layout and must swap frags...
+
+            // Create fragment and give it an argument for the selected article
+            NotificationFragment newFragment = new NotificationFragment();
+            Bundle args = new Bundle();
+            newFragment.setArguments(args);
+
+            FragmentTransaction transaction = manager.beginTransaction();
+
+            // Replace whatever is in the fragment_container view with this fragment,
+            // and add the transaction to the back stack so the user can navigate back
+            transaction.replace(R.id.fragment_container, newFragment, "notifications");
+            transaction.addToBackStack("NOTIFICATION_RETURN");
+
+            // Commit the transaction
+            transaction.commit();
+        }
+    }
 }
 
 

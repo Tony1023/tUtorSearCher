@@ -11,6 +11,7 @@ public class NotificationModel extends AndroidViewModel {
     int indexNotification = 0;
     private NotificationListAdapter adapter;
     MutableLiveData<List<Notification>> mNotifications = new MutableLiveData<>();
+    MutableLiveData<Boolean> pickerView = new MutableLiveData<>();
 
     public NotificationModel(@NonNull Application application){
         super(application);
@@ -33,5 +34,21 @@ public class NotificationModel extends AndroidViewModel {
 
     public void setAdapter(NotificationListAdapter adapter) {
         this.adapter = adapter;
+    }
+
+    public MutableLiveData<Boolean> getPickerView(){
+        return pickerView;
+    }
+
+    public void setPosition(int position) {
+        indexNotification = position;
+    }
+
+    public int getPosition(){
+        return indexNotification;
+    }
+
+    public Notification getNotification(){
+        return mNotifications.getValue().get(indexNotification);
     }
 }

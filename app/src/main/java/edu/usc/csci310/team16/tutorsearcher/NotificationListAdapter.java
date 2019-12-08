@@ -1,7 +1,6 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
 import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +26,6 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
     private final NotificationModel viewModel;
     private List<Notification> mNotifications = new ArrayList<>();
-    private Context context;
-    private OnCardClickedListener mListener;
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,21 +62,14 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             if (notes != null) {
                 final Notification notification = notes.get(position);
 
-
-
                 finished.observeForever( observer );
 
                 binding.notificationAccept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         buttonToggleGroup.setVisibility(View.GONE);
-
-                        if (context != null){
-                            ((MainActivity)context).onCardClicked(position,
-                                    notification.getOverlap());
-                        }else{
-                            //TODO error handling
-                        }
+                        viewModel.setPosition(position);
+                        viewModel.getPickerView().postValue(true);
                     }
                 });
 
@@ -97,9 +87,8 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
 
 
-    public NotificationListAdapter(Context ctx,NotificationModel model){
+    public NotificationListAdapter(NotificationModel model){
         viewModel = model;
-        context = ctx;
     }
 
     @NonNull
@@ -155,9 +144,5 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     @Override
     public int getItemCount() {
         return mNotifications.size();
-    }
-
-    public interface OnCardClickedListener{
-        void onCardClicked(int position, String availability);
     }
 }
