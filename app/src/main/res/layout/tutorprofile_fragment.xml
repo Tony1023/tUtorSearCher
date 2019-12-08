@@ -14,27 +14,39 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         android:orientation="vertical"
         android:padding="10dp">
 
-        <FrameLayout
+        <TextView
+            android:id="@+id/tutor_label"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:text="@string/tutor_label"
+            android:textSize="25dp" />
+
+        <FrameLayout
+            android:layout_width="398dp"
+            android:layout_height="61dp">
 
             <RatingBar
                 android:id="@+id/simpleRatingBar"
-                android:layout_width="wrap_content"
+                android:layout_width="251dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="0dp"
                 android:background="#FFFFFF"
-                android:progressTint="@color/colorAccent"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:progressTint="@color/colorAccent"
                 android:rating="0" />
 
             <Button
                 android:id="@+id/submitButton"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_marginLeft="280dp"
+                android:layout_marginTop="0dp"
                 android:background="@color/colorPrimary"
                 android:onClick="updateRating"
                 android:padding="10dp"
@@ -43,14 +55,16 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-        </FrameLayout>
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="0dp"
+                android:text="0"
+                android:textColor="@color/colorAccent" />
 
-        <TextView
-            android:id="@+id/ratingText"
-            android:layout_width="53dp"
-            android:layout_height="48dp"
-            android:text="0"
-            android:textColor="@color/colorAccent" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,6 +87,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:textSize="20sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -105,35 +120,27 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:text="@string/availability_label"
             android:layout_marginBottom="15dp"
             android:textSize="20sp"
+            android:visibility="invisible"
             />
         <!--    use availability array to list all the open slots-->
+
+        <!--  TUTOR PROFILE -->
+
+        <!-- put bio in tutor section -->
+        <!--    use courses taken array to list all courses -->
         <GridLayout
             android:id="@+id/availability_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!--  TUTOR PROFILE -->
-        <TextView
-            android:id="@+id/tutor_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tutor_label"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="20dp"
-            android:textSize="25dp"
-            android:gravity="center"
-            />
-
-        <!-- put bio in tutor section -->
         <TextView
             android:id="@+id/bio_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bio_label"
             android:layout_marginBottom="15dp"
-            android:textSize="20sp"
-            />
-        <!--    use courses taken array to list all courses -->
+            android:text="@string/bio_label"
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/bio"
             android:layout_width="match_parent"
