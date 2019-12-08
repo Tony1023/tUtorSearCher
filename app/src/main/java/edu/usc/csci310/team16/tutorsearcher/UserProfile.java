@@ -36,6 +36,7 @@ public class UserProfile {
     //corresponds to ids of availability slots that have a tutor is using to tutor an accepted tutee
     private Set<Integer> disabledSlots = new HashSet<>();
 
+
     //just for tutors
     private List<String> coursesTaken = new ArrayList<>(); //tutor
     private List<String> tutorClasses = new ArrayList<>(); //tutor (which can they teach)

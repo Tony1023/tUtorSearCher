@@ -141,9 +141,11 @@ public class EditProfileFragment extends Fragment {
                 time_toggle[i][j] = new MaterialCheckBox(v.getContext());
 
 
-                //disable checkbox if tutor already has a tutee at that time
+                //disable checkbox and make it invisible if tutor already has a tutee at that time
                 if(user.getDisabledSlots().contains(i*time_toggle[0].length + j)) {
                     time_toggle[i][j].setClickable(false);
+                    time_toggle[i][j].setVisibility(View.INVISIBLE);
+
                 }
                 //if this availability is already in the user's list, check box
                 else if(user.getAvailability().contains(i*time_toggle[0].length + j)) {
