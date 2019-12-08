@@ -146,6 +146,7 @@ public class MainActivity extends AppCompatActivity
             // Call a method in the ArticleFragment to update its content
             // notificationFragment.setAvailability(updated);
             getSupportFragmentManager().popBackStackImmediate("fun", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            notificationFragment.setAvailability(position,updated);
         } else {
             // Otherwise, we're in the one-pane layout and must swap frags...
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import edu.usc.csci310.team16.tutorsearcher.RemoteServerDAO;
+import edu.usc.csci310.team16.tutorsearcher.UserProfile;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,6 +15,8 @@ import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Observable;
 
 
 public class WebServiceRepository {
@@ -68,28 +71,35 @@ public class WebServiceRepository {
         }
     }
 
-    public void acceptRequest(final Notification notification, final MutableLiveData<String> callFinished) {
+    public void acceptRequest(final Notification notification, final Observable callFinished) {
         //  response = service.makeRequest().execute().body();
-        //TODO check userID type
-        service.acceptRequest(notification.getRequestId()).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                //Log.i(TAG, response.body());
+        Log.i(TAG, String.valueOf(notification.hashCode()));
 
-                if ("Success".equals(response.body())) {
-                    callFinished.postValue("ACCEPTED");
-                } else if ("Tutee taken".equals(response.body())) {
-                    callFinished.postValue("REJECTED");
-                } else {
-                    onFailure(call, null);
+        //TODO check userID type
+        service.acceptRequest(notification.getRequestId()).enqueue(new Callback<Map<String,Object>>() {
+            @Override
+            public void onResponse(Call<Map<String,Object>> call, Response<Map<String,Object>> response) {
+                //Log.i(TAG, response.body());
+                Map<String,Object> body = response.body();
+
+                if ((Boolean) body.getOrDefault("success", false)) {
+                    Object profile = (Object) body.getOrDefault("payload",null);
+                    if(profile instanceof UserProfile){
+                        callFinished.notifyObservers(profile);
+                    }else{
+                        onFailure(call, new Throwable("Payload not profile"));
+                    }
+                }else{
+                    onFailure(call, new Throwable((String)body.getOrDefault("payload","Error with retrieval")));
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e(TAG, "ACCEPT_FAILURE");
+            public void onFailure(Call<Map<String,Object>> call, Throwable t) {
+                Log.e(TAG, "ACCEPT_FAILURE"+t.getMessage());
+                Log.i(TAG, call.toString());
 
-                callFinished.postValue("FAILED");
+                callFinished.notifyObservers(t);
             }
         });
     }

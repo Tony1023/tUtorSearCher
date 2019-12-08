@@ -62,7 +62,7 @@ public interface RemoteServerServices {
 
         @FormUrlEncoded
         @POST("user/acceptRequest")
-        Call<String> acceptRequest(@Field("id") Integer requestId);
+        Call<Map<String,Object>> acceptRequest(@Field("id") Integer requestId);
 
         @FormUrlEncoded
         @POST("user/rejectRequest")

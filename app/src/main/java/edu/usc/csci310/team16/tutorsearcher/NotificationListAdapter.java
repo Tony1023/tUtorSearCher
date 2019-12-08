@@ -80,7 +80,6 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                         }else{
                             //TODO error handling
                         }
-                        WebServiceRepository.getInstance(viewModel.getApplication()).acceptRequest(notification, finished);
                     }
                 });
 

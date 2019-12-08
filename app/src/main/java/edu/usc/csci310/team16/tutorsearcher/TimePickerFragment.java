@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.*;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import edu.usc.csci310.team16.tutorsearcher.model.WebServiceRepository;
 
-import static edu.usc.csci310.team16.tutorsearcher.BR.position;
+import java.util.Observable;
 
 /**
  * A fragment with a Google +1 button.
@@ -27,9 +28,9 @@ public class TimePickerFragment extends Fragment {
     private static final String ARG_PARAM1 = "position";
     private static final String ARG_PARAM2 = "availability";
     private static final String TAG = "TIME_PICKER_FRAGMENT";
+    private NotificationModel model;
 
-    // TODO choose correct lengths
-    private boolean[][] availability;
+    private boolean[][] availability =  new boolean[7][28];
     private final MaterialCheckBox[][] buttons = new MaterialCheckBox[7][28];
     private int index;
 
@@ -76,6 +77,13 @@ public class TimePickerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_time_picker, container, false);
 
+        model = new ViewModelProvider(
+                this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(
+                        getActivity().getApplication()
+                )).get(NotificationModel.class);
+
+
         //AVAILABILITY
         GridLayout timeSelectGrid = (GridLayout) view.findViewById(R.id.time_select_grid);
 
@@ -121,16 +129,16 @@ public class TimePickerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO serialize availibility
-                saveAvailability(availability.toString());
+                pushAvailability();
             }
         });
-
         return view;
     }
 
     private void setButton(int i, int j) {
         if(availability[i][j]) {
-            buttons[i][j].setBackgroundColor(ContextCompat.getColor(getContext(),R.color.material_on_primary_emphasis_medium));
+            //buttons[i][j].setBackgroundColor(ContextCompat.getColor(getContext(),R.color.material_on_primary_emphasis_medium));
+            buttons[i][j].setVisibility(View.VISIBLE);
             if (!buttons[i][j].hasOnClickListeners()) {
                 buttons[i][j].setOnCheckedChangeListener(new SubmissionListener(i, j));
             }
@@ -138,21 +146,9 @@ public class TimePickerFragment extends Fragment {
 
         //set red otherwise
         else {
-            buttons[i][j].setBackgroundColor(ContextCompat.getColor(getContext(),R.color.design_default_color_error));
-            buttons[i][j].setClickable(false);
-        }
-    }
-
-    public void updateAvailability(String availabilityString){
-        Log.e(TAG, "Availability update: "+ availabilityString);
-        this.availability = parseAvailability(availabilityString);
-
-        for(int i = 0; i < availability.length; i++){
-            for(int j = 0; j < availability[0].length; j++){
-
-                //set green if available during that time
-                setButton(i, j);
-            }
+            //buttons[i][j].setBackgroundColor(ContextCompat.getColor(getContext(),R.color.design_default_color_error));
+            //buttons[i][j].setClickable(false);
+            buttons[i][j].setVisibility(View.INVISIBLE);
         }
     }
 
@@ -175,7 +171,13 @@ public class TimePickerFragment extends Fragment {
 
     //TODO
     public String serializeAvailability(boolean[][] availability){
-        return "";
+        StringBuilder sb = new StringBuilder();
+        for (boolean[] row : availability){
+            for(boolean e: row){
+                sb.append(e? '1':'0');
+            }
+        }
+        return sb.toString();
     }
 
     @Override
@@ -183,11 +185,11 @@ public class TimePickerFragment extends Fragment {
         super.onResume();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void saveAvailability(String update) {
+    public void changeScreens() {
         Log.i(TAG,"Saving preferred times");
+
         if (mListener != null) {
-            mListener.onAvailabilityUpdated(position,update);
+            mListener.onAvailabilityUpdated(index,serializeAvailability(availability));
         }
     }
 
@@ -208,9 +210,41 @@ public class TimePickerFragment extends Fragment {
         mListener = null;
     }
 
+    public void pushAvailability(){
+        getView().findViewById(R.id.notification_load_accept).setVisibility(View.VISIBLE);
+
+        Observable o = new Observable();
+        o.addObserver((o1, arg) -> {
+            o1.deleteObservers();
+
+            if (arg instanceof Throwable){
+                //changeScreen
+            }
+            else if (arg instanceof UserProfile){
+                synchronized (UserProfile.class) {
+                    UserProfile.setCurrentUser((UserProfile) arg);
+                }
+            }
+
+            changeScreens();
+        });
+
+        //TODO not finding notifications....
+        WebServiceRepository.getInstance(getContext()).acceptRequest(model.getNotifications().getValue().get(index),o);
+    }
+
     public void updateInformation(int position, String availability) {
         index = position;
+
+        Log.e(TAG, "Availability update: "+ availability);
+        getView().findViewById(R.id.notification_load_accept).setVisibility(View.GONE);
         this.availability = parseAvailability(availability);
+
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 28; j++){
+                setButton(i, j);
+            }
+        }
     }
 
     /**

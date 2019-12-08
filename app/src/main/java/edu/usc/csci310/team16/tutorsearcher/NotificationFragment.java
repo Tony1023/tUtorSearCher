@@ -103,4 +103,11 @@ public class NotificationFragment extends Fragment {
 
         WorkManager.getInstance(getContext()).enqueue(notificationUpdateRequest);
     }
+
+    public void setAvailability(int position, String updated) {
+        NotificationListAdapter adapter = (NotificationListAdapter) recyclerView.getAdapter();
+        Notification data = notificationModel.mNotifications.getValue().get(position);
+        data.setOverlap(updated);
+        adapter.notifyItemChanged(position,data);
+    }
 }
