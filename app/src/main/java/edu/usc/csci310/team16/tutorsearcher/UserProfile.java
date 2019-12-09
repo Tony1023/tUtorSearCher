@@ -140,7 +140,7 @@ public class UserProfile {
     //adds slot to disabled array and removes it from availability array automatically
     public void disableSlot(int availabilityID) {
         disabledSlots.add(availabilityID);
-        availability.remove(availabilityID);
+        availability.remove((Integer)availabilityID);
     }
 
 }

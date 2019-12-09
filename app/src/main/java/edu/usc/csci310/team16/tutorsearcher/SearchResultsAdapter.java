@@ -1,5 +1,6 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 import edu.usc.csci310.team16.tutorsearcher.databinding.SearchResultItemBinding;
@@ -74,6 +76,15 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     public void setResults(List<UserProfile> results){
         mResults = results;
         notifyDataSetChanged();
+    }
+
+    @BindingAdapter("isItalic")
+    public static void setItalic(TextView view, boolean isItalic) {
+        if (isItalic) {
+            view.setTypeface(null, Typeface.ITALIC);
+        } else {
+            view.setTypeface(null, Typeface.NORMAL);
+        }
     }
 
     @Override

@@ -26,7 +26,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 
         <FrameLayout
             android:layout_width="398dp"
-            android:layout_height="61dp">
+            android:layout_height="89dp">
 
             <RatingBar
                 android:id="@+id/simpleRatingBar"
@@ -56,11 +56,19 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/ratingText"
-                android:layout_width="50dp"
+                android:id="@+id/staticRatingText"
+                android:layout_width="103dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="280dp"
+                android:layout_marginTop="55dp"
+                android:text="Your Rating: "
+                android:textColor="@color/colorAccent" />
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="360dp"
+                android:layout_marginTop="55dp"
                 android:text="0"
                 android:textColor="@color/colorAccent" />
 
@@ -113,15 +121,6 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/availability_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/availability_label"
-            android:layout_marginBottom="15dp"
-            android:textSize="20sp"
-            android:visibility="invisible"
-            />
         <!--    use availability array to list all the open slots-->
 
         <!--  TUTOR PROFILE -->
@@ -130,8 +129,10 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         <!--    use courses taken array to list all courses -->
         <GridLayout
             android:id="@+id/availability_grid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            />
 
         <TextView
             android:id="@+id/bio_label"
@@ -186,6 +187,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:visibility="invisible"
             >
             <TextView
                 android:id="@+id/rating_label"
@@ -194,6 +196,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:layout_weight="1"
                 android:text="@string/rating_label"
                 android:textSize="20sp"
+                android:visibility="invisible"
                 />
             <TextView
                 android:id="@+id/rating"
@@ -201,6 +204,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:textSize="20sp"
+                android:visibility="invisible"
                 />
         </LinearLayout>
 
