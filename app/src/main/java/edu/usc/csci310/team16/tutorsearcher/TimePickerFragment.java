@@ -37,6 +37,7 @@ public class TimePickerFragment extends Fragment {
     Notification notification;
 
     private boolean[][] availability =  new boolean[7][28];
+    private boolean[][] selected = new boolean[7][28];
     private final MaterialCheckBox[][] buttons = new MaterialCheckBox[7][28];
     private int index;
 
@@ -133,7 +134,7 @@ public class TimePickerFragment extends Fragment {
         view.findViewById(R.id.plus_one_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO serialize availibility
+                notification.setOverlap(serializeAvailability(selected));
                 pushAvailability();
             }
         });
@@ -174,7 +175,6 @@ public class TimePickerFragment extends Fragment {
         return this.availability;
     }
 
-    //TODO
     public String serializeAvailability(boolean[][] availability){
         StringBuilder sb = new StringBuilder();
         for (boolean[] row : availability){
@@ -207,6 +207,9 @@ public class TimePickerFragment extends Fragment {
             public void onChanged(Object s) {
                 //TODO finished
                 model.getPickerView().postValue(false);
+                if (s instanceof UserProfile) {
+                    UserProfile.setCurrentUser((UserProfile) s);
+                }
                 openNotifications();
             }
         });
@@ -245,7 +248,7 @@ public class TimePickerFragment extends Fragment {
         public void onCheckedChanged(CompoundButton button, boolean isChecked) {
             Log.i(TAG, String.format("Clicked: %d %d", i,j));
             synchronized (availability){
-                availability[i][j] = isChecked;
+                selected[i][j] = isChecked;
             }
         }
     }

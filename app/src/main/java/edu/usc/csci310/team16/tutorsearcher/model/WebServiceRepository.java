@@ -77,12 +77,6 @@ public class WebServiceRepository {
         service.acceptRequest(notification.getRequestId(), notification.getOverlap()).enqueue(new Callback<JsonElement>() {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
-                try {
-                    Log.i(TAG, response.raw().body().string());
-                } catch (IOException e) {
-                    Log.e(TAG,e.getMessage());
-                }
-
                 JsonElement body = response.body();
 
                 JsonObject obj = null;
