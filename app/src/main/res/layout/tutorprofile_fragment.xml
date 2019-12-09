@@ -187,6 +187,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:visibility="invisible"
             >
             <TextView
                 android:id="@+id/rating_label"
@@ -195,6 +196,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:layout_weight="1"
                 android:text="@string/rating_label"
                 android:textSize="20sp"
+                android:visibility="invisible"
                 />
             <TextView
                 android:id="@+id/rating"
@@ -202,6 +204,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:textSize="20sp"
+                android:visibility="invisible"
                 />
         </LinearLayout>
 
