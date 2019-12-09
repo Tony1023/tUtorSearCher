@@ -111,10 +111,10 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             holder.binding.notificationSender.setText("From: " + current.getSenderName());
 
             StringBuilder sb = new StringBuilder();
-            sb.append("\n").append(current.getMsg());
+            sb.append(current.getMsg());
             holder.buttonToggleGroup.setVisibility(View.GONE);
-            if (current.getType() == 0){
-                if (current.getStatus() == 0) {
+            if (current.getStatus() == 0){
+                if (current.getType() == 0) {
                     sb.append("\nYou are a candidate for a tutor.");
                     holder.buttonToggleGroup.setVisibility(View.VISIBLE);
                 }else{
@@ -122,9 +122,11 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                     holder.buttonToggleGroup.setVisibility(View.GONE);
                 }
             } else if(current.getStatus() == 1) {
-                sb.append("\nCongratulations, you have found a match.");
+
+                sb.append("\nYou found a ").append(
+                        (current.getType()==0)?"tutee":"tutor");
             }else if (current.getStatus() == 2){
-                sb.append("\nUnfortunately, the tutee has found another tutor.\nBetter luck next time");
+                sb.append("\nUnfortunately, you have been rejected.\nBetter luck next time");
             } else if (current.getStatus() == 3) {
                 sb.append("\nUnfortunately, the tutee has found another tutor.\nBetter luck next time");
             }else{

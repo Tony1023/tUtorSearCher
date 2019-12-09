@@ -100,7 +100,14 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onChanged(List<Notification> o) {
                 NotificationListAdapter adapter = (NotificationListAdapter) recyclerView.getAdapter();
-                adapter.setNotifications(o);
+                if (o.isEmpty()){
+                    recyclerView.setVisibility(View.GONE);
+                    binding.notificationGone.setVisibility(View.VISIBLE);
+                }else {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    binding.notificationGone.setVisibility(View.GONE);
+                    adapter.setNotifications(o);
+                }
             }
         });
 

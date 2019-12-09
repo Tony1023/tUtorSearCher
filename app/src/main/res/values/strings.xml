@@ -52,6 +52,7 @@
     <string name="time_select_grid_label">Select Availability:</string>
     <string name="no_search_results">There are no search results.</string>
     <string name="notification_view">View</string>
+    <string name="notifications_empty">No notifications</string>
 
 
 </resources>
