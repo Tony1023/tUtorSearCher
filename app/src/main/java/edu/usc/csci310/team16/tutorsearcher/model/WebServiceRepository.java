@@ -2,18 +2,22 @@ package edu.usc.csci310.team16.tutorsearcher.model;
 
 import android.content.Context;
 import android.util.Log;
-import androidx.databinding.ObservableField;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import edu.usc.csci310.team16.tutorsearcher.RemoteServerDAO;
-import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
+import edu.usc.csci310.team16.tutorsearcher.UserProfile;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class WebServiceRepository {
@@ -23,7 +27,6 @@ public class WebServiceRepository {
     private static volatile WebServiceRepository INSTANCE;
 
     private Context application;
-    private final MutableLiveData<List<Notification>> data = new MutableLiveData<>();
     private final RemoteServerServices service;
 
     private WebServiceRepository(Context application){
@@ -40,10 +43,6 @@ public class WebServiceRepository {
             }
         }
         return INSTANCE;
-    }
-
-    public MutableLiveData<List<Notification>> getNotifications(){
-        return data;
     }
 
     public void getNotificationUpdates(final MutableLiveData<List<Notification>> data) {
@@ -71,32 +70,44 @@ public class WebServiceRepository {
         }catch (Exception e){
             Log.e("WEB_REPO",e.getMessage());
         }
-
-        //  return retrofit.create(ResultModel.class);
     }
 
-    public void acceptRequest(final Notification notification, final MutableLiveData<String> callFinished) {
-        //  response = service.makeRequest().execute().body();
+    public void acceptRequest(final Notification notification, final MutableLiveData<Object> callFinished) {
         //TODO check userID type
-        service.acceptRequest(notification.getRequestId()).enqueue(new Callback<String>() {
+        service.acceptRequest(notification.getRequestId(), notification.getOverlap()).enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                //Log.i(TAG, response.body());
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                try {
+                    Log.i(TAG, response.raw().body().string());
+                } catch (IOException e) {
+                    Log.e(TAG,e.getMessage());
+                }
 
-                if ("Success".equals(response.body())) {
-                    callFinished.postValue("ACCEPTED");
-                } else if ("Tutee taken".equals(response.body())) {
-                    callFinished.postValue("REJECTED");
-                } else {
-                    onFailure(call, null);
+                JsonElement body = response.body();
+
+                JsonObject obj = null;
+                if (body.isJsonObject())
+                    obj = body.getAsJsonObject();
+
+                if (obj.get("success").getAsBoolean()) {
+                    UserProfile profile = new Gson().fromJson(obj.get("payload").getAsJsonObject(), UserProfile.class);
+                    if(profile instanceof UserProfile){
+                        callFinished.postValue(profile);
+                    }else{
+                        onFailure(call, new Throwable("Payload not profile"));
+                    }
+                }else{
+                    Log.e(TAG,body.getAsString());
+                    onFailure(call, new Throwable("Error with retrieval"));
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e(TAG, "ACCEPT_FAILURE");
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+                Log.e(TAG, "ACCEPT_FAILURE: "+t.getMessage());
+                Log.i(TAG, call.toString());
 
-                callFinished.postValue("FAILED");
+                callFinished.postValue(t);
             }
         });
     }
