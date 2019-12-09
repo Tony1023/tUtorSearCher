@@ -26,7 +26,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 
         <FrameLayout
             android:layout_width="398dp"
-            android:layout_height="61dp">
+            android:layout_height="89dp">
 
             <RatingBar
                 android:id="@+id/simpleRatingBar"
@@ -56,11 +56,19 @@ xmlns:android="http://schemas.android.com/apk/res/android">
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/ratingText"
-                android:layout_width="50dp"
+                android:id="@+id/staticRatingText"
+                android:layout_width="103dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="280dp"
+                android:layout_marginTop="55dp"
+                android:text="Your Rating: "
+                android:textColor="@color/colorAccent" />
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="103dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="360dp"
+                android:layout_marginTop="55dp"
                 android:text="0"
                 android:textColor="@color/colorAccent" />
 

@@ -84,9 +84,10 @@ public class TutorProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 Log.d("tutorprofilefragment", "in onClick");
+                float submittedRating = rt.getRating();
 
                 TextView ratingText = (TextView)getActivity().findViewById(R.id.ratingText);
-                ratingText.setText(Double.toString(2.5));
+                ratingText.setText(Double.toString(submittedRating));
 
 
                 RemoteServerDAO.getDao().rateTutor(user.getId(), UserProfile.getCurrentUser().getId(), (double)rt.getRating()).enqueue(new Callback<String>() {
