@@ -33,6 +33,7 @@
                 android:id="@+id/search_result_bio"
                 android:text='@{(viewModel.searchResults.get(position).getBio().equals("")) ? "This person is too lazy to write a bio" : viewModel.searchResults.get(position).getBio()}'
                 android:textSize="16sp"
+                app:isItalic='@{viewModel.searchResults.get(position).getBio().equals("")}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp" />
