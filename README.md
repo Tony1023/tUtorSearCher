@@ -11,6 +11,10 @@ A revolutionary new app that connects USC Viterbi students, tutor to tutee.
 
 ### Search
 ### Rating
+- The tutor profile/rating page was fixed to save and display a user’s previous submitted rating
+- No longer displays the tutor’s availability (since the tutor already has a time slot with them)
+- UI cleaned up to be more clear/pretty
+
 ### Notifications
 ### Miscellaneous
 - Added custom icon for the app
