@@ -2,21 +2,22 @@ package edu.usc.csci310.team16.tutorsearcher.model;
 
 import android.content.Context;
 import android.util.Log;
-import androidx.databinding.ObservableField;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import edu.usc.csci310.team16.tutorsearcher.RemoteServerDAO;
 import edu.usc.csci310.team16.tutorsearcher.UserProfile;
-import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 
 public class WebServiceRepository {
@@ -72,31 +73,38 @@ public class WebServiceRepository {
     }
 
     public void acceptRequest(final Notification notification, final MutableLiveData<Object> callFinished) {
-        //  response = service.makeRequest().execute().body();
-        Log.i(TAG, String.valueOf(notification.hashCode()));
-
         //TODO check userID type
-        service.acceptRequest(notification.getRequestId()).enqueue(new Callback<Map<String,Object>>() {
+        service.acceptRequest(notification.getRequestId(), notification.getOverlap()).enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<Map<String,Object>> call, Response<Map<String,Object>> response) {
-                //Log.i(TAG, response.body());
-                Map<String,Object> body = response.body();
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                try {
+                    Log.i(TAG, response.raw().body().string());
+                } catch (IOException e) {
+                    Log.e(TAG,e.getMessage());
+                }
 
-                if ((Boolean) body.getOrDefault("success", false)) {
-                    Object profile = (Object) body.getOrDefault("payload",null);
+                JsonElement body = response.body();
+
+                JsonObject obj = null;
+                if (body.isJsonObject())
+                    obj = body.getAsJsonObject();
+
+                if (obj.get("success").getAsBoolean()) {
+                    UserProfile profile = new Gson().fromJson(obj.get("payload").getAsJsonObject(), UserProfile.class);
                     if(profile instanceof UserProfile){
                         callFinished.postValue(profile);
                     }else{
                         onFailure(call, new Throwable("Payload not profile"));
                     }
                 }else{
-                    onFailure(call, new Throwable((String)body.getOrDefault("payload","Error with retrieval")));
+                    Log.e(TAG,body.getAsString());
+                    onFailure(call, new Throwable("Error with retrieval"));
                 }
             }
 
             @Override
-            public void onFailure(Call<Map<String,Object>> call, Throwable t) {
-                Log.e(TAG, "ACCEPT_FAILURE"+t.getMessage());
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+                Log.e(TAG, "ACCEPT_FAILURE: "+t.getMessage());
                 Log.i(TAG, call.toString());
 
                 callFinished.postValue(t);

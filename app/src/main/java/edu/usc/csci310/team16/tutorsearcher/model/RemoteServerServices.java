@@ -1,5 +1,7 @@
 package edu.usc.csci310.team16.tutorsearcher.model;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import edu.usc.csci310.team16.tutorsearcher.LoginData;
 import edu.usc.csci310.team16.tutorsearcher.Notification;
 import edu.usc.csci310.team16.tutorsearcher.UserProfile;
@@ -62,7 +64,7 @@ public interface RemoteServerServices {
 
         @FormUrlEncoded
         @POST("user/acceptRequest")
-        Call<Map<String,Object>> acceptRequest(@Field("id") Integer requestId);
+        Call<JsonElement> acceptRequest(@Field("id") Integer requestId, @Field("overlap") String overlap);
 
         @FormUrlEncoded
         @POST("user/rejectRequest")
