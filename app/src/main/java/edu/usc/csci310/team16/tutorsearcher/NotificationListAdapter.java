@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import edu.usc.csci310.team16.tutorsearcher.databinding.NotificationMsgBinding;
@@ -96,6 +97,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         NotificationMsgBinding binding = NotificationMsgBinding.inflate( inflater,parent,false);
+
         return new ViewHolder(binding);
     }
 
@@ -106,12 +108,14 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             holder.message.setText(R.string.messages_unavailable);
         }else{
             Notification current = mNotifications.get(position);
+            holder.binding.notificationSender.setText("From: " + current.getSenderName());
+
             StringBuilder sb = new StringBuilder();
-            sb.append("From: ").append(current.getSenderName()).append("\n").append(current.getMsg());
+            sb.append("\n").append(current.getMsg());
             holder.buttonToggleGroup.setVisibility(View.GONE);
             if (current.getType() == 0){
-                if (current.getStatus() == 1) {
-                    sb.append("\nYou are a candidate for as a tutor.");
+                if (current.getStatus() == 0) {
+                    sb.append("\nYou are a candidate for a tutor.");
                     holder.buttonToggleGroup.setVisibility(View.VISIBLE);
                 }else{
                     sb.append("\nThis request has expired");

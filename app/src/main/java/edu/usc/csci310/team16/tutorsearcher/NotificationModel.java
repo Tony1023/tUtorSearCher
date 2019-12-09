@@ -51,4 +51,10 @@ public class NotificationModel extends AndroidViewModel {
     public Notification getNotification(){
         return mNotifications.getValue().get(indexNotification);
     }
+
+    public void removePosition(int position) {
+        List<Notification> notifications = mNotifications.getValue();
+        notifications.remove(position);
+        mNotifications.postValue(notifications);
+    }
 }
