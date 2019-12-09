@@ -45,7 +45,8 @@
                 android:progressTint="@color/colorAccent"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:rating="@{(float)viewModel.searchResults.get(position).getRating()}" />
+                android:rating="@{(float)viewModel.searchResults.get(position).getRating()}"
+                android:isIndicator="true" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
