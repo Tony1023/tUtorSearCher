@@ -69,9 +69,12 @@ public class TimePickerFragment extends Fragment {
                 ViewModelProvider.AndroidViewModelFactory.getInstance(
                         getActivity().getApplication()
                 )).get(NotificationModel.class);
-        model.getPickerView().observe(this, aBoolean -> {
-            if (!aBoolean.booleanValue()){
-                openNotifications();
+        model.getPickerView().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (!aBoolean.booleanValue()) {
+                    openNotifications();
+                }
             }
         });
     }
