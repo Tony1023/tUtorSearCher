@@ -14,9 +14,9 @@
     android:paddingBottom="75dp" >
 
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <Button
             android:id="@+id/search_button"
@@ -29,12 +29,26 @@
             android:visibility="gone"
             android:id="@+id/error_message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textSize="18sp"
             android:textColor="#F00"
+            android:layout_marginLeft="8dp"
             android:text=""/>
 
+
+        <TextView
+            android:id="@+id/empty_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            android:text="No search results." />
+
         <FrameLayout
+            android:id="@+id/search_results_layout"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
@@ -42,9 +56,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/search_results_view"
                 app:setAdapter="@{viewModel.getAdapter()}"
-                tools:listitem="@layout/search_result_item">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/search_result_item" />
         </FrameLayout>
 
     </LinearLayout>
