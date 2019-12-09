@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS Requests (
 );
 
 INSERT INTO Requests(tutee_id, tutor_id, course_id, req_status) VALUES
-(1, 2, 1, 1);
+(1, 2, 1, 0);
 
 CREATE TABLE IF NOT EXISTS RequestOverlap(
   req_id INT(11) NOT NULL,
@@ -105,6 +105,10 @@ CREATE TABLE IF NOT EXISTS RequestOverlap(
   INDEX idx_ro_req_id_slot_num (req_id, slot_num),
   CONSTRAINT pk_ro PRIMARY KEY(req_id, slot_num)
 );
+
+INSERT INTO RequestOverlap(req_id, slot_num) VALUES
+(1, 2),
+(1, 3);
 
 CREATE TABLE IF NOT EXISTS Notifications (
   id INT(11) PRIMARY KEY AUTO_INCREMENT,
@@ -120,8 +124,7 @@ CREATE TABLE IF NOT EXISTS Notifications (
 );
 
 INSERT INTO Notifications(req_id, sender_id, receiver_id, receiver_type, pushed) VALUES
-(1, 1, 2, 0, 1),
-(1, 2, 1, 1, 1);
+(1, 1, 2, 0, 1);
 
 CREATE TABLE IF NOT EXISTS Ratings (
   tutor_id INT(11) NOT NULL,
