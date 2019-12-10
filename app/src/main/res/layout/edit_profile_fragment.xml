@@ -293,11 +293,12 @@
             android:text="Submit"
             android:layout_marginTop="10dp"
             />
-        <!--    added text view for padding    -->
+        <!--  added text view for padding and to put error message from server in  -->
         <TextView
                 android:id="@+id/bottom_view"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
+                android:gravity="center"
             ></TextView>
 
     </LinearLayout>

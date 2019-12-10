@@ -1,6 +1,24 @@
 # tUtorSearCher
 A revolutionary new app that connects USC Viterbi students, tutor to tutee.
 
+## Improvements Since Project 2.4
+
+### Login/Server
+### Profile
+- When users log out and back in, courses tutoring and courses taken are saved and displayed properly
+- Availability checkboxes on Edit Profile page are disabled/invisible and blocks on Profile page are grayed out when they correspond to times that the tutor has accepted tutoring requests for
+- Server error messages on Edit Profile page show up appropriately on page
+
+### Search
+### Rating
+- The tutor profile/rating page was fixed to save and display a user’s previous submitted rating
+- No longer displays the tutor’s availability (since the tutor already has a time slot with them)
+- UI cleaned up to be more clear/pretty
+
+### Notifications
+### Miscellaneous
+- Added custom icon for the app
+
 ## How to Run and Generate Test Reports (with Coverage)
 - Sync gradle
 - Open file `build.gradle` for app

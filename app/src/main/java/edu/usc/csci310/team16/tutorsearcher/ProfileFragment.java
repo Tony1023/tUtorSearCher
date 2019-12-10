@@ -22,6 +22,7 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class ProfileFragment extends Fragment {
 
         //get data from the singleton
         user = UserProfile.getCurrentUser();
+
+
 
         //availability variables
         time_toggle = new TextView[SearchModel.getDays().size()][SearchModel.getBlocks().size()];
@@ -80,6 +83,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        
         //SHOW PROFILE ATTRIBUTES ON PROFILE LAYOUT
         //put name on page
         TextView name = (TextView)v.findViewById(R.id.name);
@@ -126,8 +130,13 @@ public class ProfileFragment extends Fragment {
 
 //                time_toggle[i][j].setGravity(Gravity.CENTER);
 
+                //make green if a disabled slot
+                if(user.getDisabledSlots().contains(i*time_toggle[0].length + j)) {
+                    time_toggle[i][j].setBackgroundColor(Color.parseColor("#808080"));
+                }
+
                 //set green if available during that time
-                if(user.getAvailability().contains(i*time_toggle[0].length + j)) {
+                else if(user.getAvailability().contains(i*time_toggle[0].length + j)) {
 
                     time_toggle[i][j].setBackgroundColor(Color.parseColor("#90ee90"));
                 }

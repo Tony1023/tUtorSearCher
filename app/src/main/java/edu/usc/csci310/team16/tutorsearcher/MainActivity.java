@@ -4,18 +4,18 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainer;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity
-        implements BottomNavigationView.OnNavigationItemSelectedListener{
+        implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private MainModel mainModel;
     private FragmentContainer fragmentContainer;
@@ -102,4 +102,7 @@ public class MainActivity extends AppCompatActivity
     public TutorFragment getRating() {
         return rating;
     }
+
+
 }
+
