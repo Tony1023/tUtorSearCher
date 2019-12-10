@@ -4,18 +4,30 @@ A revolutionary new app that connects USC Viterbi students, tutor to tutee.
 ## Improvements Since Project 2.4
 
 ### Login/Server
+- Password are stored as hash now
+- Changed server implementation accordingly to accommodate new features and bug fixes
 ### Profile
 - When users log out and back in, courses tutoring and courses taken are saved and displayed properly
 - Availability checkboxes on Edit Profile page are disabled/invisible and blocks on Profile page are grayed out when they correspond to times that the tutor has accepted tutoring requests for
 - Server error messages on Edit Profile page show up appropriately on page
-
 ### Search
+- Fixed bug in which wrong availability overlap was sent to the server when tutor request was sent.
+- Display server response after sending tutor request.
+- Filter current user out of search results.
+- Styled search results to look nicer and include the user bios and ratings.
+- Added message to display on screen when there are no search results available
 ### Rating
 - The tutor profile/rating page was fixed to save and display a user’s previous submitted rating
 - No longer displays the tutor’s availability (since the tutor already has a time slot with them)
 - UI cleaned up to be more clear/pretty
-
 ### Notifications
+- Notification functionality specified in the user story works.
+    - Display correct notification given from the server
+    - Interact with notifications correctly
+    - Can be refreshed
+- Notification push notifications have been made to be less error prone.
+- Created a time picker dialog
+- Removed overlap from tutor’s availability
 ### Miscellaneous
 - Added custom icon for the app
 
