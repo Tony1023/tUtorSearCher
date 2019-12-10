@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -50,16 +52,29 @@ public class TutorFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
+        View v = (View) binding.getRoot();
+
+        final TextView emptyMessageView = (TextView) v.findViewById(R.id.empty_message);
+        final FrameLayout TutorsLayout = (FrameLayout) v.findViewById(R.id.tutors_layout);
 
         tutorModel.getTutors().observe(this,
                 new Observer<List<Tutor>>() {
                     @Override
                     public void onChanged(List<Tutor> tutors) {
                         tutorModel.getAdapter().setTutors(tutors);
+
+                        if(tutors == null || tutors.isEmpty()) {
+                            TutorsLayout.setVisibility(View.GONE);
+                            emptyMessageView.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            TutorsLayout.setVisibility(View.VISIBLE);
+                            emptyMessageView.setVisibility(View.GONE);
+                        }
                     }
                 });
 
-        return binding.getRoot();
+        return v;
     }
 
     @Override
