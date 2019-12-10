@@ -1,5 +1,7 @@
 package edu.usc.csci310.team16.tutorsearcher;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -7,6 +9,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 public class LoginModel extends ViewModel {
@@ -39,7 +45,8 @@ public class LoginModel extends ViewModel {
 
     void register() {
         validating.setValue(true);
-        RemoteServerDAO.getDao().register(credentials.getValue()).enqueue(new Callback<Map<String, Object>>() {
+        LoginData hashedData = new LoginData(credentials.getValue().email, getSHAString(credentials.getValue().password));
+        RemoteServerDAO.getDao().register(hashedData).enqueue(new Callback<Map<String, Object>>() {
             @Override
             public void onResponse(@NonNull Call<Map<String, Object>> call, @NonNull Response<Map<String, Object>> response) {
                 validating.postValue(false);
@@ -70,7 +77,9 @@ public class LoginModel extends ViewModel {
 
     void login() {
         validating.setValue(true);
-        RemoteServerDAO.getDao().login(credentials.getValue()).enqueue(new Callback<UserProfile>() {
+        LoginData hashedData = new LoginData(credentials.getValue().email, getSHAString(credentials.getValue().password));
+        Log.i("hash", hashedData.password);
+        RemoteServerDAO.getDao().login(hashedData).enqueue(new Callback<UserProfile>() {
             @Override
             public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
                 validating.postValue(false);
@@ -114,5 +123,27 @@ public class LoginModel extends ViewModel {
                 t.printStackTrace();
             }
         });
+    }
+
+    private String getSHAString(String input) {
+        String sha = input;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(input.getBytes(StandardCharsets.UTF_8));
+            BigInteger number = new BigInteger(1, hash);
+
+            // Convert message digest into hex value
+            StringBuilder hexString = new StringBuilder(number.toString(16));
+
+            // Pad with leading zeros
+            while (hexString.length() < 32) {
+                hexString.insert(0, '0');
+            }
+            sha = hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return sha;
     }
 }
