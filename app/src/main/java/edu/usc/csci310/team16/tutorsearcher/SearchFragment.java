@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,37 +31,47 @@ public class SearchFragment extends Fragment {
         binding = SearchFragmentBinding.inflate(inflater,container,false);
         binding.setViewModel(searchModel);
 
-        searchModel.getError().observe(this,
-                new Observer<String>() {
-                    @Override
-                    public void onChanged(String errorMessage) {
-                        ((TextView)getActivity().findViewById(R.id.error_message)).setText(errorMessage);
-                        if (errorMessage.equals("")) {
-                            getActivity().findViewById(R.id.error_message).setVisibility(View.GONE);
-                        } else {
-                            getActivity().findViewById(R.id.error_message).setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-
         recyclerView = binding.searchResultsView;
 
         recyclerView.setAdapter(searchModel.getAdapter());
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
+        View v = binding.getRoot();
+
+        final TextView errorMessageView = (TextView) v.findViewById(R.id.error_message);
+        final TextView emptyMessageView = (TextView) v.findViewById(R.id.empty_message);
+        final FrameLayout searchResultsLayout = (FrameLayout) v.findViewById(R.id.search_results_layout);
+
+        searchModel.getError().observe(this,
+                new Observer<String>() {
+                    @Override
+                    public void onChanged(String errorMessage) {
+                        errorMessageView.setText(errorMessage);
+                        if (errorMessage.equals("")) {
+                            errorMessageView.setVisibility(View.GONE);
+                        } else {
+                            errorMessageView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
 
         searchModel.getSearchResults().observe(this,
                 new Observer<List<UserProfile>>() {
                     @Override
                     public void onChanged(List<UserProfile> results) {
                         searchModel.getAdapter().setResults(results);
+
+                        if(results == null || results.isEmpty()) {
+                            searchResultsLayout.setVisibility(View.GONE);
+                            emptyMessageView.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            searchResultsLayout.setVisibility(View.VISIBLE);
+                            emptyMessageView.setVisibility(View.GONE);
+                        }
                     }
                 });
-
-        View v = binding.getRoot();
-
-//        getActivity().getSupportFragmentManager().be
 
         //when clicking search button, transition to search criteria page
         Button searchButton = (Button)v.findViewById(R.id.search_button);
@@ -71,11 +82,6 @@ public class SearchFragment extends Fragment {
                         .commit();
             }
         });
-
-        Log.d("search fragment", searchModel.getCourse());
-        Log.d("search fragment", searchModel.getAvailability().toString());
-        if(searchModel.getSearchResults().getValue() != null)
-            Log.d("search fragment", searchModel.getSearchResults().getValue().toString());
 
         return v;
     }
