@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".NotificationFragment">
 <data>
     <variable
             name="viewModel"
@@ -10,7 +11,8 @@
 </data>
     <FrameLayout
              android:layout_width="match_parent"
-             android:layout_height="match_parent">
+             android:layout_height="match_parent"
+            android:id="@+id/notification_fragment">
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:layout_width="match_parent" android:layout_height="match_parent"
                 android:id="@+id/notification_swipe">
@@ -21,5 +23,13 @@
                 tools:listitem="@layout/notification_msg">
         </androidx.recyclerview.widget.RecyclerView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+                android:id="@+id/notification_gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/notifications_empty"
+                android:visibility="gone"/>
     </FrameLayout>
 </layout>
