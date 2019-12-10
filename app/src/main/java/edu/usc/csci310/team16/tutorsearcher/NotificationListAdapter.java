@@ -126,7 +126,11 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                 sb.append("\nYou found a ").append(
                         (current.getType()==0)?"tutee":"tutor");
             }else if (current.getStatus() == 2){
-                sb.append("\nUnfortunately, you have been rejected.\nBetter luck next time");
+                if (current.getType()==1) {
+                    sb.append("\nUnfortunately, you have been rejected.\nBetter luck next time");
+                } else {
+                    sb.append("\nYou've rejected this request");
+                }
             } else if (current.getStatus() == 3) {
                 sb.append("\nUnfortunately, the tutee has found another tutor.\nBetter luck next time");
             }else{
