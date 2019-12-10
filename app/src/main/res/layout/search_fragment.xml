@@ -8,46 +8,53 @@
         type="edu.usc.csci310.team16.tutorsearcher.SearchModel"
         />
 </data>
-<ScrollView
+
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="75dp" >
+    android:layout_height="wrap_content" >
 
-    <LinearLayout
-            android:orientation="vertical"
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/new_search_button_label" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/error_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="18sp"
+        android:textColor="#F00"
+        android:layout_marginLeft="8dp"
+        android:text=""/>
+
+
+    <TextView
+        android:id="@+id/empty_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:layout_marginLeft="8dp"
+        android:gravity="center"
+        android:text="No search results." />
+
+    <FrameLayout
+        android:id="@+id/search_results_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:id="@+id/search_results_view"
+            app:setAdapter="@{viewModel.getAdapter()}"
+            tools:listitem="@layout/search_result_item" />
+    </FrameLayout>
 
-        <Button
-            android:id="@+id/search_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/new_search_button_label" />
+</LinearLayout>
 
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/error_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="#F00"
-            android:text=""/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/search_results_view"
-                app:setAdapter="@{viewModel.getAdapter()}"
-                tools:listitem="@layout/search_result_item">
-
-            </androidx.recyclerview.widget.RecyclerView>
-        </FrameLayout>
-
-    </LinearLayout>
-
-</ScrollView>
 </layout>
